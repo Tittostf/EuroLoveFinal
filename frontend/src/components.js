@@ -185,19 +185,53 @@ export const Header = () => {
 // Top Cashback Banner
 export const CashbackBanner = () => {
   return (
-    <div className="bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 py-3">
+    <div className="bg-gradient-to-r from-gray-800 via-gray-900 to-black py-4">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-center text-center">
-          <div className="flex items-center space-x-4">
-            <div className="w-8 h-8 bg-black rounded-full flex items-center justify-center">
-              <span className="text-yellow-400 text-sm font-bold">€</span>
+          <div className="flex items-center space-x-6 bg-gray-700/50 rounded-full px-8 py-4 backdrop-blur">
+            {/* EUROLOVE Logo */}
+            <div className="flex-shrink-0">
+              <img 
+                src="https://i.imgur.com/YourImageURL.jpg" 
+                alt="EUROLOVE Logo"
+                className="w-16 h-16 rounded-full object-cover border-2 border-yellow-400"
+                onError={(e) => {
+                  e.target.style.display = 'none';
+                  e.target.nextSibling.style.display = 'flex';
+                }}
+              />
+              <div className="w-16 h-16 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-full flex items-center justify-center border-2 border-yellow-400" style={{display: 'none'}}>
+                <span className="text-black font-bold text-xl">♥</span>
+              </div>
             </div>
-            <div>
-              <span className="text-black font-bold text-lg">Monthly Cash-Back System</span>
-              <span className="text-black/80 ml-2">Get up to 15% back on all bookings!</span>
+            
+            {/* Contest Text */}
+            <div className="text-left">
+              <div className="flex items-center space-x-2 mb-1">
+                <span className="text-2xl">🏆</span>
+                <span className="text-yellow-400 font-bold text-lg">CONCURS LUNAR UNIC.</span>
+              </div>
+              <div className="flex items-center space-x-2 mb-2">
+                <span className="text-2xl">💎</span>
+                <span className="text-cyan-400 font-bold text-xl">EUROLOVE</span>
+                <span className="text-2xl">💎</span>
+              </div>
+              <p className="text-white font-bold text-sm mb-1">
+                CÂȘTIGĂ 10% CASH-BACK DIN TOTALUL ABONAMENTELOR ESCORTELOR!
+              </p>
+              <p className="text-gray-300 text-sm mb-1">
+                ÎN FIECARE LUNĂ, 3 PERSOANE PRIMESC RECOMPENSA.
+              </p>
+              <p className="text-yellow-300 text-sm mb-1 font-medium">
+                ACTIVEAZĂ-ȚI PROFILUL ȘI INTRĂ ÎN CURSĂ CHIAR AZI!
+              </p>
+              <p className="text-gray-400 text-xs">
+                CU CÂT MAI MULTE ABONAMENTE PER TOTAL CU ATÂT MAI MARE ESTE SUMA CASH-BACK ACORDATĂ.
+              </p>
             </div>
-            <button className="bg-black text-yellow-400 px-4 py-1 rounded-full text-sm font-semibold hover:bg-gray-900 transition-colors">
-              Learn More
+            
+            <button className="bg-gradient-to-r from-yellow-400 to-yellow-500 text-black px-6 py-2 rounded-full text-sm font-bold hover:from-yellow-500 hover:to-yellow-600 transition-all transform hover:scale-105">
+              PARTICIPĂ ACUM!
             </button>
           </div>
         </div>
