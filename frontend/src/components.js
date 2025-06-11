@@ -671,28 +671,37 @@ export const RightSidebar = () => {
 
 // Hero Section
 export const HeroSection = () => {
+  const { t } = useLanguage();
+  
   return (
-    <div className="bg-gradient-to-r from-pink-500 via-purple-500 to-pink-600 py-16">
-      <div className="max-w-4xl mx-auto text-center px-4">
-        <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
-          Premium Escort Directory
+    <div className="bg-gradient-to-br from-purple-600 via-pink-500 to-purple-700 py-20 relative overflow-hidden">
+      {/* Background decoration */}
+      <div className="absolute inset-0 bg-black/20"></div>
+      <div className="absolute inset-0">
+        <div className="absolute top-0 left-0 w-96 h-96 bg-yellow-400/10 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-0 right-0 w-96 h-96 bg-pink-400/10 rounded-full blur-3xl"></div>
+      </div>
+      
+      <div className="relative max-w-6xl mx-auto text-center px-4">
+        <h1 className="text-5xl md:text-6xl font-bold text-white mb-6 tracking-tight">
+          {t('heroTitle')}
         </h1>
-        <p className="text-xl text-white/90 mb-8">
-          Discover sophisticated companions across Europe's finest cities
+        <p className="text-xl md:text-2xl text-white/90 mb-12 max-w-4xl mx-auto leading-relaxed">
+          {t('heroSubtitle')}
         </p>
         
-        <div className="bg-white rounded-lg p-6 shadow-xl">
-          <div className="flex flex-col md:flex-row gap-4">
+        <div className="bg-white/95 backdrop-blur rounded-2xl p-8 shadow-2xl max-w-4xl mx-auto">
+          <div className="flex flex-col lg:flex-row gap-4">
             <div className="flex-1">
               <input
                 type="text"
-                placeholder="Search for escorts or services..."
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-transparent"
+                placeholder={t('searchPlaceholder')}
+                className="w-full px-6 py-4 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-yellow-400 focus:border-transparent text-lg font-medium"
               />
             </div>
-            <div className="md:w-48">
-              <select className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-transparent">
-                <option>All Locations</option>
+            <div className="lg:w-64">
+              <select className="w-full px-6 py-4 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-yellow-400 focus:border-transparent text-lg font-medium">
+                <option>{t('allLocations')}</option>
                 <option>London</option>
                 <option>Paris</option>
                 <option>Berlin</option>
@@ -700,20 +709,20 @@ export const HeroSection = () => {
                 <option>Barcelona</option>
               </select>
             </div>
-            <button className="bg-gradient-to-r from-yellow-400 to-yellow-600 text-black px-8 py-3 rounded-lg font-semibold hover:from-yellow-500 hover:to-yellow-700 transition-all">
-              Search Now
+            <button className="bg-gradient-to-r from-yellow-400 to-yellow-500 text-black px-10 py-4 rounded-xl font-bold text-lg hover:from-yellow-500 hover:to-yellow-600 transition-all transform hover:scale-105 shadow-lg uppercase tracking-wide">
+              {t('searchNow')}
             </button>
           </div>
         </div>
 
         {/* Popular Destinations */}
-        <div className="mt-8">
-          <p className="text-white/90 mb-4">Popular Destinations</p>
-          <div className="flex flex-wrap justify-center gap-3">
+        <div className="mt-12">
+          <p className="text-white/90 mb-6 text-lg font-medium">{t('popularDestinations')}</p>
+          <div className="flex flex-wrap justify-center gap-4">
             {['London', 'Paris', 'Berlin', 'Milan', 'Amsterdam', 'Barcelona'].map((city) => (
               <button
                 key={city}
-                className="bg-white/20 text-white px-4 py-2 rounded-full hover:bg-white/30 transition-colors"
+                className="bg-white/20 backdrop-blur text-white px-6 py-3 rounded-full hover:bg-white/30 transition-all transform hover:scale-105 font-medium border border-white/20"
               >
                 {city}
               </button>
