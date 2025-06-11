@@ -143,36 +143,51 @@ export const Header = () => {
         <div className="flex justify-between items-center py-4">
           {/* Logo */}
           <div className="flex items-center space-x-4">
-            <div className="flex items-center space-x-2">
-              <div className="w-12 h-12 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-full flex items-center justify-center">
-                <span className="text-black font-bold text-xl">♥</span>
+            <div className="flex items-center space-x-3">
+              {/* EUROLOVE Logo Image */}
+              <div className="relative">
+                <img 
+                  src="https://i.imgur.com/YourImageURL.jpg" 
+                  alt="EUROLOVE - Intimacy, Sculpted in Luxury"
+                  className="w-14 h-14 rounded-full object-cover border-2 border-yellow-400"
+                  onError={(e) => {
+                    e.target.style.display = 'none';
+                    e.target.nextSibling.style.display = 'flex';
+                  }}
+                />
+                {/* Fallback golden heart logo */}
+                <div className="w-14 h-14 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-full flex items-center justify-center border-2 border-yellow-400" style={{display: 'none'}}>
+                  <span className="text-black font-bold text-xl">♥</span>
+                </div>
+                {/* Premium glow effect */}
+                <div className="absolute inset-0 w-14 h-14 rounded-full bg-yellow-400/20 animate-pulse"></div>
               </div>
               <div>
-                <h1 className="text-2xl font-bold bg-gradient-to-r from-yellow-400 to-yellow-600 bg-clip-text text-transparent">
+                <h1 className="text-3xl font-bold bg-gradient-to-r from-yellow-400 to-yellow-600 bg-clip-text text-transparent">
                   EUROLOVE
                 </h1>
-                <p className="text-xs text-gray-400 tracking-wider">INTIMACY, SCULPTED IN LUXURY</p>
+                <p className="text-xs text-gray-400 tracking-widest font-light">INTIMACY, SCULPTED IN LUXURY</p>
               </div>
             </div>
           </div>
 
           {/* Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
-            <a href="#" className="text-white hover:text-yellow-400 transition-colors">VIP Escorts</a>
-            <a href="#" className="text-white hover:text-yellow-400 transition-colors">Girls</a>
-            <a href="#" className="text-white hover:text-yellow-400 transition-colors">Pornstars</a>
-            <a href="#" className="text-white hover:text-yellow-400 transition-colors">City Tour</a>
-            <a href="#" className="text-white hover:text-yellow-400 transition-colors">Agencies</a>
-            <a href="#" className="text-white hover:text-yellow-400 transition-colors">Videos</a>
-            <a href="#" className="text-white hover:text-yellow-400 transition-colors">Reviews</a>
+            <a href="#" className="text-white hover:text-yellow-400 transition-colors font-medium">VIP Escorts</a>
+            <a href="#" className="text-white hover:text-yellow-400 transition-colors font-medium">Girls</a>
+            <a href="#" className="text-white hover:text-yellow-400 transition-colors font-medium">Pornstars</a>
+            <a href="#" className="text-white hover:text-yellow-400 transition-colors font-medium">City Tour</a>
+            <a href="#" className="text-white hover:text-yellow-400 transition-colors font-medium">Agencies</a>
+            <a href="#" className="text-white hover:text-yellow-400 transition-colors font-medium">Videos</a>
+            <a href="#" className="text-white hover:text-yellow-400 transition-colors font-medium">Reviews</a>
           </nav>
 
           {/* User Actions */}
           <div className="flex items-center space-x-4">
-            <button className="bg-gradient-to-r from-yellow-400 to-yellow-600 text-black px-4 py-2 rounded-lg font-semibold hover:from-yellow-500 hover:to-yellow-700 transition-all">
+            <button className="bg-gradient-to-r from-yellow-400 to-yellow-600 text-black px-6 py-2 rounded-lg font-bold hover:from-yellow-500 hover:to-yellow-700 transition-all transform hover:scale-105 shadow-lg">
               Login
             </button>
-            <button className="border border-yellow-400 text-yellow-400 px-4 py-2 rounded-lg font-semibold hover:bg-yellow-400 hover:text-black transition-all">
+            <button className="border-2 border-yellow-400 text-yellow-400 px-6 py-2 rounded-lg font-bold hover:bg-yellow-400 hover:text-black transition-all transform hover:scale-105">
               Register
             </button>
           </div>
