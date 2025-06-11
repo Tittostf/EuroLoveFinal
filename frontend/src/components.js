@@ -852,7 +852,8 @@ export const ProfileManagement = ({ profile }) => {
     </div>
   );
 };
-export const MainContent = ({ selectedCountry, selectedCity }) => {
+// Main Content Area
+export const MainContent = ({ selectedCountry, selectedCity, onProfileManagementClick }) => {
   const getDisplayTitle = () => {
     if (selectedCity && selectedCountry) {
       return `Escorts in ${selectedCity}, ${selectedCountry}`;
@@ -874,6 +875,12 @@ export const MainContent = ({ selectedCountry, selectedCity }) => {
           <button className="hover:bg-red-600 px-4 py-2 rounded transition-colors">Escorts Now</button>
           <button className="hover:bg-red-600 px-4 py-2 rounded transition-colors">Live Sex</button>
           <button className="hover:bg-red-600 px-4 py-2 rounded transition-colors">Live Escorts</button>
+          <button 
+            onClick={onProfileManagementClick}
+            className="hover:bg-red-600 px-4 py-2 rounded transition-colors ml-auto bg-yellow-500 text-black font-bold"
+          >
+            🔧 Manage Profile
+          </button>
         </div>
       </div>
 
