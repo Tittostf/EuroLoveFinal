@@ -563,8 +563,28 @@ export const FilterBar = () => {
 
 // Profile Card Component
 export const ProfileCard = ({ profile }) => {
+  const [isReposting, setIsReposting] = useState(false);
+  const [showRepostSuccess, setShowRepostSuccess] = useState(false);
+
+  const handleRepost = async () => {
+    setIsReposting(true);
+    // Simulate API call
+    setTimeout(() => {
+      setIsReposting(false);
+      setShowRepostSuccess(true);
+      setTimeout(() => setShowRepostSuccess(false), 3000);
+    }, 1500);
+  };
+
   return (
-    <div className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
+    <div className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow profile-card">
+      {/* Repost Success Message */}
+      {showRepostSuccess && (
+        <div className="absolute top-0 left-0 right-0 bg-green-500 text-white text-center py-2 z-10 rounded-t-lg">
+          ✅ Ad reposted successfully! Now appears on top to attract more clients!
+        </div>
+      )}
+      
       <div className="relative">
         <img 
           src={profile.image} 
@@ -575,13 +595,13 @@ export const ProfileCard = ({ profile }) => {
         {/* Badges */}
         <div className="absolute top-2 left-2 flex flex-col gap-1">
           {profile.vip && (
-            <span className="bg-red-500 text-white px-2 py-1 rounded text-xs font-bold">VIP</span>
+            <span className="bg-red-500 text-white px-2 py-1 rounded text-xs font-bold vip-badge">VIP</span>
           )}
           {profile.verified && (
-            <span className="bg-green-500 text-white px-2 py-1 rounded text-xs font-bold">VERIFIED</span>
+            <span className="bg-green-500 text-white px-2 py-1 rounded text-xs font-bold verified-badge">VERIFIED</span>
           )}
           {profile.hasVideos && (
-            <span className="bg-blue-500 text-white px-2 py-1 rounded text-xs font-bold">VIDEO</span>
+            <span className="bg-blue-500 text-white px-2 py-1 rounded text-xs font-bold video-badge">VIDEO</span>
           )}
         </div>
 
@@ -593,6 +613,11 @@ export const ProfileCard = ({ profile }) => {
         {/* Featured badge */}
         <div className="absolute bottom-2 left-2">
           <span className="bg-blue-600 text-white px-2 py-1 rounded text-xs font-bold">FEATURED</span>
+        </div>
+
+        {/* Repost Info */}
+        <div className="absolute bottom-2 right-2 bg-black/70 text-white px-2 py-1 rounded text-xs">
+          Last repost: {profile.lastRepost}
         </div>
       </div>
 
@@ -616,15 +641,47 @@ export const ProfileCard = ({ profile }) => {
           ))}
         </div>
         
-        <p className="text-sm text-green-600 mb-3">{profile.availability}</p>
+        <p className="text-sm text-green-600 mb-2">{profile.availability}</p>
+        
+        {/* Repost Stats */}
+        <div className="flex justify-between items-center mb-3 text-xs text-gray-500">
+          <span>Reposts: {profile.repostCount}</span>
+          <span>Points earned: {(profile.repostCount * 2) + 25}</span>
+        </div>
         
         <p className="text-sm text-gray-700 mb-4">
           Intellectual companion who loves art, history and meaningful conversations. Perfect for dinner and city exploration.
         </p>
         
-        <button className="w-full bg-gradient-to-r from-pink-500 to-pink-600 text-white py-2 rounded-lg font-semibold hover:from-pink-600 hover:to-pink-700 transition-all">
-          View Details
-        </button>
+        {/* Action Buttons */}
+        <div className="space-y-2">
+          <button className="w-full bg-gradient-to-r from-pink-500 to-pink-600 text-white py-2 rounded-lg font-semibold hover:from-pink-600 hover:to-pink-700 transition-all">
+            View Details
+          </button>
+          
+          {/* Repost Button */}
+          <button 
+            onClick={handleRepost}
+            disabled={isReposting}
+            className="w-full bg-gradient-to-r from-yellow-400 to-yellow-500 text-black py-2 rounded-lg font-semibold hover:from-yellow-500 hover:to-yellow-600 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
+          >
+            {isReposting ? (
+              <>
+                <div className="loading-spinner w-4 h-4"></div>
+                <span>Reposting...</span>
+              </>
+            ) : (
+              <>
+                <span>🚀</span>
+                <span>Repost Ad (2 Credits)</span>
+              </>
+            )}
+          </button>
+          
+          <p className="text-xs text-center text-gray-500 italic">
+            "Repost your ad to stay on top and attract more clients!"
+          </p>
+        </div>
       </div>
     </div>
   );
