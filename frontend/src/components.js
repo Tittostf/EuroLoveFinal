@@ -687,7 +687,171 @@ export const ProfileCard = ({ profile }) => {
   );
 };
 
-// Main Content Area
+// Profile Management Component
+export const ProfileManagement = ({ profile }) => {
+  const [credits, setCredits] = useState(45);
+  const [repostHistory, setRepostHistory] = useState([
+    { date: '2025-06-11 14:30', cost: 2, status: 'Success' },
+    { date: '2025-06-11 10:15', cost: 2, status: 'Success' },
+    { date: '2025-06-10 16:45', cost: 2, status: 'Success' },
+    { date: '2025-06-10 09:20', cost: 2, status: 'Success' }
+  ]);
+  const [monthlyPoints, setMonthlyPoints] = useState(267);
+  const [isReposting, setIsReposting] = useState(false);
+
+  const handleRepost = async () => {
+    if (credits < 2) {
+      alert('Insufficient credits! Please top up your account.');
+      return;
+    }
+    
+    setIsReposting(true);
+    setTimeout(() => {
+      setCredits(prev => prev - 2);
+      setMonthlyPoints(prev => prev + 2);
+      setRepostHistory(prev => [
+        { date: new Date().toLocaleString(), cost: 2, status: 'Success' },
+        ...prev
+      ]);
+      setIsReposting(false);
+      alert('✅ Ad reposted successfully! Your profile is now on top!');
+    }, 1500);
+  };
+
+  return (
+    <div className="bg-white rounded-lg shadow-lg p-6 max-w-4xl mx-auto">
+      <div className="border-b border-gray-200 pb-6 mb-6">
+        <h2 className="text-2xl font-bold text-gray-900 mb-2">Profile Management</h2>
+        <p className="text-gray-600">{profile.name} - {profile.location}</p>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        {/* Credits Balance */}
+        <div className="bg-gradient-to-br from-yellow-50 to-yellow-100 rounded-lg p-4 border border-yellow-200">
+          <div className="flex items-center space-x-2 mb-2">
+            <span className="text-2xl">💰</span>
+            <h3 className="font-semibold text-gray-900">Credits Balance</h3>
+          </div>
+          <p className="text-3xl font-bold text-yellow-600">{credits}</p>
+          <p className="text-sm text-gray-600">Available credits</p>
+          <button className="mt-2 bg-yellow-500 text-white px-4 py-2 rounded text-sm font-medium hover:bg-yellow-600 transition-colors">
+            Top Up Credits
+          </button>
+        </div>
+
+        {/* Monthly Points */}
+        <div className="bg-gradient-to-br from-purple-50 to-purple-100 rounded-lg p-4 border border-purple-200">
+          <div className="flex items-center space-x-2 mb-2">
+            <span className="text-2xl">🏆</span>
+            <h3 className="font-semibold text-gray-900">Monthly Points</h3>
+          </div>
+          <p className="text-3xl font-bold text-purple-600">{monthlyPoints}</p>
+          <p className="text-sm text-gray-600">Current ranking: #12</p>
+          <p className="text-xs text-gray-500 mt-1">1€ spent = 1 point earned</p>
+        </div>
+
+        {/* Quick Stats */}
+        <div className="bg-gradient-to-br from-green-50 to-green-100 rounded-lg p-4 border border-green-200">
+          <div className="flex items-center space-x-2 mb-2">
+            <span className="text-2xl">📊</span>
+            <h3 className="font-semibold text-gray-900">This Month</h3>
+          </div>
+          <p className="text-lg font-semibold text-green-600">{profile.repostCount} reposts</p>
+          <p className="text-sm text-gray-600">€{profile.repostCount * 2} invested</p>
+          <p className="text-xs text-gray-500 mt-1">Last repost: {profile.lastRepost}</p>
+        </div>
+      </div>
+
+      {/* Repost Section */}
+      <div className="bg-gradient-to-br from-blue-50 to-indigo-100 rounded-lg p-6 border border-blue-200 mb-8">
+        <div className="flex items-center justify-between mb-4">
+          <div>
+            <h3 className="text-xl font-bold text-gray-900 flex items-center space-x-2">
+              <span>🚀</span>
+              <span>Repost Your Ad</span>
+            </h3>
+            <p className="text-gray-600 mt-1">Move your profile to the top of search results</p>
+          </div>
+          <div className="text-right">
+            <p className="text-2xl font-bold text-blue-600">2 Credits</p>
+            <p className="text-sm text-gray-500">per repost</p>
+          </div>
+        </div>
+        
+        <div className="bg-white rounded-lg p-4 border border-blue-200 mb-4">
+          <p className="text-sm text-gray-700 mb-2">
+            <span className="font-semibold text-blue-600">"Repost your ad to stay on top and attract more clients!"</span>
+          </p>
+          <ul className="text-xs text-gray-600 space-y-1">
+            <li>• Your profile moves to the first page of listings</li>
+            <li>• Increases visibility and booking chances</li>
+            <li>• Earns 2 points towards Monthly Rewards Program</li>
+            <li>• No limit on repost frequency</li>
+          </ul>
+        </div>
+
+        <button 
+          onClick={handleRepost}
+          disabled={isReposting || credits < 2}
+          className="w-full bg-gradient-to-r from-blue-500 to-indigo-600 text-white py-3 rounded-lg font-bold text-lg hover:from-blue-600 hover:to-indigo-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
+        >
+          {isReposting ? (
+            <>
+              <div className="loading-spinner w-5 h-5"></div>
+              <span>Reposting...</span>
+            </>
+          ) : (
+            <>
+              <span>🚀</span>
+              <span>Repost Now - 2 Credits</span>
+            </>
+          )}
+        </button>
+        
+        {credits < 2 && (
+          <p className="text-red-600 text-sm mt-2 text-center">
+            Insufficient credits. Please top up your account to continue reposting.
+          </p>
+        )}
+      </div>
+
+      {/* Repost History */}
+      <div className="bg-gray-50 rounded-lg p-6">
+        <h3 className="text-lg font-bold text-gray-900 mb-4 flex items-center space-x-2">
+          <span>📝</span>
+          <span>Repost History</span>
+        </h3>
+        
+        <div className="overflow-x-auto">
+          <table className="w-full">
+            <thead>
+              <tr className="border-b border-gray-200">
+                <th className="text-left py-2 text-sm font-semibold text-gray-700">Date & Time</th>
+                <th className="text-left py-2 text-sm font-semibold text-gray-700">Cost</th>
+                <th className="text-left py-2 text-sm font-semibold text-gray-700">Points Earned</th>
+                <th className="text-left py-2 text-sm font-semibold text-gray-700">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {repostHistory.map((entry, index) => (
+                <tr key={index} className="border-b border-gray-100">
+                  <td className="py-2 text-sm text-gray-600">{entry.date}</td>
+                  <td className="py-2 text-sm text-gray-600">{entry.cost} credits</td>
+                  <td className="py-2 text-sm text-purple-600 font-medium">+{entry.cost} points</td>
+                  <td className="py-2">
+                    <span className="bg-green-100 text-green-800 px-2 py-1 rounded text-xs font-medium">
+                      {entry.status}
+                    </span>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  );
+};
 export const MainContent = ({ selectedCountry, selectedCity }) => {
   const getDisplayTitle = () => {
     if (selectedCity && selectedCountry) {
