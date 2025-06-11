@@ -967,14 +967,28 @@ export const Footer = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
-            <div className="flex items-center space-x-2 mb-4">
-              <div className="w-8 h-8 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-full flex items-center justify-center">
-                <span className="text-black font-bold">♥</span>
+            <div className="flex items-center space-x-3 mb-4">
+              {/* EUROLOVE Logo Image */}
+              <img 
+                src="https://i.imgur.com/YourImageURL.jpg" 
+                alt="EUROLOVE Logo"
+                className="w-10 h-10 rounded-full object-cover border-2 border-yellow-400"
+                onError={(e) => {
+                  e.target.style.display = 'none';
+                  e.target.nextSibling.style.display = 'flex';
+                }}
+              />
+              {/* Fallback golden heart logo */}
+              <div className="w-10 h-10 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-full flex items-center justify-center border-2 border-yellow-400" style={{display: 'none'}}>
+                <span className="text-black font-bold text-sm">♥</span>
               </div>
               <span className="text-xl font-bold bg-gradient-to-r from-yellow-400 to-yellow-600 bg-clip-text text-transparent">
                 EUROLOVE
               </span>
             </div>
+            <p className="text-gray-400 text-sm mb-2 font-light tracking-wide">
+              INTIMACY, SCULPTED IN LUXURY
+            </p>
             <p className="text-gray-400 text-sm">
               Europe's premier escort directory connecting sophisticated companions with discerning clients across major cities.
             </p>
