@@ -418,102 +418,115 @@ export const CashbackBanner = () => {
 
 // Monthly Rewards Program Section
 export const MonthlyRewardsSection = () => {
+  const { t } = useLanguage();
+  
   return (
-    <div className="bg-gradient-to-br from-gray-900 via-black to-gray-900 py-16">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <div className="flex items-center justify-center space-x-3 mb-4">
-            <div className="w-12 h-12 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-full flex items-center justify-center">
-              <span className="text-black font-bold text-xl">💎</span>
+    <div className="bg-gradient-to-br from-gray-900 via-black to-gray-900 py-20 relative overflow-hidden">
+      {/* Background decoration */}
+      <div className="absolute inset-0">
+        <div className="absolute top-1/4 left-0 w-96 h-96 bg-yellow-400/5 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-1/4 right-0 w-96 h-96 bg-purple-400/5 rounded-full blur-3xl"></div>
+      </div>
+      
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-16">
+          <div className="flex items-center justify-center space-x-4 mb-6">
+            <div className="w-16 h-16 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-full flex items-center justify-center shadow-xl">
+              <span className="text-black font-bold text-2xl">💎</span>
             </div>
-            <h2 className="text-4xl font-bold bg-gradient-to-r from-yellow-400 to-yellow-600 bg-clip-text text-transparent">
-              EUROLOVE Monthly Rewards Program
+            <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-yellow-400 to-yellow-600 bg-clip-text text-transparent tracking-tight">
+              {t('rewardsTitle')}
             </h2>
           </div>
-          <p className="text-2xl text-yellow-400 font-semibold mb-2">Earn Every Month!</p>
-          <p className="text-white text-lg max-w-4xl mx-auto">
-            Turn your activity on EUROLOVE into real cash with our Official Monthly Rewards Program.
+          <p className="text-2xl md:text-3xl text-yellow-400 font-bold mb-4 tracking-wide">
+            {t('earnMonthly')}
           </p>
-          <p className="text-yellow-300 text-lg font-medium mt-2">
-            👉 The more active you are, the more you can earn — simple, transparent, and profitable.
+          <p className="text-white text-lg md:text-xl max-w-5xl mx-auto leading-relaxed">
+            {t('rewardsSubtitle')}
+          </p>
+          <p className="text-yellow-300 text-lg md:text-xl font-medium mt-4 max-w-4xl mx-auto">
+            👉 {t('moreActive')}
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+        <div className="grid grid-cols-1 xl:grid-cols-2 gap-12">
           {/* How it works */}
-          <div className="bg-gray-800/50 backdrop-blur rounded-xl p-8 border border-yellow-400/20">
-            <h3 className="text-2xl font-bold text-yellow-400 mb-6">How it works:</h3>
-            <div className="space-y-4">
-              <div className="flex items-start space-x-3">
-                <span className="text-green-400 font-bold">✅</span>
-                <p className="text-white">
-                  <span className="font-semibold">Activate your account monthly</span> (€25 activation)
+          <div className="bg-gradient-to-br from-gray-800/60 to-gray-900/60 backdrop-blur rounded-2xl p-8 border border-yellow-400/20 shadow-2xl">
+            <h3 className="text-2xl md:text-3xl font-bold text-yellow-400 mb-8 flex items-center space-x-3">
+              <span>⚡</span>
+              <span>How it works:</span>
+            </h3>
+            <div className="space-y-6">
+              <div className="flex items-start space-x-4 p-4 bg-gray-700/30 rounded-xl border border-green-400/20">
+                <span className="text-green-400 font-bold text-xl">✅</span>
+                <p className="text-white text-lg">
+                  <span className="font-bold text-yellow-400">Activate your account monthly</span> (€25 activation)
                 </p>
               </div>
-              <div className="flex items-start space-x-3">
-                <span className="text-green-400 font-bold">✅</span>
-                <p className="text-white">
-                  <span className="font-semibold">Top up at least €5</span> in reposting credits
+              <div className="flex items-start space-x-4 p-4 bg-gray-700/30 rounded-xl border border-green-400/20">
+                <span className="text-green-400 font-bold text-xl">✅</span>
+                <p className="text-white text-lg">
+                  <span className="font-bold text-yellow-400">Top up at least €5</span> in reposting credits
                 </p>
               </div>
-              <div className="flex items-start space-x-3">
-                <span className="text-green-400 font-bold">✅</span>
-                <p className="text-white">
-                  <span className="font-semibold">Earn 1 point</span> for each €1 invested (activation + repost credits)
+              <div className="flex items-start space-x-4 p-4 bg-gray-700/30 rounded-xl border border-green-400/20">
+                <span className="text-green-400 font-bold text-xl">✅</span>
+                <p className="text-white text-lg">
+                  <span className="font-bold text-yellow-400">Earn 1 point</span> for each €1 invested (activation + repost credits)
                 </p>
               </div>
-              <div className="flex items-start space-x-3">
-                <span className="text-green-400 font-bold">✅</span>
-                <p className="text-white">
-                  <span className="font-semibold">Compete for the Top 3</span> every month:
+              <div className="flex items-start space-x-4 p-4 bg-gray-700/30 rounded-xl border border-green-400/20">
+                <span className="text-green-400 font-bold text-xl">✅</span>
+                <p className="text-white text-lg">
+                  <span className="font-bold text-yellow-400">Compete for the Top 3</span> every month:
                 </p>
               </div>
             </div>
 
             {/* Prizes */}
-            <div className="mt-8 space-y-4">
-              <div className="bg-gradient-to-r from-yellow-600 to-yellow-500 rounded-lg p-4 flex items-center space-x-4">
-                <span className="text-3xl">🥇</span>
+            <div className="mt-10 space-y-4">
+              <div className="bg-gradient-to-r from-yellow-500 to-yellow-400 rounded-xl p-6 flex items-center space-x-6 shadow-lg transform hover:scale-105 transition-all">
+                <span className="text-4xl">🥇</span>
                 <div>
-                  <p className="text-black font-bold text-lg">1st Place</p>
-                  <p className="text-black font-semibold">7% CASH-BACK on total invested</p>
+                  <p className="text-black font-bold text-xl">1st Place</p>
+                  <p className="text-black font-bold text-lg">7% CASH-BACK on total invested</p>
                 </div>
               </div>
-              <div className="bg-gradient-to-r from-gray-400 to-gray-300 rounded-lg p-4 flex items-center space-x-4">
-                <span className="text-3xl">🥈</span>
+              <div className="bg-gradient-to-r from-gray-300 to-gray-200 rounded-xl p-6 flex items-center space-x-6 shadow-lg transform hover:scale-105 transition-all">
+                <span className="text-4xl">🥈</span>
                 <div>
-                  <p className="text-black font-bold text-lg">2nd Place</p>
-                  <p className="text-black font-semibold">2% CASH-BACK</p>
+                  <p className="text-black font-bold text-xl">2nd Place</p>
+                  <p className="text-black font-bold text-lg">2% CASH-BACK</p>
                 </div>
               </div>
-              <div className="bg-gradient-to-r from-amber-600 to-amber-500 rounded-lg p-4 flex items-center space-x-4">
-                <span className="text-3xl">🥉</span>
+              <div className="bg-gradient-to-r from-amber-500 to-amber-400 rounded-xl p-6 flex items-center space-x-6 shadow-lg transform hover:scale-105 transition-all">
+                <span className="text-4xl">🥉</span>
                 <div>
-                  <p className="text-black font-bold text-lg">3rd Place</p>
-                  <p className="text-black font-semibold">1% CASH-BACK</p>
+                  <p className="text-black font-bold text-xl">3rd Place</p>
+                  <p className="text-black font-bold text-lg">1% CASH-BACK</p>
                 </div>
               </div>
             </div>
           </div>
 
           {/* Live Leaderboard */}
-          <div className="bg-gray-800/50 backdrop-blur rounded-xl p-8 border border-yellow-400/20">
-            <h3 className="text-2xl font-bold text-yellow-400 mb-6 flex items-center space-x-2">
+          <div className="bg-gradient-to-br from-gray-800/60 to-gray-900/60 backdrop-blur rounded-2xl p-8 border border-yellow-400/20 shadow-2xl">
+            <h3 className="text-2xl md:text-3xl font-bold text-yellow-400 mb-8 flex items-center space-x-3">
               <span>🏆</span>
               <span>Live Leaderboard</span>
             </h3>
-            <div className="space-y-3">
+            <div className="space-y-4">
               {mockLeaderboard.slice(0, 8).map((user) => (
                 <div 
                   key={user.rank}
-                  className={`flex items-center justify-between p-3 rounded-lg ${
+                  className={`flex items-center justify-between p-4 rounded-xl transition-all hover:scale-105 ${
                     user.rank <= 3 
-                      ? 'bg-gradient-to-r from-yellow-600/20 to-yellow-400/20 border border-yellow-400/30' 
-                      : 'bg-gray-700/30'
+                      ? 'bg-gradient-to-r from-yellow-600/20 to-yellow-400/20 border-2 border-yellow-400/40 shadow-lg' 
+                      : 'bg-gray-700/40 border border-gray-600/30'
                   }`}
                 >
-                  <div className="flex items-center space-x-3">
-                    <span className={`font-bold text-lg ${
+                  <div className="flex items-center space-x-4">
+                    <span className={`font-bold text-xl w-8 text-center ${
                       user.rank === 1 ? 'text-yellow-400' : 
                       user.rank === 2 ? 'text-gray-300' : 
                       user.rank === 3 ? 'text-amber-500' : 'text-gray-400'
@@ -521,15 +534,17 @@ export const MonthlyRewardsSection = () => {
                       #{user.rank}
                     </span>
                     <div>
-                      <p className="text-white font-medium">{user.name}</p>
-                      <p className="text-gray-400 text-sm">{user.points} points</p>
+                      <p className="text-white font-bold text-lg">{user.name}</p>
+                      <p className="text-gray-400 text-sm">{user.points} points • €{user.invested} invested</p>
                     </div>
                   </div>
                   <div className="text-right">
-                    <p className={`font-bold ${user.rank <= 3 ? 'text-green-400' : 'text-gray-400'}`}>
+                    <p className={`font-bold text-lg ${user.rank <= 3 ? 'text-green-400' : 'text-gray-400'}`}>
                       {user.earnings}
                     </p>
-                    <p className="text-gray-400 text-sm">{user.cashback}</p>
+                    <p className={`text-sm font-medium ${user.rank <= 3 ? 'text-yellow-400' : 'text-gray-500'}`}>
+                      {user.cashback}
+                    </p>
                   </div>
                 </div>
               ))}
@@ -537,18 +552,20 @@ export const MonthlyRewardsSection = () => {
           </div>
         </div>
 
-        <div className="mt-12 text-center">
-          <div className="bg-gray-800/50 backdrop-blur rounded-xl p-6 border border-yellow-400/20 max-w-4xl mx-auto">
-            <p className="text-white mb-4">
-              <span className="font-semibold text-yellow-400">Leaderboard resets monthly</span> → New chances to win every month!
-            </p>
-            <p className="text-white mb-4">
-              Track your points in real-time and see the live leaderboard.
-            </p>
-            <p className="text-yellow-300 font-medium mb-6">
-              <span className="font-bold">TIP:</span> The more you repost and stay active, the more points you earn — and the closer you are to the Top 3!
-            </p>
-            <button className="bg-gradient-to-r from-red-500 to-red-600 text-white px-8 py-4 rounded-lg font-bold text-lg hover:from-red-600 hover:to-red-700 transition-all transform hover:scale-105">
+        <div className="mt-16 text-center">
+          <div className="bg-gradient-to-br from-gray-800/60 to-gray-900/60 backdrop-blur rounded-2xl p-8 border border-yellow-400/20 shadow-2xl max-w-5xl mx-auto">
+            <div className="space-y-4 mb-8">
+              <p className="text-white text-lg">
+                <span className="font-bold text-yellow-400">Leaderboard resets monthly</span> → New chances to win every month!
+              </p>
+              <p className="text-white text-lg">
+                Track your points in real-time and see the live leaderboard.
+              </p>
+              <p className="text-yellow-300 font-medium text-lg">
+                <span className="font-bold">TIP:</span> The more you repost and stay active, the more points you earn — and the closer you are to the Top 3!
+              </p>
+            </div>
+            <button className="bg-gradient-to-r from-red-500 to-red-600 text-white px-12 py-4 rounded-xl font-bold text-lg hover:from-red-600 hover:to-red-700 transition-all transform hover:scale-105 shadow-xl uppercase tracking-wide">
               🔴 Join the Monthly Rewards Program now and start earning real money every month!
             </button>
           </div>
