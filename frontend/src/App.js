@@ -3,11 +3,13 @@ import './App.css';
 import {
   Header,
   CashbackBanner,
+  MonthlyRewardsSection,
   CountrySidebar,
   RightSidebar,
   HeroSection,
   MainContent,
-  Footer
+  Footer,
+  ProfileManagement
 } from './components';
 
 function App() {
