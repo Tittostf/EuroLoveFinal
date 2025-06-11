@@ -1,5 +1,129 @@
 import React, { useState } from 'react';
 
+// Language context
+const useLanguage = () => {
+  const [language, setLanguage] = useState('en'); // 'en' or 'ro'
+  
+  const translations = {
+    en: {
+      // Header
+      vipEscorts: "VIP Escorts",
+      girls: "Girls", 
+      pornstars: "Pornstars",
+      cityTour: "City Tour",
+      agencies: "Agencies",
+      videos: "Videos",
+      reviews: "Reviews",
+      login: "Login",
+      register: "Register",
+      
+      // Hero Section
+      heroTitle: "Premium Escort Directory",
+      heroSubtitle: "Discover sophisticated companions across Europe's finest cities",
+      searchPlaceholder: "Search for escorts or services...",
+      allLocations: "All Locations",
+      searchNow: "Search Now",
+      popularDestinations: "Popular Destinations",
+      
+      // Monthly Rewards
+      lunarContest: "LUNAR UNIQUE CONTEST",
+      euroloveBrand: "EUROLOVE",
+      contestText1: "EARN 10% CASH-BACK FROM TOTAL ESCORT SUBSCRIPTIONS!",
+      contestText2: "EVERY MONTH, 3 PEOPLE RECEIVE THE REWARD.",
+      contestText3: "ACTIVATE YOUR PROFILE AND JOIN THE RACE TODAY!",
+      contestText4: "THE MORE SUBSCRIPTIONS IN TOTAL, THE HIGHER THE CASH-BACK AMOUNT GRANTED.",
+      participateNow: "PARTICIPATE NOW!",
+      
+      rewardsTitle: "EUROLOVE Monthly Rewards Program",
+      earnMonthly: "Earn Every Month!",
+      rewardsSubtitle: "Turn your activity on EUROLOVE into real cash with our Official Monthly Rewards Program.",
+      moreActive: "The more active you are, the more you can earn — simple, transparent, and profitable.",
+      
+      // Profile Management
+      profileManagement: "Profile Management",
+      creditsBalance: "Credits Balance",
+      monthlyPoints: "Monthly Points", 
+      thisMonth: "This Month",
+      repostAd: "Repost Your Ad",
+      repostNow: "Repost Now",
+      repostHistory: "Repost History",
+      
+      // Footer
+      quickLinks: "Quick Links",
+      browseCompanions: "Browse Companions",
+      featuredProfiles: "Featured Profiles",
+      rewardsProgram: "Rewards Program",
+      vipMemberships: "VIP Memberships",
+      support: "Support",
+      helpCenter: "Help Center",
+      safetyGuidelines: "Safety Guidelines",
+      privacyPolicy: "Privacy Policy",
+      termsOfService: "Terms of Service",
+      allRightsReserved: "All rights reserved."
+    },
+    ro: {
+      // Header
+      vipEscorts: "Escorte VIP",
+      girls: "Fete",
+      pornstars: "Vedete Porno", 
+      cityTour: "Tur Oraș",
+      agencies: "Agenții",
+      videos: "Videouri",
+      reviews: "Recenzii",
+      login: "Conectare",
+      register: "Înregistrare",
+      
+      // Hero Section
+      heroTitle: "Director Premium de Escorte",
+      heroSubtitle: "Descoperă companioni sofisticați în cele mai rafinate orașe din Europa",
+      searchPlaceholder: "Caută escorte sau servicii...",
+      allLocations: "Toate Locațiile",
+      searchNow: "Caută Acum",
+      popularDestinations: "Destinații Populare",
+      
+      // Monthly Rewards  
+      lunarContest: "CONCURS LUNAR UNIC",
+      euroloveBrand: "EUROLOVE",
+      contestText1: "CÂȘTIGĂ 10% CASH-BACK DIN TOTALUL ABONAMENTELOR ESCORTELOR!",
+      contestText2: "ÎN FIECARE LUNĂ, 3 PERSOANE PRIMESC RECOMPENSA.",
+      contestText3: "ACTIVEAZĂ-ȚI PROFILUL ȘI INTRĂ ÎN CURSĂ CHIAR AZI!",
+      contestText4: "CU CÂT MAI MULTE ABONAMENTE PER TOTAL CU ATÂT MAI MARE ESTE SUMA CASH-BACK ACORDATĂ.",
+      participateNow: "PARTICIPĂ ACUM!",
+      
+      rewardsTitle: "Programul de Recompense Lunare EUROLOVE",
+      earnMonthly: "Câștigă În Fiecare Lună!",
+      rewardsSubtitle: "Transformă activitatea ta pe EUROLOVE în bani reali cu Programul nostru Oficial de Recompense Lunare.",
+      moreActive: "Cu cât ești mai activ, cu atât poți câștiga mai mult — simplu, transparent și profitabil.",
+      
+      // Profile Management
+      profileManagement: "Gestionare Profil",
+      creditsBalance: "Sold Credite",
+      monthlyPoints: "Puncte Lunare",
+      thisMonth: "Luna Aceasta", 
+      repostAd: "Republicare Anunț",
+      repostNow: "Republică Acum",
+      repostHistory: "Istoric Republicări",
+      
+      // Footer
+      quickLinks: "Link-uri Rapide",
+      browseCompanions: "Răsfoiește Companioni",
+      featuredProfiles: "Profiluri Recomandate", 
+      rewardsProgram: "Program Recompense",
+      vipMemberships: "Abonamente VIP",
+      support: "Suport",
+      helpCenter: "Centru de Ajutor",
+      safetyGuidelines: "Ghid de Siguranță",
+      privacyPolicy: "Politica de Confidențialitate",
+      termsOfService: "Termeni și Condiții",
+      allRightsReserved: "Toate drepturile rezervate."
+    }
+  };
+  
+  const t = (key) => translations[language][key] || key;
+  
+  return { language, setLanguage, t };
+};
+
 // Mock data for countries and cities
 const countriesData = {
   'Albania': { count: 2371, cities: ['Tirana', 'Durres', 'Vlore', 'Shkoder', 'Korce'] },
