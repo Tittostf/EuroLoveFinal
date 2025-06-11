@@ -37,7 +37,9 @@ const mockProfiles = [
     availability: 'Available Today',
     vip: true,
     verified: true,
-    hasVideos: false
+    hasVideos: false,
+    lastRepost: '2 hours ago',
+    repostCount: 12
   },
   {
     id: 2,
