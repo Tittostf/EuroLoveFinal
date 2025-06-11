@@ -147,13 +147,9 @@ export const Header = () => {
               {/* EUROLOVE Logo Image */}
               <div className="relative">
                 <img 
-                  src="https://i.imgur.com/YourImageURL.jpg" 
+                  src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgdmlld0JveD0iMCAwIDEwMCAxMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxjaXJjbGUgY3g9IjUwIiBjeT0iNTAiIHI9IjUwIiBmaWxsPSJsaW5lYXItZ3JhZGllbnQoMTM1ZGVnLCAjZmZkNzAwLCAjZmZlZDRlKSIvPgo8cGF0aCBkPSJNMzAgMjBDMzAgMTUgMzUgMTAgNDAgMTBINjBDNjUgMTAgNzAgMTUgNzAgMjBWNDBDNzAgNjAgNTAgODAgNTAgODBTMzAgNjAgMzAgNDBWMjBaIiBmaWxsPSIjMDAwIi8+CjxwYXRoIGQ9Ik00MCAzMEM0MCAyNSA0NSAyMCA1MCAyMFM2MCAyNSA2MCAzMFY0NUg0MFYzMFoiIGZpbGw9ImdvbGQiLz4KPC9zdmc+" 
                   alt="EUROLOVE - Intimacy, Sculpted in Luxury"
                   className="w-14 h-14 rounded-full object-cover border-2 border-yellow-400"
-                  onError={(e) => {
-                    e.target.style.display = 'none';
-                    e.target.nextSibling.style.display = 'flex';
-                  }}
                 />
                 {/* Fallback golden heart logo */}
                 <div className="w-14 h-14 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-full flex items-center justify-center border-2 border-yellow-400" style={{display: 'none'}}>
