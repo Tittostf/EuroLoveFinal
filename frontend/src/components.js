@@ -53,7 +53,9 @@ const mockProfiles = [
     availability: 'Available Tomorrow',
     vip: true,
     verified: true,
-    hasVideos: true
+    hasVideos: true,
+    lastRepost: '1 hour ago',
+    repostCount: 8
   },
   {
     id: 3,
@@ -67,7 +69,9 @@ const mockProfiles = [
     availability: 'Available This Week',
     vip: false,
     verified: true,
-    hasVideos: false
+    hasVideos: false,
+    lastRepost: '4 hours ago',
+    repostCount: 15
   },
   {
     id: 4,
@@ -81,7 +85,9 @@ const mockProfiles = [
     availability: 'Available Today',
     vip: true,
     verified: true,
-    hasVideos: true
+    hasVideos: true,
+    lastRepost: '30 minutes ago',
+    repostCount: 22
   },
   {
     id: 5,
@@ -95,7 +101,9 @@ const mockProfiles = [
     availability: 'Available Tomorrow',
     vip: true,
     verified: true,
-    hasVideos: false
+    hasVideos: false,
+    lastRepost: '6 hours ago',
+    repostCount: 9
   },
   {
     id: 6,
@@ -109,8 +117,22 @@ const mockProfiles = [
     availability: 'Available This Week',
     vip: false,
     verified: true,
-    hasVideos: true
+    hasVideos: true,
+    lastRepost: '3 hours ago',
+    repostCount: 11
   }
+];
+
+// Mock leaderboard data
+const mockLeaderboard = [
+  { rank: 1, name: 'Sofia_VIP', points: 2847, invested: 2847, cashback: '7%', earnings: '€199.29' },
+  { rank: 2, name: 'Isabella_Elite', points: 2234, invested: 2234, cashback: '2%', earnings: '€44.68' },
+  { rank: 3, name: 'Emma_Berlin', points: 1956, invested: 1956, cashback: '1%', earnings: '€19.56' },
+  { rank: 4, name: 'Anastasia_Vienna', points: 1743, invested: 1743, cashback: '0%', earnings: '€0.00' },
+  { rank: 5, name: 'Victoria_BCN', points: 1598, invested: 1598, cashback: '0%', earnings: '€0.00' },
+  { rank: 6, name: 'Olivia_AMS', points: 1342, invested: 1342, cashback: '0%', earnings: '€0.00' },
+  { rank: 7, name: 'Maria_Madrid', points: 1287, invested: 1287, cashback: '0%', earnings: '€0.00' },
+  { rank: 8, name: 'Anna_Prague', points: 1156, invested: 1156, cashback: '0%', earnings: '€0.00' }
 ];
 
 // Header Component
