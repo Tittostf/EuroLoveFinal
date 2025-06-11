@@ -354,56 +354,60 @@ export const Header = () => {
   );
 };
 
-// Top Cashback Banner
+// Top Professional Romanian/English Banner
 export const CashbackBanner = () => {
+  const { language, t } = useLanguage();
+  
   return (
-    <div className="bg-gradient-to-r from-gray-800 via-gray-900 to-black py-4">
+    <div className="bg-gradient-to-r from-gray-800 via-gray-900 to-black py-6 border-b border-yellow-400/10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-center text-center">
-          <div className="flex items-center space-x-6 bg-gray-700/50 rounded-full px-8 py-4 backdrop-blur">
+        <div className="flex items-center justify-center">
+          <div className="flex items-center space-x-8 bg-gradient-to-r from-gray-700/40 to-gray-800/40 rounded-2xl px-8 py-6 backdrop-blur border border-yellow-400/20 shadow-2xl">
             {/* EUROLOVE Logo */}
-            <div className="flex-shrink-0">
+            <div className="flex-shrink-0 relative">
               <img 
-                src="https://i.imgur.com/YourImageURL.jpg" 
+                src="/eurolove-logo.svg" 
                 alt="EUROLOVE Logo"
-                className="w-16 h-16 rounded-full object-cover border-2 border-yellow-400"
-                onError={(e) => {
-                  e.target.style.display = 'none';
-                  e.target.nextSibling.style.display = 'flex';
-                }}
+                className="w-20 h-20 rounded-full object-cover border-3 border-yellow-400 shadow-lg"
               />
-              <div className="w-16 h-16 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-full flex items-center justify-center border-2 border-yellow-400" style={{display: 'none'}}>
-                <span className="text-black font-bold text-xl">♥</span>
+              <div className="absolute inset-0 w-20 h-20 rounded-full bg-yellow-400/10 animate-pulse"></div>
+            </div>
+            
+            {/* Contest Content */}
+            <div className="text-left max-w-4xl">
+              <div className="flex items-center space-x-3 mb-2">
+                <span className="text-3xl">🏆</span>
+                <span className="text-yellow-400 font-bold text-xl tracking-wide uppercase">
+                  {t('lunarContest')}
+                </span>
+              </div>
+              
+              <div className="flex items-center space-x-3 mb-3">
+                <span className="text-2xl">💎</span>
+                <span className="text-cyan-400 font-bold text-2xl tracking-widest">
+                  {t('euroloveBrand')}
+                </span>
+                <span className="text-2xl">💎</span>
+              </div>
+              
+              <div className="space-y-2">
+                <p className="text-white font-bold text-sm tracking-wide">
+                  {t('contestText1')}
+                </p>
+                <p className="text-gray-300 text-sm font-medium">
+                  {t('contestText2')}
+                </p>
+                <p className="text-yellow-300 text-sm font-semibold">
+                  {t('contestText3')}
+                </p>
+                <p className="text-gray-400 text-xs leading-relaxed">
+                  {t('contestText4')}
+                </p>
               </div>
             </div>
             
-            {/* Contest Text */}
-            <div className="text-left">
-              <div className="flex items-center space-x-2 mb-1">
-                <span className="text-2xl">🏆</span>
-                <span className="text-yellow-400 font-bold text-lg">CONCURS LUNAR UNIC.</span>
-              </div>
-              <div className="flex items-center space-x-2 mb-2">
-                <span className="text-2xl">💎</span>
-                <span className="text-cyan-400 font-bold text-xl">EUROLOVE</span>
-                <span className="text-2xl">💎</span>
-              </div>
-              <p className="text-white font-bold text-sm mb-1">
-                CÂȘTIGĂ 10% CASH-BACK DIN TOTALUL ABONAMENTELOR ESCORTELOR!
-              </p>
-              <p className="text-gray-300 text-sm mb-1">
-                ÎN FIECARE LUNĂ, 3 PERSOANE PRIMESC RECOMPENSA.
-              </p>
-              <p className="text-yellow-300 text-sm mb-1 font-medium">
-                ACTIVEAZĂ-ȚI PROFILUL ȘI INTRĂ ÎN CURSĂ CHIAR AZI!
-              </p>
-              <p className="text-gray-400 text-xs">
-                CU CÂT MAI MULTE ABONAMENTE PER TOTAL CU ATÂT MAI MARE ESTE SUMA CASH-BACK ACORDATĂ.
-              </p>
-            </div>
-            
-            <button className="bg-gradient-to-r from-yellow-400 to-yellow-500 text-black px-6 py-2 rounded-full text-sm font-bold hover:from-yellow-500 hover:to-yellow-600 transition-all transform hover:scale-105">
-              PARTICIPĂ ACUM!
+            <button className="bg-gradient-to-r from-yellow-400 to-yellow-500 text-black px-8 py-3 rounded-lg font-bold hover:from-yellow-500 hover:to-yellow-600 transition-all transform hover:scale-105 shadow-lg hover:shadow-yellow-400/25 uppercase tracking-wide whitespace-nowrap">
+              {t('participateNow')}
             </button>
           </div>
         </div>
