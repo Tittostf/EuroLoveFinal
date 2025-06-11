@@ -261,54 +261,91 @@ const mockLeaderboard = [
 
 // Header Component
 export const Header = () => {
+  const { language, setLanguage, t } = useLanguage();
+  
   return (
-    <header className="bg-black border-b border-gray-800">
+    <header className="bg-gradient-to-r from-gray-900 via-black to-gray-900 border-b border-yellow-400/20 shadow-2xl">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center py-4">
           {/* Logo */}
           <div className="flex items-center space-x-4">
             <div className="flex items-center space-x-3">
-              {/* EUROLOVE Logo Image */}
-              <div className="relative">
+              {/* EUROLOVE Logo */}
+              <div className="relative group">
                 <img 
-                  src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgdmlld0JveD0iMCAwIDEwMCAxMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxjaXJjbGUgY3g9IjUwIiBjeT0iNTAiIHI9IjUwIiBmaWxsPSJsaW5lYXItZ3JhZGllbnQoMTM1ZGVnLCAjZmZkNzAwLCAjZmZlZDRlKSIvPgo8cGF0aCBkPSJNMzAgMjBDMzAgMTUgMzUgMTAgNDAgMTBINjBDNjUgMTAgNzAgMTUgNzAgMjBWNDBDNzAgNjAgNTAgODAgNTAgODBTMzAgNjAgMzAgNDBWMjBaIiBmaWxsPSIjMDAwIi8+CjxwYXRoIGQ9Ik00MCAzMEM0MCAyNSA0NSAyMCA1MCAyMFM2MCAyNSA2MCAzMFY0NUg0MFYzMFoiIGZpbGw9ImdvbGQiLz4KPC9zdmc+" 
+                  src="/eurolove-logo.svg" 
                   alt="EUROLOVE - Intimacy, Sculpted in Luxury"
-                  className="w-14 h-14 rounded-full object-cover border-2 border-yellow-400"
+                  className="w-16 h-16 rounded-full object-cover border-3 border-yellow-400 shadow-lg group-hover:shadow-yellow-400/30 transition-all duration-300"
                 />
-                {/* Fallback golden heart logo */}
-                <div className="w-14 h-14 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-full flex items-center justify-center border-2 border-yellow-400" style={{display: 'none'}}>
-                  <span className="text-black font-bold text-xl">♥</span>
-                </div>
-                {/* Premium glow effect */}
-                <div className="absolute inset-0 w-14 h-14 rounded-full bg-yellow-400/20 animate-pulse"></div>
+                <div className="absolute inset-0 w-16 h-16 rounded-full bg-yellow-400/10 animate-pulse"></div>
               </div>
               <div>
-                <h1 className="text-3xl font-bold bg-gradient-to-r from-yellow-400 to-yellow-600 bg-clip-text text-transparent">
+                <h1 className="text-3xl font-bold bg-gradient-to-r from-yellow-400 via-yellow-300 to-yellow-500 bg-clip-text text-transparent tracking-wide">
                   EUROLOVE
                 </h1>
-                <p className="text-xs text-gray-400 tracking-widest font-light">INTIMACY, SCULPTED IN LUXURY</p>
+                <p className="text-xs text-gray-300 tracking-[0.2em] font-light uppercase">
+                  Intimacy, Sculpted in Luxury
+                </p>
               </div>
             </div>
           </div>
 
           {/* Navigation */}
-          <nav className="hidden md:flex items-center space-x-8">
-            <a href="#" className="text-white hover:text-yellow-400 transition-colors font-medium">VIP Escorts</a>
-            <a href="#" className="text-white hover:text-yellow-400 transition-colors font-medium">Girls</a>
-            <a href="#" className="text-white hover:text-yellow-400 transition-colors font-medium">Pornstars</a>
-            <a href="#" className="text-white hover:text-yellow-400 transition-colors font-medium">City Tour</a>
-            <a href="#" className="text-white hover:text-yellow-400 transition-colors font-medium">Agencies</a>
-            <a href="#" className="text-white hover:text-yellow-400 transition-colors font-medium">Videos</a>
-            <a href="#" className="text-white hover:text-yellow-400 transition-colors font-medium">Reviews</a>
+          <nav className="hidden lg:flex items-center space-x-8">
+            <a href="#" className="text-gray-300 hover:text-yellow-400 transition-all duration-300 font-medium tracking-wide uppercase text-sm">
+              {t('vipEscorts')}
+            </a>
+            <a href="#" className="text-gray-300 hover:text-yellow-400 transition-all duration-300 font-medium tracking-wide uppercase text-sm">
+              {t('girls')}
+            </a>
+            <a href="#" className="text-gray-300 hover:text-yellow-400 transition-all duration-300 font-medium tracking-wide uppercase text-sm">
+              {t('pornstars')}
+            </a>
+            <a href="#" className="text-gray-300 hover:text-yellow-400 transition-all duration-300 font-medium tracking-wide uppercase text-sm">
+              {t('cityTour')}
+            </a>
+            <a href="#" className="text-gray-300 hover:text-yellow-400 transition-all duration-300 font-medium tracking-wide uppercase text-sm">
+              {t('agencies')}
+            </a>
+            <a href="#" className="text-gray-300 hover:text-yellow-400 transition-all duration-300 font-medium tracking-wide uppercase text-sm">
+              {t('videos')}
+            </a>
+            <a href="#" className="text-gray-300 hover:text-yellow-400 transition-all duration-300 font-medium tracking-wide uppercase text-sm">
+              {t('reviews')}
+            </a>
           </nav>
 
-          {/* User Actions */}
+          {/* Language Switcher & User Actions */}
           <div className="flex items-center space-x-4">
-            <button className="bg-gradient-to-r from-yellow-400 to-yellow-600 text-black px-6 py-2 rounded-lg font-bold hover:from-yellow-500 hover:to-yellow-700 transition-all transform hover:scale-105 shadow-lg">
-              Login
+            {/* Language Switcher */}
+            <div className="flex items-center bg-gray-800/50 rounded-lg p-1">
+              <button
+                onClick={() => setLanguage('en')}
+                className={`px-3 py-1 rounded text-xs font-medium transition-all ${
+                  language === 'en' 
+                    ? 'bg-yellow-400 text-black' 
+                    : 'text-gray-400 hover:text-white'
+                }`}
+              >
+                EN
+              </button>
+              <button
+                onClick={() => setLanguage('ro')}
+                className={`px-3 py-1 rounded text-xs font-medium transition-all ${
+                  language === 'ro' 
+                    ? 'bg-yellow-400 text-black' 
+                    : 'text-gray-400 hover:text-white'
+                }`}
+              >
+                RO
+              </button>
+            </div>
+            
+            <button className="bg-gradient-to-r from-yellow-400 to-yellow-500 text-black px-6 py-2.5 rounded-lg font-bold hover:from-yellow-500 hover:to-yellow-600 transition-all transform hover:scale-105 shadow-lg hover:shadow-yellow-400/25 uppercase tracking-wide text-sm">
+              {t('login')}
             </button>
-            <button className="border-2 border-yellow-400 text-yellow-400 px-6 py-2 rounded-lg font-bold hover:bg-yellow-400 hover:text-black transition-all transform hover:scale-105">
-              Register
+            <button className="border-2 border-yellow-400 text-yellow-400 px-6 py-2.5 rounded-lg font-bold hover:bg-yellow-400 hover:text-black transition-all transform hover:scale-105 uppercase tracking-wide text-sm">
+              {t('register')}
             </button>
           </div>
         </div>
