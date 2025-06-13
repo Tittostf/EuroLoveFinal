@@ -262,24 +262,45 @@ const mockTopDonators = [
   { rank: 10, username: 'ExclusivePatron', creditsSpent: 3892, percentage: 2, potentialCashback: '€124.54', avatar: '🎖️' }
 ];
 
-// Mock past winners data
-const mockPastWinners = {
-  'November 2024': [
-    { rank: 1, username: 'DiamondKing_VIP', reward: '€4,234.50', creditsSpent: 18234 },
-    { rank: 2, username: 'LuxuryLegend_Elite', reward: '€3,175.88', creditsSpent: 15467 },
-    { rank: 3, username: 'GoldEmperor_Premium', reward: '€2,117.25', creditsSpent: 12890 }
-  ],
-  'October 2024': [
-    { rank: 1, username: 'PlatinumPrince_VIP', reward: '€3,892.40', creditsSpent: 16723 },
-    { rank: 2, username: 'RoyalSupporter_Elite', reward: '€2,919.30', creditsSpent: 14234 },
-    { rank: 3, username: 'EliteBacker_Premium', reward: '€1,946.20', creditsSpent: 11567 }
-  ],
-  'September 2024': [
-    { rank: 1, username: 'VIPMagnate_Exclusive', reward: '€5,123.75', creditsSpent: 20145 },
-    { rank: 2, username: 'LuxuryTycoon_Elite', reward: '€3,842.81', creditsSpent: 17892 },
-    { rank: 3, username: 'DiamondBaron_Premium', reward: '€2,561.88', creditsSpent: 15234 }
-  ]
-};
+// Mock Virtual Gifts Catalog
+const virtualGiftsCatalog = [
+  // Basic Gifts (Free users can send)
+  { id: 1, name: 'rose', emoji: '🌹', cost: 10, category: 'basic', animation: 'small', description: 'A beautiful rose' },
+  { id: 2, name: 'kiss', emoji: '💋', cost: 20, category: 'basic', animation: 'small', description: 'Sweet kiss' },
+  { id: 3, name: 'heart', emoji: '❤️', cost: 30, category: 'basic', animation: 'small', description: 'From the heart' },
+  
+  // Premium Gifts (VIP users)
+  { id: 4, name: 'diamond', emoji: '💎', cost: 100, category: 'premium', animation: 'medium', description: 'Precious diamond' },
+  { id: 5, name: 'champagne', emoji: '🍾', cost: 150, category: 'premium', animation: 'medium', description: 'Celebration champagne' },
+  { id: 6, name: 'crown', emoji: '👑', cost: 200, category: 'premium', animation: 'medium', description: 'Royal crown' },
+  
+  // Luxury Gifts (VIP only)
+  { id: 7, name: 'yacht', emoji: '🛥️', cost: 500, category: 'luxury', animation: 'large', description: 'Luxury yacht' },
+  { id: 8, name: 'goldBar', emoji: '🥇', cost: 1000, category: 'luxury', animation: 'large', description: 'Pure gold bar' }
+];
+
+// Mock Top Gift Senders
+const mockTopGiftSenders = [
+  { rank: 1, username: 'LuxuryGifter_VIP', totalSpent: 25847, giftsSent: 342, avatar: '👑', monthlySpending: '€2,584.70' },
+  { rank: 2, username: 'DiamondSender_Elite', totalSpent: 19456, giftsSent: 267, avatar: '💎', monthlySpending: '€1,945.60' },
+  { rank: 3, username: 'GoldGiver_Premium', totalSpent: 16823, giftsSent: 223, avatar: '🥇', monthlySpending: '€1,682.30' },
+  { rank: 4, username: 'RoseKing_VIP', totalSpent: 14745, giftsSent: 1967, avatar: '🌹', monthlySpending: '€1,474.50' },
+  { rank: 5, username: 'ChampagneClient', totalSpent: 12234, giftsSent: 156, avatar: '🍾', monthlySpending: '€1,223.40' },
+  { rank: 6, username: 'CrownCollector', totalSpent: 10892, giftsSent: 134, avatar: '👑', monthlySpending: '€1,089.20' },
+  { rank: 7, username: 'YachtOwner_Premium', totalSpent: 9567, giftsSent: 89, avatar: '🛥️', monthlySpending: '€956.70' },
+  { rank: 8, username: 'HeartSender_Gold', totalSpent: 8234, giftsSent: 445, avatar: '❤️', monthlySpending: '€823.40' },
+  { rank: 9, username: 'KissMaster_VIP', totalSpent: 7567, giftsSent: 523, avatar: '💋', monthlySpending: '€756.70' },
+  { rank: 10, username: 'DiamondLover', totalSpent: 6892, giftsSent: 98, avatar: '💎', monthlySpending: '€689.20' }
+];
+
+// Mock Gift History for Escorts
+const mockGiftHistory = [
+  { id: 1, sender: 'LuxuryGifter_VIP', giftName: 'yacht', giftEmoji: '🛥️', value: 500, earnings: 50.00, dateReceived: '2024-12-13 15:30', status: 'received' },
+  { id: 2, sender: 'DiamondSender_Elite', giftName: 'diamond', giftEmoji: '💎', value: 100, earnings: 10.00, dateReceived: '2024-12-13 14:15', status: 'received' },
+  { id: 3, sender: 'RoseKing_VIP', giftName: 'rose', giftEmoji: '🌹', value: 10, earnings: 1.00, dateReceived: '2024-12-13 13:45', status: 'received' },
+  { id: 4, sender: 'ChampagneClient', giftName: 'champagne', giftEmoji: '🍾', value: 150, earnings: 15.00, dateReceived: '2024-12-13 12:20', status: 'received' },
+  { id: 5, sender: 'HeartSender_Gold', giftName: 'heart', giftEmoji: '❤️', value: 30, earnings: 3.00, dateReceived: '2024-12-13 11:10', status: 'received' }
+];
 
 // Header Component
 export const Header = () => {
