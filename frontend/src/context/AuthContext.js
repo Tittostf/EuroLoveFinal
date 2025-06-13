@@ -29,15 +29,30 @@ export const AuthProvider = ({ children }) => {
   const login = async (credentials) => {
     try {
       const response = await ApiService.login(credentials);
+      console.log('Login response:', response); // Debug logging
+      
       const { token: newToken, user: userData } = response;
       
+      // Ensure userData is a proper object with expected properties
+      if (!userData || typeof userData !== 'object') {
+        throw new Error('Invalid user data received from server');
+      }
+      
+      // Ensure numeric values are properly typed
+      const sanitizedUser = {
+        ...userData,
+        credits: typeof userData.credits === 'number' ? userData.credits : 0,
+        points: typeof userData.points === 'number' ? userData.points : 0
+      };
+      
       setToken(newToken);
-      setUser(userData);
+      setUser(sanitizedUser);
       ApiService.setToken(newToken);
       localStorage.setItem('auth_token', newToken);
       
       return response;
     } catch (error) {
+      console.error('Login error in AuthContext:', error); // Debug logging
       throw error;
     }
   };
