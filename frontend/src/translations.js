@@ -361,7 +361,40 @@ export const translations = {
     independent: "INDEPENDENTE",
     seenLastWeek: "VĂZUTE SĂPT. TRECUTĂ",
     duoWithGirl: "DUO CU FATĂ",
-    couple: "CUPLU"
+    couple: "CUPLU",
+    
+    // Top Donators Rewards Program
+    topDonatorsTitle: "Programul de Recompense pentru Top Donatori",
+    topDonatorsSubtitle: "Program de Fidelitate pentru Clienții Premium",
+    topDonatorsDescription: "În fiecare lună, 50% din veniturile totale ale platformei din Cadouri se duc către Top 10 Clienți ca recompense!",
+    loyaltyNotGambling: "Acesta este un Program de Recompense de Fidelitate bazat pe activitatea utilizatorilor (total Credite cheltuite). Nu este un joc de noroc.",
+    
+    currentMonth: "Luna Curentă",
+    liveLeaderboard: "Clasament Live",
+    topClientsLeaderboard: "Top 10 Clienți - Cheltuieli Cadouri",
+    rank: "Rang",
+    username: "Nume utilizator",
+    creditsSpent: "Credite Cheltuite", 
+    potentialCashback: "Potențial Cashback",
+    rewardsPool: "Fondul de Recompense",
+    ofGiftRevenue: "din Veniturile Cadourilor",
+    
+    rewardDistribution: "Distribuția Recompenselor",
+    monthlyRewardsPool: "Fondul Lunar de Recompense: 50% din Veniturile Cadourilor",
+    
+    pastWinners: "Câștigători Anteriori",
+    viewPastWinners: "Vezi Câștigătorii Anteriori",
+    lastMonths: "Ultimele 3 Luni",
+    totalReward: "Recompensă Totală",
+    
+    howItWorksClients: "Cum funcționează pentru Clienți:",
+    spendCreditsOnGifts: "Cheltuiește Credite pe Cadouri Virtuale pentru escortele tale favorite",
+    earnRankingPoints: "Fiecare Credit cheltuit = 1 Punct de Clasament pentru leaderboard-ul lunar",
+    top10Share: "Top 10 Clienți la sfârșitul lunii împart 50% din veniturile totale ale Cadourilor",
+    automaticRewards: "Recompensele se adaugă automat în portofelul tău ca Credite",
+    newChanceMonthly: "Clasamentul se resetează lunar - șanse noi în fiecare lună!",
+    
+    joinLoyaltyProgram: "Alătură-te Programului de Fidelitate și începe să câștigi recompense!"
   }
 };
 
