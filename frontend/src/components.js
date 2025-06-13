@@ -1857,7 +1857,8 @@ export const GiftsReceivedDashboard = ({ escortName = "Isabella" }) => {
 
 // Top Gift Senders Leaderboard Component
 export const TopGiftSendersLeaderboard = () => {
-  const { language, setLanguage, t } = useLanguage();
+  const { language, setLanguage } = useLanguage();
+  const { t } = useTranslation();
   
   return (
     <div className="bg-gradient-to-br from-green-900 via-black to-emerald-900 py-20 relative overflow-hidden">
