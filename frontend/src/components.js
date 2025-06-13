@@ -439,7 +439,7 @@ export const CashbackBanner = () => {
 
 // Top Donators Rewards Program Section
 export const TopDonatorsRewardsSection = () => {
-  const { t } = useLanguage();
+  const { language, setLanguage, t } = useLanguage();
   const [selectedMonth, setSelectedMonth] = useState('December 2024');
   
   const rewardPercentages = [
