@@ -38,13 +38,33 @@ class ApiService {
       const response = await fetch(url, config);
       
       if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
-        throw new Error(errorData.detail || `HTTP Error: ${response.status}`);
+        let errorData;
+        try {
+          errorData = await response.json();
+        } catch (parseError) {
+          errorData = { detail: `HTTP Error: ${response.status}` };
+        }
+        
+        // Create a more detailed error object
+        const error = new Error(errorData.detail || errorData.message || `HTTP Error: ${response.status}`);
+        error.response = {
+          status: response.status,
+          data: errorData
+        };
+        throw error;
       }
       
       return await response.json();
     } catch (error) {
       console.error('API Request failed:', error);
+      
+      // If it's a network error, provide a user-friendly message
+      if (error.name === 'TypeError' && error.message.includes('Failed to fetch')) {
+        const networkError = new Error('Network error. Please check your internet connection.');
+        networkError.response = { data: { detail: 'Network error. Please check your internet connection.' } };
+        throw networkError;
+      }
+      
       throw error;
     }
   }
