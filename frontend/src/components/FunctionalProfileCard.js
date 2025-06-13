@@ -2,10 +2,6 @@ import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import ApiService from '../services/api';
 
-import React, { useState } from 'react';
-import { useAuth } from '../context/AuthContext';
-import ApiService from '../services/api';
-
 // Enhanced Gift Catalog with more gift options
 const GIFT_CATALOG = [
   { id: 1, name: 'Rose', value: 5, emoji: '🌹', description: 'A beautiful rose', category: 'basic' },
