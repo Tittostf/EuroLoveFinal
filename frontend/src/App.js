@@ -4,6 +4,8 @@ import {
   Header,
   CashbackBanner,
   HeroSection,
+  MonthlyRewardsSection,
+  TopDonatorsRewardsSection,
   CountrySidebar,
   RightSidebar,
   MainContent,
@@ -36,6 +38,12 @@ function App() {
         {/* Hero Section */}
         <HeroSection />
         
+        {/* Monthly Rewards Program Section (ESCORT LEADERBOARD) */}
+        <MonthlyRewardsSection />
+        
+        {/* Top Donators Rewards Program Section (CLIENT LEADERBOARD) */}
+        <TopDonatorsRewardsSection />
+        
         {/* Main Layout */}
         <div className="flex">
           {/* Left Sidebar - Countries */}
@@ -46,7 +54,7 @@ function App() {
             onCitySelect={handleCitySelect}
           />
           
-          {/* Main Content */}
+          {/* Main Content with REPOST functionality */}
           <MainContent 
             selectedCountry={selectedCountry}
             selectedCity={selectedCity}
