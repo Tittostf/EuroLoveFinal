@@ -302,6 +302,25 @@ const mockGiftHistory = [
   { id: 5, sender: 'HeartSender_Gold', giftName: 'heart', giftEmoji: '❤️', value: 30, earnings: 3.00, dateReceived: '2024-12-13 11:10', status: 'received' }
 ];
 
+// Mock past winners data
+const mockPastWinners = {
+  'November 2024': [
+    { rank: 1, username: 'DiamondKing_VIP', reward: '€4,234.50', creditsSpent: 18234 },
+    { rank: 2, username: 'LuxuryLegend_Elite', reward: '€3,175.88', creditsSpent: 15467 },
+    { rank: 3, username: 'GoldEmperor_Premium', reward: '€2,117.25', creditsSpent: 12890 }
+  ],
+  'October 2024': [
+    { rank: 1, username: 'PlatinumPrince_VIP', reward: '€3,892.40', creditsSpent: 16723 },
+    { rank: 2, username: 'RoyalSupporter_Elite', reward: '€2,919.30', creditsSpent: 14234 },
+    { rank: 3, username: 'EliteBacker_Premium', reward: '€1,946.20', creditsSpent: 11567 }
+  ],
+  'September 2024': [
+    { rank: 1, username: 'VIPMagnate_Exclusive', reward: '€5,123.75', creditsSpent: 20145 },
+    { rank: 2, username: 'LuxuryTycoon_Elite', reward: '€3,842.81', creditsSpent: 17892 },
+    { rank: 3, username: 'DiamondBaron_Premium', reward: '€2,561.88', creditsSpent: 15234 }
+  ]
+};
+
 // Header Component
 export const Header = () => {
   const { language, setLanguage, t } = useLanguage();
