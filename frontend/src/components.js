@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useLanguage, useTranslation } from './translations';
+import { useLanguage, useTranslation } from './translations';
 
 // Language context
 const useLanguage = () => {
