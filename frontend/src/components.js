@@ -199,7 +199,8 @@ const mockPastWinners = {
 
 // Header Component
 export const Header = () => {
-  const { language, setLanguage, t } = useLanguage();
+  const { language, setLanguage } = useLanguage();
+  const { t } = useTranslation();
   
   return (
     <header className="bg-gradient-to-r from-gray-900 via-black to-gray-900 border-b border-yellow-400/20 shadow-2xl">
