@@ -37,63 +37,68 @@ function App() {
   };
 
   return (
-    <div className="App min-h-screen bg-gray-100">
-      {/* Header */}
-      <Header />
-      
-      {/* Top Cashback Banner */}
-      <CashbackBanner />
-      
-      {/* Hero Section */}
-      <HeroSection />
-      
-      {/* Monthly Rewards Program Section */}
-      <MonthlyRewardsSection />
-      
-      {/* Profile Management Modal/Section */}
-      {showProfileManagement && (
-        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto">
-            <div className="p-4 border-b border-gray-200 flex justify-between items-center">
-              <h2 className="text-xl font-bold">Profile Management</h2>
-              <button 
-                onClick={() => setShowProfileManagement(false)}
-                className="text-gray-500 hover:text-gray-700 text-2xl"
-              >
-                ×
-              </button>
-            </div>
-            <div className="p-4">
-              <ProfileManagement profile={mockProfile} />
+    <LanguageProvider>
+      <div className="App min-h-screen bg-gray-100">
+        {/* Header */}
+        <Header />
+        
+        {/* Top Cashback Banner */}
+        <CashbackBanner />
+        
+        {/* Hero Section */}
+        <HeroSection />
+        
+        {/* Monthly Rewards Program Section */}
+        <MonthlyRewardsSection />
+        
+        {/* Top Donators Rewards Program Section */}
+        <TopDonatorsRewardsSection />
+        
+        {/* Profile Management Modal/Section */}
+        {showProfileManagement && (
+          <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+            <div className="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+              <div className="p-4 border-b border-gray-200 flex justify-between items-center">
+                <h2 className="text-xl font-bold">Profile Management</h2>
+                <button 
+                  onClick={() => setShowProfileManagement(false)}
+                  className="text-gray-500 hover:text-gray-700 text-2xl"
+                >
+                  ×
+                </button>
+              </div>
+              <div className="p-4">
+                <ProfileManagement profile={mockProfile} />
+              </div>
             </div>
           </div>
+        )}
+        
+        {/* Main Layout */}
+        <div className="flex">
+          {/* Left Sidebar - Countries */}
+          <CountrySidebar 
+            selectedCountry={selectedCountry}
+            onCountrySelect={handleCountrySelect}
+            selectedCity={selectedCity}
+            onCitySelect={handleCitySelect}
+          />
+          
+          {/* Main Content */}
+          <MainContent 
+            selectedCountry={selectedCountry}
+            selectedCity={selectedCity}
+            onProfileManagementClick={() => setShowProfileManagement(true)}
+          />
+          
+          {/* Right Sidebar - Banners */}
+          <RightSidebar />
         </div>
-      )}
-      
-      {/* Main Layout */}
-      <div className="flex">
-        {/* Left Sidebar - Countries */}
-        <CountrySidebar 
-          selectedCountry={selectedCountry}
-          onCountrySelect={handleCountrySelect}
-          selectedCity={selectedCity}
-          onCitySelect={handleCitySelect}
-        />
         
-        {/* Main Content */}
-        <MainContent 
-          selectedCountry={selectedCountry}
-          selectedCity={selectedCity}
-          onProfileManagementClick={() => setShowProfileManagement(true)}
-        />
-        
-        {/* Right Sidebar - Banners */}
-        <RightSidebar />
+        {/* Footer */}
+        <Footer />
       </div>
-      
-      {/* Footer */}
-      <Footer />
-    </div>
+    </LanguageProvider>
   );
 }
 
