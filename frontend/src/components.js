@@ -1768,7 +1768,7 @@ export const GiftsReceivedDashboard = ({ escortName = "Isabella" }) => {
     </div>
   );
 
-// Top Gift Senders Leaderboard Component
+// Gifts Received Dashboard Component (for Escorts)
 export const TopGiftSendersLeaderboard = () => {
   const { language, setLanguage } = useLanguage();
   const { t } = useTranslation();
