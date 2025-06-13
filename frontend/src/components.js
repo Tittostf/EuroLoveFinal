@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useLanguage, useTranslation } from './translations';
+import { useAuth } from './context/AuthContext';
 
 // Mock data for countries and cities
 const countriesData = {
