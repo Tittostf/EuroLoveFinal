@@ -302,19 +302,7 @@ const mockGiftHistory = [
   { id: 5, sender: 'HeartSender_Gold', giftName: 'heart', giftEmoji: '❤️', value: 30, earnings: 3.00, dateReceived: '2024-12-13 11:10', status: 'received' }
 ];
 
-// Mock Leaderboard
-const mockLeaderboard = [
-  { rank: 1, name: 'DiamondKing_VIP', points: 18234, invested: 18234, earnings: '€4,234.50', cashback: '20%' },
-  { rank: 2, name: 'LuxuryLegend_Elite', points: 15467, invested: 15467, earnings: '€3,175.88', cashback: '15%' },
-  { rank: 3, name: 'GoldEmperor_Premium', points: 12890, invested: 12890, earnings: '€2,117.25', cashback: '10%' },
-  { rank: 4, name: 'PlatinumPrince_VIP', points: 16723, invested: 16723, earnings: '€1,119.36', cashback: '8%' },
-  { rank: 5, name: 'RoyalSupporter_Elite', points: 14234, invested: 14234, earnings: '€811.13', cashback: '7%' },
-  { rank: 6, name: 'EliteBacker_Premium', points: 11567, invested: 11567, earnings: '€662.45', cashback: '6%' },
-  { rank: 7, name: 'VIPMagnate_Exclusive', points: 20145, invested: 20145, earnings: '€477.36', cashback: '5%' },
-  { rank: 8, name: 'LuxuryTycoon_Elite', points: 17892, invested: 17892, earnings: '€335.78', cashback: '4%' }
-];
-
-// Mock past winners data
+// Header Component
 const mockPastWinners = {
   'November 2024': [
     { rank: 1, username: 'DiamondKing_VIP', reward: '€4,234.50', creditsSpent: 18234 },
