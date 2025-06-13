@@ -302,7 +302,7 @@ const mockGiftHistory = [
   { id: 5, sender: 'HeartSender_Gold', giftName: 'heart', giftEmoji: '❤️', value: 30, earnings: 3.00, dateReceived: '2024-12-13 11:10', status: 'received' }
 ];
 
-// Header Component
+// Mock past winners data
 const mockPastWinners = {
   'November 2024': [
     { rank: 1, username: 'DiamondKing_VIP', reward: '€4,234.50', creditsSpent: 18234 },
