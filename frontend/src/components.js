@@ -1858,7 +1858,8 @@ export const TopGiftSendersLeaderboard = () => {
 
 // Gifts Received Dashboard Component (for Escorts)
 export const GiftsReceivedDashboard = ({ escortName = "Isabella" }) => {
-  const { language, setLanguage, t } = useLanguage();
+  const { language, setLanguage } = useLanguage();
+  const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState('recent');
   
   const totalEarnings = mockGiftHistory.reduce((sum, gift) => sum + gift.earnings, 0);
