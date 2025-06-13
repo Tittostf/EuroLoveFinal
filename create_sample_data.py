@@ -201,7 +201,7 @@ async def create_sample_data():
     except Exception as e:
         print(f"❌ Error creating sample data: {e}")
     finally:
-        client.close()
+        await client.close()
 
 if __name__ == "__main__":
     asyncio.run(create_sample_data())
