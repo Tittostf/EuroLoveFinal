@@ -402,120 +402,56 @@ export const MainContent = ({ selectedCountry, selectedCity }) => {
                     <span className="bg-green-500 text-white px-2 py-1 rounded text-xs font-bold">VERIFIED</span>
                   )}
                 </div>
+                
+                {/* Repost Info */}
+                <div className="absolute bottom-2 right-2 bg-black/70 text-white px-2 py-1 rounded text-xs">
+                  Last repost: {profile.lastRepost}
+                </div>
               </div>
 
-// Profile Card Component with Repost
-export const ProfileCard = ({ profile }) => {
-  const [isReposting, setIsReposting] = useState(false);
-  const [showRepostSuccess, setShowRepostSuccess] = useState(false);
-
-  const handleRepost = async () => {
-    setIsReposting(true);
-    setTimeout(() => {
-      setIsReposting(false);
-      setShowRepostSuccess(true);
-      setTimeout(() => setShowRepostSuccess(false), 3000);
-    }, 1500);
-  };
-
-  return (
-    <div className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
-      {/* Repost Success Message */}
-      {showRepostSuccess && (
-        <div className="absolute top-0 left-0 right-0 bg-green-500 text-white text-center py-2 z-10 rounded-t-lg">
-          ✅ Ad reposted successfully! Now appears on top to attract more clients!
-        </div>
-      )}
-      
-      <div className="relative">
-        <img 
-          src={profile.image} 
-          alt={profile.name}
-          className="w-full h-64 object-cover"
-        />
-        
-        {/* Badges */}
-        <div className="absolute top-2 left-2 flex flex-col gap-1">
-          {profile.vip && (
-            <span className="bg-red-500 text-white px-2 py-1 rounded text-xs font-bold">VIP</span>
-          )}
-          {profile.verified && (
-            <span className="bg-green-500 text-white px-2 py-1 rounded text-xs font-bold">VERIFIED</span>
-          )}
-        </div>
-
-        {/* Repost Info */}
-        <div className="absolute bottom-2 right-2 bg-black/70 text-white px-2 py-1 rounded text-xs">
-          Last repost: {profile.lastRepost}
-        </div>
-      </div>
-
-      <div className="p-4">
-        <div className="flex justify-between items-start mb-2">
-          <h3 className="text-lg font-bold text-gray-900">{profile.name}</h3>
-          <div className="flex items-center">
-            <span className="text-yellow-400">★</span>
-            <span className="text-sm text-gray-600 ml-1">{profile.rating} ({profile.reviews})</span>
-          </div>
-        </div>
-        
-        <p className="text-gray-600 text-sm mb-2">{profile.location}</p>
-        <p className="text-gray-600 text-sm mb-3">Age: {profile.age}</p>
-        
-        <div className="flex flex-wrap gap-1 mb-3">
-          {profile.services.map((service, index) => (
-            <span key={index} className="bg-gray-100 text-gray-600 px-2 py-1 rounded text-xs">
-              {service}
-            </span>
-          ))}
-        </div>
-        
-        <p className="text-sm text-green-600 mb-2">{profile.availability}</p>
-        
-        {/* Repost Stats */}
-        <div className="flex justify-between items-center mb-3 text-xs text-gray-500">
-          <span>Reposts: {profile.repostCount}</span>
-          <span>Points earned: {(profile.repostCount * 2) + 25}</span>
-        </div>
-        
-        {/* Action Buttons */}
-        <div className="space-y-2">
-          <button className="w-full bg-gradient-to-r from-pink-500 to-pink-600 text-white py-2 rounded-lg font-semibold hover:from-pink-600 hover:to-pink-700 transition-all">
-            View Details
-          </button>
-          
-          <button className="w-full bg-gradient-to-r from-purple-500 to-purple-600 text-white py-2 rounded-lg font-semibold hover:from-purple-600 hover:to-purple-700 transition-all flex items-center justify-center space-x-2">
-            <span>🎁</span>
-            <span>Send Gift</span>
-          </button>
-          
-          {/* Repost Button */}
-          <button 
-            onClick={handleRepost}
-            disabled={isReposting}
-            className="w-full bg-gradient-to-r from-yellow-400 to-yellow-500 text-black py-2 rounded-lg font-semibold hover:from-yellow-500 hover:to-yellow-600 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
-          >
-            {isReposting ? (
-              <>
-                <div className="w-4 h-4 border-2 border-black border-t-transparent rounded-full animate-spin"></div>
-                <span>Reposting...</span>
-              </>
-            ) : (
-              <>
-                <span>🚀</span>
-                <span>Repost Ad (2 Credits)</span>
-              </>
-            )}
-          </button>
-          
-          <p className="text-xs text-center text-gray-500 italic">
-            "Repost your ad to stay on top and attract more clients!"
-          </p>
-        </div>
-      </div>
-    </div>
-  );
-};
+              <div className="p-4">
+                <div className="flex justify-between items-start mb-2">
+                  <h3 className="text-lg font-bold text-gray-900">{profile.name}</h3>
+                  <div className="flex items-center">
+                    <span className="text-yellow-400">★</span>
+                    <span className="text-sm text-gray-600 ml-1">{profile.rating} ({profile.reviews})</span>
+                  </div>
+                </div>
+                
+                <p className="text-gray-600 text-sm mb-2">{profile.location}</p>
+                <p className="text-gray-600 text-sm mb-3">Age: {profile.age}</p>
+                
+                <div className="flex flex-wrap gap-1 mb-3">
+                  {profile.services.map((service, index) => (
+                    <span key={index} className="bg-gray-100 text-gray-600 px-2 py-1 rounded text-xs">
+                      {service}
+                    </span>
+                  ))}
+                </div>
+                
+                <p className="text-sm text-green-600 mb-2">{profile.availability}</p>
+                
+                {/* Action Buttons */}
+                <div className="space-y-2">
+                  <button className="w-full bg-gradient-to-r from-pink-500 to-pink-600 text-white py-2 rounded-lg font-semibold hover:from-pink-600 hover:to-pink-700 transition-all">
+                    View Details
+                  </button>
+                  
+                  <button className="w-full bg-gradient-to-r from-purple-500 to-purple-600 text-white py-2 rounded-lg font-semibold hover:from-purple-600 hover:to-purple-700 transition-all flex items-center justify-center space-x-2">
+                    <span>🎁</span>
+                    <span>Send Gift</span>
+                  </button>
+                  
+                  <button className="w-full bg-gradient-to-r from-yellow-400 to-yellow-500 text-black py-2 rounded-lg font-semibold hover:from-yellow-500 hover:to-yellow-600 transition-all flex items-center justify-center space-x-2">
+                    <span>🚀</span>
+                    <span>Repost Ad (2 Credits)</span>
+                  </button>
+                  
+                  <p className="text-xs text-center text-gray-500 italic">
+                    "Repost your ad to stay on top and attract more clients!"
+                  </p>
+                </div>
+              </div>
             </div>
           ))}
         </div>
