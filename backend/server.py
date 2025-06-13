@@ -582,6 +582,11 @@ async def create_admin(admin_data: UserCreate):
 # Include the router in the main app
 app.include_router(api_router)
 
+# Add health check directly to main app as well for external access
+@app.get("/api/health") 
+async def app_health_check():
+    return {"status": "healthy", "timestamp": datetime.utcnow(), "service": "eurolove-backend"}
+
 app.add_middleware(
     CORSMiddleware,
     allow_credentials=True,
