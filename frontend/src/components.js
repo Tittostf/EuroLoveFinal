@@ -1227,6 +1227,15 @@ export const ProfileCard = ({ profile }) => {
             View Details
           </button>
           
+          {/* Send Gift Button */}
+          <button 
+            onClick={() => {/* This would open the VirtualGiftsModal */}}
+            className="w-full bg-gradient-to-r from-purple-500 to-purple-600 text-white py-2 rounded-lg font-semibold hover:from-purple-600 hover:to-purple-700 transition-all flex items-center justify-center space-x-2"
+          >
+            <span>🎁</span>
+            <span>Send Gift</span>
+          </button>
+          
           {/* Repost Button */}
           <button 
             onClick={handleRepost}
