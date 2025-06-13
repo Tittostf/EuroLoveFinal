@@ -21,6 +21,9 @@ function App() {
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [selectedCity, setSelectedCity] = useState(null);
   const [showProfileManagement, setShowProfileManagement] = useState(false);
+  const [showGiftsModal, setShowGiftsModal] = useState(false);
+  const [showGiftsDashboard, setShowGiftsDashboard] = useState(false);
+  const [selectedProfile, setSelectedProfile] = useState(null);
 
   const handleCountrySelect = (country) => {
     setSelectedCountry(country);
