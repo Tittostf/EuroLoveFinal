@@ -173,39 +173,53 @@ async def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(s
 # Authentication Routes
 @api_router.post("/register")
 async def register_user(user_data: UserCreate):
-    # Check if user already exists
-    existing_user = await db.users.find_one({"$or": [{"email": user_data.email}, {"username": user_data.username}]})
-    if existing_user:
-        raise HTTPException(status_code=400, detail="User already exists")
-    
-    # Create new user
-    user = User(
-        username=user_data.username,
-        email=user_data.email,
-        password_hash=hash_password(user_data.password),
-        user_type=user_data.user_type,
-        name=user_data.name,
-        age=user_data.age,
-        location=user_data.location,
-        services=user_data.services,
-        credits=100.0 if user_data.user_type == "client" else 50.0  # Welcome credits
-    )
-    
-    await db.users.insert_one(user.dict())
-    
-    # Create JWT token
-    token = create_jwt_token(user.id, user.user_type)
-    
-    return {
-        "message": "User registered successfully",
-        "token": token,
-        "user": {
-            "id": user.id,
-            "username": user.username,
-            "user_type": user.user_type,
-            "credits": user.credits
+    try:
+        # Validate user_type
+        if user_data.user_type not in ["client", "escort"]:
+            raise HTTPException(status_code=400, detail="Invalid user type. Must be 'client' or 'escort'")
+        
+        # Check if user already exists
+        existing_user = await db.users.find_one({"$or": [{"email": user_data.email}, {"username": user_data.username}]})
+        if existing_user:
+            if existing_user.get("email") == user_data.email:
+                raise HTTPException(status_code=400, detail="Email already registered")
+            else:
+                raise HTTPException(status_code=400, detail="Username already taken")
+        
+        # Create new user
+        user = User(
+            username=user_data.username,
+            email=user_data.email,
+            password_hash=hash_password(user_data.password),
+            user_type=user_data.user_type,
+            name=user_data.name,
+            age=user_data.age,
+            location=user_data.location,
+            services=user_data.services or [],
+            credits=100.0 if user_data.user_type == "client" else 50.0  # Welcome credits
+        )
+        
+        await db.users.insert_one(user.dict())
+        
+        # Create JWT token
+        token = create_jwt_token(user.id, user.user_type)
+        
+        return {
+            "message": "User registered successfully",
+            "token": token,
+            "user": {
+                "id": user.id,
+                "username": user.username,
+                "user_type": user.user_type,
+                "credits": user.credits,
+                "points": user.points
+            }
         }
-    }
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Registration error: {e}")
+        raise HTTPException(status_code=500, detail="Registration failed. Please try again.")
 
 @api_router.post("/login")
 async def login_user(login_data: UserLogin):
