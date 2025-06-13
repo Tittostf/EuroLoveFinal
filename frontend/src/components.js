@@ -437,7 +437,234 @@ export const CashbackBanner = () => {
   );
 };
 
-// Monthly Rewards Program Section
+// Top Donators Rewards Program Section
+export const TopDonatorsRewardsSection = () => {
+  const { t } = useTranslation();
+  const [selectedMonth, setSelectedMonth] = useState('December 2024');
+  
+  const rewardPercentages = [
+    { rank: 1, percentage: 20 },
+    { rank: 2, percentage: 15 },
+    { rank: 3, percentage: 10 },
+    { rank: 4, percentage: 8 },
+    { rank: 5, percentage: 7 },
+    { rank: 6, percentage: 6 },
+    { rank: 7, percentage: 5 },
+    { rank: 8, percentage: 4 },
+    { rank: 9, percentage: 3 },
+    { rank: 10, percentage: 2 }
+  ];
+  
+  return (
+    <div className="bg-gradient-to-br from-purple-900 via-black to-blue-900 py-20 relative overflow-hidden">
+      {/* Background decoration */}
+      <div className="absolute inset-0">
+        <div className="absolute top-1/4 left-0 w-96 h-96 bg-purple-400/5 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-1/4 right-0 w-96 h-96 bg-blue-400/5 rounded-full blur-3xl"></div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-yellow-400/5 rounded-full blur-3xl"></div>
+      </div>
+      
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Header */}
+        <div className="text-center mb-16">
+          <div className="flex items-center justify-center space-x-4 mb-6">
+            <div className="w-16 h-16 bg-gradient-to-br from-purple-400 to-blue-500 rounded-full flex items-center justify-center shadow-xl">
+              <span className="text-white font-bold text-2xl">🏆</span>
+            </div>
+            <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 bg-clip-text text-transparent tracking-tight">
+              {t('topDonatorsTitle')}
+            </h2>
+          </div>
+          <p className="text-2xl md:text-3xl text-purple-300 font-bold mb-4 tracking-wide">
+            {t('topDonatorsSubtitle')}
+          </p>
+          <p className="text-white text-lg md:text-xl max-w-5xl mx-auto leading-relaxed mb-6">
+            {t('topDonatorsDescription')}
+          </p>
+          <div className="bg-green-900/30 backdrop-blur rounded-xl p-4 max-w-4xl mx-auto border border-green-400/20">
+            <p className="text-green-300 font-medium text-sm">
+              ✅ {t('loyaltyNotGambling')}
+            </p>
+          </div>
+        </div>
+
+        {/* Main Content Grid */}
+        <div className="grid grid-cols-1 xl:grid-cols-3 gap-8 mb-16">
+          {/* Live Leaderboard */}
+          <div className="xl:col-span-2 bg-gradient-to-br from-gray-800/60 to-gray-900/60 backdrop-blur rounded-2xl p-8 border border-purple-400/20 shadow-2xl">
+            <div className="flex items-center justify-between mb-8">
+              <h3 className="text-2xl md:text-3xl font-bold text-purple-400 flex items-center space-x-3">
+                <span>👑</span>
+                <span>{t('topClientsLeaderboard')}</span>
+              </h3>
+              <div className="bg-purple-500/20 backdrop-blur rounded-lg px-4 py-2">
+                <span className="text-purple-300 font-bold text-sm">{t('currentMonth')}</span>
+              </div>
+            </div>
+            
+            {/* Leaderboard Table */}
+            <div className="space-y-3">
+              {mockTopDonators.map((donator) => (
+                <div 
+                  key={donator.rank}
+                  className={`flex items-center justify-between p-4 rounded-xl transition-all hover:scale-105 ${
+                    donator.rank <= 3 
+                      ? 'bg-gradient-to-r from-yellow-600/20 to-purple-600/20 border-2 border-yellow-400/40 shadow-lg' 
+                      : 'bg-gray-700/40 border border-gray-600/30'
+                  }`}
+                >
+                  <div className="flex items-center space-x-4">
+                    <div className="flex items-center space-x-2">
+                      <span className={`font-bold text-xl w-8 text-center ${
+                        donator.rank === 1 ? 'text-yellow-400' : 
+                        donator.rank === 2 ? 'text-gray-300' : 
+                        donator.rank === 3 ? 'text-amber-500' : 'text-gray-400'
+                      }`}>
+                        #{donator.rank}
+                      </span>
+                      <span className="text-2xl">{donator.avatar}</span>
+                    </div>
+                    <div>
+                      <p className="text-white font-bold text-lg">{donator.username}</p>
+                      <p className="text-gray-400 text-sm">{donator.creditsSpent.toLocaleString()} {t('creditsSpent').toLowerCase()}</p>
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <p className={`font-bold text-lg ${donator.rank <= 3 ? 'text-green-400' : 'text-gray-400'}`}>
+                      {donator.potentialCashback}
+                    </p>
+                    <p className={`text-sm font-medium ${donator.rank <= 3 ? 'text-purple-400' : 'text-gray-500'}`}>
+                      {donator.percentage}% {t('rewardsPool').toLowerCase()}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Reward Distribution */}
+          <div className="bg-gradient-to-br from-gray-800/60 to-gray-900/60 backdrop-blur rounded-2xl p-8 border border-purple-400/20 shadow-2xl">
+            <h3 className="text-2xl font-bold text-purple-400 mb-8 flex items-center space-x-3">
+              <span>💰</span>
+              <span>{t('rewardDistribution')}</span>
+            </h3>
+            
+            <div className="mb-8">
+              <div className="bg-purple-500/20 backdrop-blur rounded-xl p-6 border border-purple-400/30">
+                <h4 className="text-lg font-bold text-white mb-2">{t('monthlyRewardsPool')}</h4>
+                <p className="text-3xl font-bold text-yellow-400">50%</p>
+                <p className="text-purple-300 text-sm">{t('ofGiftRevenue')}</p>
+              </div>
+            </div>
+
+            <div className="space-y-3">
+              {rewardPercentages.map((tier) => (
+                <div 
+                  key={tier.rank}
+                  className={`flex items-center justify-between p-3 rounded-lg ${
+                    tier.rank <= 3 
+                      ? 'bg-gradient-to-r from-yellow-600/20 to-purple-600/20 border border-yellow-400/30' 
+                      : 'bg-gray-700/30'
+                  }`}
+                >
+                  <div className="flex items-center space-x-3">
+                    <span className={`font-bold text-lg ${
+                      tier.rank === 1 ? 'text-yellow-400' : 
+                      tier.rank === 2 ? 'text-gray-300' : 
+                      tier.rank === 3 ? 'text-amber-500' : 'text-gray-400'
+                    }`}>
+                      #{tier.rank}
+                    </span>
+                  </div>
+                  <span className={`font-bold text-lg ${tier.rank <= 3 ? 'text-green-400' : 'text-gray-400'}`}>
+                    {tier.percentage}%
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* How it Works */}
+        <div className="bg-gradient-to-br from-gray-800/60 to-gray-900/60 backdrop-blur rounded-2xl p-8 border border-purple-400/20 shadow-2xl mb-16">
+          <h3 className="text-2xl md:text-3xl font-bold text-purple-400 mb-8 flex items-center space-x-3">
+            <span>⚡</span>
+            <span>{t('howItWorksClients')}</span>
+          </h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="bg-purple-500/20 backdrop-blur rounded-xl p-6 border border-purple-400/30">
+              <div className="text-3xl mb-4">🎁</div>
+              <p className="text-white font-medium">{t('spendCreditsOnGifts')}</p>
+            </div>
+            <div className="bg-blue-500/20 backdrop-blur rounded-xl p-6 border border-blue-400/30">
+              <div className="text-3xl mb-4">📊</div>
+              <p className="text-white font-medium">{t('earnRankingPoints')}</p>
+            </div>
+            <div className="bg-green-500/20 backdrop-blur rounded-xl p-6 border border-green-400/30">
+              <div className="text-3xl mb-4">💰</div>
+              <p className="text-white font-medium">{t('top10Share')}</p>
+            </div>
+            <div className="bg-yellow-500/20 backdrop-blur rounded-xl p-6 border border-yellow-400/30">
+              <div className="text-3xl mb-4">🔄</div>
+              <p className="text-white font-medium">{t('automaticRewards')}</p>
+            </div>
+            <div className="bg-pink-500/20 backdrop-blur rounded-xl p-6 border border-pink-400/30">
+              <div className="text-3xl mb-4">🗓️</div>
+              <p className="text-white font-medium">{t('newChanceMonthly')}</p>
+            </div>
+            <div className="bg-purple-500/20 backdrop-blur rounded-xl p-6 border border-purple-400/30">
+              <div className="text-3xl mb-4">🏆</div>
+              <p className="text-white font-medium">{t('joinLoyaltyProgram')}</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Past Winners */}
+        <div className="bg-gradient-to-br from-gray-800/60 to-gray-900/60 backdrop-blur rounded-2xl p-8 border border-purple-400/20 shadow-2xl">
+          <h3 className="text-2xl md:text-3xl font-bold text-purple-400 mb-8 flex items-center space-x-3">
+            <span>🏅</span>
+            <span>{t('pastWinners')}</span>
+          </h3>
+          
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            {Object.entries(mockPastWinners).map(([month, winners]) => (
+              <div key={month} className="bg-gray-700/40 backdrop-blur rounded-xl p-6 border border-gray-600/30">
+                <h4 className="text-lg font-bold text-white mb-4 text-center">{month}</h4>
+                <div className="space-y-3">
+                  {winners.slice(0, 3).map((winner) => (
+                    <div 
+                      key={winner.rank}
+                      className={`flex items-center justify-between p-3 rounded-lg ${
+                        winner.rank === 1 ? 'bg-yellow-600/20 border border-yellow-400/30' :
+                        winner.rank === 2 ? 'bg-gray-600/20 border border-gray-400/30' :
+                        'bg-amber-600/20 border border-amber-400/30'
+                      }`}
+                    >
+                      <div className="flex items-center space-x-2">
+                        <span className={`font-bold text-sm ${
+                          winner.rank === 1 ? 'text-yellow-400' :
+                          winner.rank === 2 ? 'text-gray-300' :
+                          'text-amber-500'
+                        }`}>
+                          #{winner.rank}
+                        </span>
+                        <div>
+                          <p className="text-white font-medium text-sm">{winner.username}</p>
+                          <p className="text-gray-400 text-xs">{winner.creditsSpent.toLocaleString()} credits</p>
+                        </div>
+                      </div>
+                      <span className="text-green-400 font-bold text-sm">{winner.reward}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
 export const MonthlyRewardsSection = () => {
   const { t } = useLanguage();
   
