@@ -4,6 +4,7 @@ import {
   Header,
   CashbackBanner,
   MonthlyRewardsSection,
+  TopDonatorsRewardsSection,
   CountrySidebar,
   RightSidebar,
   HeroSection,
@@ -11,6 +12,7 @@ import {
   Footer,
   ProfileManagement
 } from './components';
+import { LanguageProvider } from './translations';
 
 function App() {
   const [selectedCountry, setSelectedCountry] = useState(null);
