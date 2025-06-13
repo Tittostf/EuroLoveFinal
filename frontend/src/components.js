@@ -247,17 +247,38 @@ const mockProfiles = [
   }
 ];
 
-// Mock leaderboard data
-const mockLeaderboard = [
-  { rank: 1, name: 'Sofia_VIP', points: 2847, invested: 2847, cashback: '7%', earnings: '€199.29' },
-  { rank: 2, name: 'Isabella_Elite', points: 2234, invested: 2234, cashback: '2%', earnings: '€44.68' },
-  { rank: 3, name: 'Emma_Berlin', points: 1956, invested: 1956, cashback: '1%', earnings: '€19.56' },
-  { rank: 4, name: 'Anastasia_Vienna', points: 1743, invested: 1743, cashback: '0%', earnings: '€0.00' },
-  { rank: 5, name: 'Victoria_BCN', points: 1598, invested: 1598, cashback: '0%', earnings: '€0.00' },
-  { rank: 6, name: 'Olivia_AMS', points: 1342, invested: 1342, cashback: '0%', earnings: '€0.00' },
-  { rank: 7, name: 'Maria_Madrid', points: 1287, invested: 1287, cashback: '0%', earnings: '€0.00' },
-  { rank: 8, name: 'Anna_Prague', points: 1156, invested: 1156, cashback: '0%', earnings: '€0.00' }
+// Mock data for Top Donators
+const mockTopDonators = [
+  { rank: 1, username: 'LuxuryLover_VIP', creditsSpent: 15847, percentage: 20, potentialCashback: '€3,169.40', avatar: '👑' },
+  { rank: 2, username: 'DiamondClient_Elite', creditsSpent: 12456, percentage: 15, potentialCashback: '€2,374.05', avatar: '💎' },
+  { rank: 3, username: 'GoldMember_Premium', creditsSpent: 9823, percentage: 10, potentialCashback: '€1,574.68', avatar: '🥇' },
+  { rank: 4, username: 'PlatinumUser_VIP', creditsSpent: 8745, percentage: 8, potentialCashback: '€1,119.36', avatar: '🏆' },
+  { rank: 5, username: 'RoyalClient_Exclusive', creditsSpent: 7234, percentage: 7, potentialCashback: '€811.13', avatar: '👨‍💼' },
+  { rank: 6, username: 'EliteSpender_Pro', creditsSpent: 6892, percentage: 6, potentialCashback: '€662.45', avatar: '💼' },
+  { rank: 7, username: 'PremiumDonator_VIP', creditsSpent: 5967, percentage: 5, potentialCashback: '€477.36', avatar: '🎩' },
+  { rank: 8, username: 'LuxurySupporter', creditsSpent: 5234, percentage: 4, potentialCashback: '€335.78', avatar: '🌟' },
+  { rank: 9, username: 'VIPContributor_Gold', creditsSpent: 4567, percentage: 3, potentialCashback: '€219.21', avatar: '⭐' },
+  { rank: 10, username: 'ExclusivePatron', creditsSpent: 3892, percentage: 2, potentialCashback: '€124.54', avatar: '🎖️' }
 ];
+
+// Mock past winners data
+const mockPastWinners = {
+  'November 2024': [
+    { rank: 1, username: 'DiamondKing_VIP', reward: '€4,234.50', creditsSpent: 18234 },
+    { rank: 2, username: 'LuxuryLegend_Elite', reward: '€3,175.88', creditsSpent: 15467 },
+    { rank: 3, username: 'GoldEmperor_Premium', reward: '€2,117.25', creditsSpent: 12890 }
+  ],
+  'October 2024': [
+    { rank: 1, username: 'PlatinumPrince_VIP', reward: '€3,892.40', creditsSpent: 16723 },
+    { rank: 2, username: 'RoyalSupporter_Elite', reward: '€2,919.30', creditsSpent: 14234 },
+    { rank: 3, username: 'EliteBacker_Premium', reward: '€1,946.20', creditsSpent: 11567 }
+  ],
+  'September 2024': [
+    { rank: 1, username: 'VIPMagnate_Exclusive', reward: '€5,123.75', creditsSpent: 20145 },
+    { rank: 2, username: 'LuxuryTycoon_Elite', reward: '€3,842.81', creditsSpent: 17892 },
+    { rank: 3, username: 'DiamondBaron_Premium', reward: '€2,561.88', creditsSpent: 15234 }
+  ]
+};
 
 // Header Component
 export const Header = () => {
