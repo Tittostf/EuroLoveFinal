@@ -491,34 +491,40 @@ async def get_repost_history(current_user: User = Depends(get_current_user)):
 # Escort Discovery Routes
 @api_router.get("/escorts")
 async def get_escorts(city: Optional[str] = None, country: Optional[str] = None):
-    query = {"user_type": "escort", "profile_active": True}
-    
-    if city or country:
-        location_query = []
-        if city:
-            location_query.append({"location": {"$regex": city, "$options": "i"}})
-        if country:
-            location_query.append({"location": {"$regex": country, "$options": "i"}})
-        query["$or"] = location_query
-    
-    escorts = await db.users.find(
-        query,
-        {"_id": 0, "password_hash": 0, "email": 0}
-    ).sort("points", -1).to_list(100)
-    
-    # Add repost stats
-    for escort in escorts:
-        repost_count = await db.reposts.count_documents({"escort_id": escort["id"]})
-        escort["repost_count"] = repost_count
+    try:
+        query = {"user_type": "escort", "profile_active": True}
         
-        # Get last repost time
-        last_repost = await db.reposts.find_one(
-            {"escort_id": escort["id"]},
-            sort=[("repost_date", -1)]
-        )
-        escort["last_repost"] = last_repost["repost_date"] if last_repost else None
-    
-    return escorts
+        if city or country:
+            location_query = []
+            if city:
+                location_query.append({"location": {"$regex": city, "$options": "i"}})
+            if country:
+                location_query.append({"location": {"$regex": country, "$options": "i"}})
+            query["$or"] = location_query
+        
+        escorts_cursor = db.users.find(
+            query,
+            {"_id": 0, "password_hash": 0, "email": 0}
+        ).sort("points", -1).limit(100)
+        
+        escorts = await escorts_cursor.to_list(100)
+        
+        # Add repost stats
+        for escort in escorts:
+            repost_count = await db.reposts.count_documents({"escort_id": escort["id"]})
+            escort["repost_count"] = repost_count
+            
+            # Get last repost time
+            last_repost = await db.reposts.find_one(
+                {"escort_id": escort["id"]},
+                sort=[("repost_date", -1)]
+            )
+            escort["last_repost"] = last_repost["repost_date"] if last_repost else None
+        
+        return JSONResponse(content=json.loads(json.dumps(escorts, cls=JSONEncoder)))
+    except Exception as e:
+        logger.error(f"Failed to fetch escorts: {e}")
+        raise HTTPException(status_code=500, detail="Failed to fetch escorts")
 
 # Admin Routes
 async def verify_admin(current_user: User = Depends(get_current_user)):
