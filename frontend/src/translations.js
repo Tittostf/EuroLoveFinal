@@ -187,7 +187,40 @@ export const translations = {
     independent: "INDEPENDENT",
     seenLastWeek: "SEEN LAST WEEK",
     duoWithGirl: "DUO WITH GIRL",
-    couple: "COUPLE"
+    couple: "COUPLE",
+    
+    // Top Donators Rewards Program
+    topDonatorsTitle: "Top Donators Rewards Program",
+    topDonatorsSubtitle: "Loyalty Program for Premium Clients",
+    topDonatorsDescription: "Every month, 50% of platform's total Gift revenue goes to our Top 10 Clients as rewards!",
+    loyaltyNotGambling: "This is a Loyalty Rewards Program based on user activity (total Credits spent). It is not a game of chance.",
+    
+    currentMonth: "Current Month",
+    liveLeaderboard: "Live Leaderboard",
+    topClientsLeaderboard: "Top 10 Clients - Gift Spending",
+    rank: "Rank",
+    username: "Username", 
+    creditsSpent: "Credits Spent",
+    potentialCashback: "Potential Cashback",
+    rewardsPool: "Rewards Pool",
+    ofGiftRevenue: "of Gift Revenue",
+    
+    rewardDistribution: "Reward Distribution",
+    monthlyRewardsPool: "Monthly Rewards Pool: 50% of Gift Revenue",
+    
+    pastWinners: "Past Winners",
+    viewPastWinners: "View Past Winners",
+    lastMonths: "Last 3 Months",
+    totalReward: "Total Reward",
+    
+    howItWorksClients: "How it works for Clients:",
+    spendCreditsOnGifts: "Spend Credits on Virtual Gifts to your favorite escorts",
+    earnRankingPoints: "Every Credit spent = 1 Ranking Point for the monthly leaderboard",
+    top10Share: "Top 10 Clients at month-end share 50% of total Gift revenue",
+    automaticRewards: "Rewards are automatically added to your wallet as Credits",
+    newChanceMonthly: "Leaderboard resets monthly - new chances every month!",
+    
+    joinLoyaltyProgram: "Join the Loyalty Program and start earning rewards!"
   },
   
   ro: {
