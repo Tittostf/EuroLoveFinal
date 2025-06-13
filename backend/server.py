@@ -433,33 +433,60 @@ async def get_profile(current_user: User = Depends(get_current_user)):
 
 @api_router.get("/gift-history")
 async def get_gift_history(current_user: User = Depends(get_current_user)):
-    if current_user.user_type == "client":
-        # Get gifts sent by client
-        gifts = await db.gifts.find({"sender_id": current_user.id}).sort("transaction_date", -1).to_list(100)
-        
-        # Enrich with recipient info
-        for gift in gifts:
-            recipient = await db.users.find_one({"id": gift["recipient_id"]}, {"username": 1, "name": 1})
-            gift["recipient_name"] = recipient.get("name") or recipient.get("username")
+    try:
+        if current_user.user_type == "client":
+            # Get gifts sent by client
+            gifts_cursor = db.gifts.find({"sender_id": current_user.id}).sort("transaction_date", -1).limit(100)
+            gifts = await gifts_cursor.to_list(100)
             
-    else:  # escort
-        # Get gifts received by escort
-        gifts = await db.gifts.find({"recipient_id": current_user.id}).sort("transaction_date", -1).to_list(100)
+            # Enrich with recipient info
+            for gift in gifts:
+                recipient = await db.users.find_one({"id": gift["recipient_id"]}, {"username": 1, "name": 1})
+                if recipient:
+                    gift["recipient_name"] = recipient.get("name") or recipient.get("username")
+                
+                # Remove MongoDB ObjectId
+                if "_id" in gift:
+                    del gift["_id"]
+                    
+        else:  # escort
+            # Get gifts received by escort
+            gifts_cursor = db.gifts.find({"recipient_id": current_user.id}).sort("transaction_date", -1).limit(100)
+            gifts = await gifts_cursor.to_list(100)
+            
+            # Enrich with sender info
+            for gift in gifts:
+                sender = await db.users.find_one({"id": gift["sender_id"]}, {"username": 1})
+                if sender:
+                    gift["sender_name"] = sender.get("username")
+                
+                # Remove MongoDB ObjectId
+                if "_id" in gift:
+                    del gift["_id"]
         
-        # Enrich with sender info
-        for gift in gifts:
-            sender = await db.users.find_one({"id": gift["sender_id"]}, {"username": 1})
-            gift["sender_name"] = sender.get("username")
-    
-    return gifts
+        return JSONResponse(content=json.loads(json.dumps(gifts, cls=JSONEncoder)))
+    except Exception as e:
+        logger.error(f"Failed to fetch gift history: {e}")
+        raise HTTPException(status_code=500, detail="Failed to fetch gift history")
 
 @api_router.get("/repost-history")
 async def get_repost_history(current_user: User = Depends(get_current_user)):
     if current_user.user_type != "escort":
         raise HTTPException(status_code=403, detail="Only escorts can view repost history")
     
-    reposts = await db.reposts.find({"escort_id": current_user.id}).sort("repost_date", -1).to_list(100)
-    return reposts
+    try:
+        reposts_cursor = db.reposts.find({"escort_id": current_user.id}).sort("repost_date", -1).limit(100)
+        reposts = await reposts_cursor.to_list(100)
+        
+        # Remove MongoDB ObjectId from each repost
+        for repost in reposts:
+            if "_id" in repost:
+                del repost["_id"]
+        
+        return JSONResponse(content=json.loads(json.dumps(reposts, cls=JSONEncoder)))
+    except Exception as e:
+        logger.error(f"Failed to fetch repost history: {e}")
+        raise HTTPException(status_code=500, detail="Failed to fetch repost history")
 
 # Escort Discovery Routes
 @api_router.get("/escorts")
