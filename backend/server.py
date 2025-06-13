@@ -557,6 +557,27 @@ logger = logging.getLogger(__name__)
 async def health_check():
     return {"status": "healthy", "timestamp": datetime.utcnow()}
 
+# Add credits endpoint for users to top up
+@api_router.post("/add-credits")
+async def add_credits(amount: float, current_user: User = Depends(get_current_user)):
+    if amount <= 0:
+        raise HTTPException(status_code=400, detail="Amount must be positive")
+    
+    try:
+        # Update user credits
+        await db.users.update_one(
+            {"id": current_user.id},
+            {"$inc": {"credits": amount}}
+        )
+        
+        return {
+            "message": f"Added €{amount:.2f} credits successfully",
+            "new_balance": current_user.credits + amount
+        }
+    except Exception as e:
+        logger.error(f"Failed to add credits: {e}")
+        raise HTTPException(status_code=500, detail="Failed to add credits")
+
 # Initialize database indexes for better performance
 @app.on_event("startup")
 async def startup_event():
