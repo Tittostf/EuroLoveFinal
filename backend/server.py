@@ -598,16 +598,19 @@ async def health_check():
 
 # Add credits endpoint for users to top up
 @api_router.post("/add-credits")
-async def add_credits(amount: float, current_user: User = Depends(get_current_user)):
+async def add_credits(amount: float = Query(..., description="Amount to add"), current_user: User = Depends(get_current_user)):
     if amount <= 0:
         raise HTTPException(status_code=400, detail="Amount must be positive")
     
     try:
         # Update user credits
-        await db.users.update_one(
+        result = await db.users.update_one(
             {"id": current_user.id},
             {"$inc": {"credits": amount}}
         )
+        
+        if result.modified_count == 0:
+            raise HTTPException(status_code=404, detail="User not found")
         
         return {
             "message": f"Added €{amount:.2f} credits successfully",
