@@ -220,7 +220,76 @@ export const translations = {
     automaticRewards: "Rewards are automatically added to your wallet as Credits",
     newChanceMonthly: "Leaderboard resets monthly - new chances every month!",
     
-    joinLoyaltyProgram: "Join the Loyalty Program and start earning rewards!"
+    joinLoyaltyProgram: "Join the Loyalty Program and start earning rewards!",
+    
+    // Virtual Gifts System
+    virtualGifts: "Virtual Gifts",
+    sendGift: "Send Gift",
+    giftCatalog: "Gift Catalog",
+    selectGift: "Select a Gift",
+    sendGiftTo: "Send Gift to",
+    confirmGift: "Confirm Gift",
+    giftSent: "Gift Sent Successfully!",
+    giftReceived: "Gift Received!",
+    myCredits: "My Credits",
+    buyCredits: "Buy Credits",
+    creditsRequired: "Credits Required",
+    insufficientCredits: "Insufficient Credits",
+    topUpCredits: "Top Up Credits",
+    
+    // Gift Categories
+    basicGifts: "Basic Gifts",
+    premiumGifts: "Premium Gifts",
+    luxuryGifts: "Luxury Gifts",
+    vipOnly: "VIP Only",
+    
+    // Gift Names
+    rose: "Rose",
+    kiss: "Kiss", 
+    heart: "Heart",
+    diamond: "Diamond",
+    champagne: "Champagne",
+    yacht: "Yacht",
+    crown: "Crown",
+    goldBar: "Gold Bar",
+    
+    // Escort Dashboard
+    giftsReceived: "Gifts Received",
+    giftHistory: "Gift History",
+    totalEarnings: "Total Earnings",
+    pendingPayouts: "Pending Payouts",
+    sender: "Sender",
+    giftName: "Gift Name",
+    value: "Value",
+    dateReceived: "Date Received",
+    conversionRate: "Conversion Rate",
+    
+    // Top Senders Leaderboard
+    topGiftSenders: "Top Gift Senders",
+    thisMonth: "This Month",
+    giftsSent: "Gifts Sent",
+    totalSpent: "Total Spent",
+    becomeTopSender: "Become a Top Sender!",
+    
+    // Gift Sending Flow
+    chooseGift: "Choose Your Gift",
+    previewGift: "Preview Gift",
+    confirmSend: "Confirm Send",
+    giftAnimation: "Gift Animation",
+    thankYouForGift: "Thank you for your gift!",
+    
+    // Credit System
+    creditBalance: "Credit Balance",
+    purchaseCredits: "Purchase Credits",
+    creditPackages: "Credit Packages",
+    selectPackage: "Select Package",
+    buyNow: "Buy Now",
+    
+    // VIP Features
+    upgradeToVip: "Upgrade to VIP",
+    vipExclusive: "VIP Exclusive",
+    vipBenefits: "VIP Benefits",
+    unlockAllGifts: "Unlock All Gifts"
   },
   
   ro: {
