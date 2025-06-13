@@ -174,9 +174,9 @@ export const Header = ({ onLoginClick }) => {
             {isAuthenticated ? (
               <div className="flex items-center space-x-4">
                 <div className="text-right">
-                  <p className="text-white font-medium">{user.username}</p>
+                  <p className="text-white font-medium">{user?.username || 'User'}</p>
                   <p className="text-yellow-400 text-xs">
-                    €{user.credits?.toFixed(2) || '0.00'} | {user.points?.toFixed(0) || '0'} pts
+                    €{(user?.credits && typeof user.credits === 'number') ? user.credits.toFixed(2) : '0.00'} | {(user?.points && typeof user.points === 'number') ? user.points.toFixed(0) : '0'} pts
                   </p>
                 </div>
                 <button 
