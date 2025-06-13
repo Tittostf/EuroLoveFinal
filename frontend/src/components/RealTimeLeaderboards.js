@@ -271,7 +271,7 @@ export const TopDonatorsRewardsSection = () => {
                       </div>
                       <div>
                         <p className="text-white font-bold text-lg">{client.username}</p>
-                        <p className="text-gray-400 text-sm">{client.points} points • €{client.total_spent?.toFixed(2) || '0.00'} spent</p>
+                        <p className="text-gray-400 text-sm">{typeof client.points === 'number' ? client.points : 0} points • €{client.total_spent?.toFixed(2) || '0.00'} spent</p>
                       </div>
                     </div>
                     <div className="text-right">
