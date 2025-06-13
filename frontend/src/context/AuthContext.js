@@ -45,15 +45,30 @@ export const AuthProvider = ({ children }) => {
   const register = async (userData) => {
     try {
       const response = await ApiService.register(userData);
+      console.log('Register response:', response); // Debug logging
+      
       const { token: newToken, user: userInfo } = response;
       
+      // Ensure userInfo is a proper object with expected properties
+      if (!userInfo || typeof userInfo !== 'object') {
+        throw new Error('Invalid user data received from server');
+      }
+      
+      // Ensure numeric values are properly typed
+      const sanitizedUser = {
+        ...userInfo,
+        credits: typeof userInfo.credits === 'number' ? userInfo.credits : 0,
+        points: typeof userInfo.points === 'number' ? userInfo.points : 0
+      };
+      
       setToken(newToken);
-      setUser(userInfo);
+      setUser(sanitizedUser);
       ApiService.setToken(newToken);
       localStorage.setItem('auth_token', newToken);
       
       return response;
     } catch (error) {
+      console.error('Registration error in AuthContext:', error); // Debug logging
       throw error;
     }
   };
