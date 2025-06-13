@@ -533,6 +533,9 @@ async def create_admin(admin_data: UserCreate):
     
     return {"message": "Admin created successfully"}
 
+# Include the router in the main app
+app.include_router(api_router)
+
 app.add_middleware(
     CORSMiddleware,
     allow_credentials=True,
@@ -547,6 +550,25 @@ logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
 )
 logger = logging.getLogger(__name__)
+
+# Health check endpoint
+@api_router.get("/health")
+async def health_check():
+    return {"status": "healthy", "timestamp": datetime.utcnow()}
+
+# Initialize database indexes for better performance
+@app.on_event("startup")
+async def startup_event():
+    # Create indexes for better query performance
+    await db.users.create_index("email", unique=True)
+    await db.users.create_index("username", unique=True)
+    await db.users.create_index([("user_type", 1), ("points", -1)])
+    await db.gifts.create_index([("sender_id", 1), ("transaction_date", -1)])
+    await db.gifts.create_index([("recipient_id", 1), ("transaction_date", -1)])
+    await db.reposts.create_index([("escort_id", 1), ("repost_date", -1)])
+    await db.platform_revenue.create_index("date")
+    
+    logger.info("Database indexes created successfully")
 
 @app.on_event("shutdown")
 async def shutdown_db_client():
