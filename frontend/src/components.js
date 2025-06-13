@@ -321,6 +321,37 @@ const mockPastWinners = {
   ]
 };
 
+// Mock Leaderboard
+const mockLeaderboard = [
+  { rank: 1, name: 'DiamondKing_VIP', points: 18234, invested: 18234, earnings: '€4,234.50', cashback: '20%' },
+  { rank: 2, name: 'LuxuryLegend_Elite', points: 15467, invested: 15467, earnings: '€3,175.88', cashback: '15%' },
+  { rank: 3, name: 'GoldEmperor_Premium', points: 12890, invested: 12890, earnings: '€2,117.25', cashback: '10%' },
+  { rank: 4, name: 'PlatinumPrince_VIP', points: 16723, invested: 16723, earnings: '€1,119.36', cashback: '8%' },
+  { rank: 5, name: 'RoyalSupporter_Elite', points: 14234, invested: 14234, earnings: '€811.13', cashback: '7%' },
+  { rank: 6, name: 'EliteBacker_Premium', points: 11567, invested: 11567, earnings: '€662.45', cashback: '6%' },
+  { rank: 7, name: 'VIPMagnate_Exclusive', points: 20145, invested: 20145, earnings: '€477.36', cashback: '5%' },
+  { rank: 8, name: 'LuxuryTycoon_Elite', points: 17892, invested: 17892, earnings: '€335.78', cashback: '4%' }
+];
+
+// Mock past winners data
+const mockPastWinners = {
+  'November 2024': [
+    { rank: 1, username: 'DiamondKing_VIP', reward: '€4,234.50', creditsSpent: 18234 },
+    { rank: 2, username: 'LuxuryLegend_Elite', reward: '€3,175.88', creditsSpent: 15467 },
+    { rank: 3, username: 'GoldEmperor_Premium', reward: '€2,117.25', creditsSpent: 12890 }
+  ],
+  'October 2024': [
+    { rank: 1, username: 'PlatinumPrince_VIP', reward: '€3,892.40', creditsSpent: 16723 },
+    { rank: 2, username: 'RoyalSupporter_Elite', reward: '€2,919.30', creditsSpent: 14234 },
+    { rank: 3, username: 'EliteBacker_Premium', reward: '€1,946.20', creditsSpent: 11567 }
+  ],
+  'September 2024': [
+    { rank: 1, username: 'VIPMagnate_Exclusive', reward: '€5,123.75', creditsSpent: 20145 },
+    { rank: 2, username: 'LuxuryTycoon_Elite', reward: '€3,842.81', creditsSpent: 17892 },
+    { rank: 3, username: 'DiamondBaron_Premium', reward: '€2,561.88', creditsSpent: 15234 }
+  ]
+};
+
 // Header Component
 export const Header = () => {
   const { language, setLanguage, t } = useLanguage();
