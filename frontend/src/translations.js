@@ -463,7 +463,76 @@ export const translations = {
     automaticRewards: "Recompensele se adaugă automat în portofelul tău ca Credite",
     newChanceMonthly: "Clasamentul se resetează lunar - șanse noi în fiecare lună!",
     
-    joinLoyaltyProgram: "Alătură-te Programului de Fidelitate și începe să câștigi recompense!"
+    joinLoyaltyProgram: "Alătură-te Programului de Fidelitate și începe să câștigi recompense!",
+    
+    // Virtual Gifts System
+    virtualGifts: "Cadouri Virtuale",
+    sendGift: "Trimite Cadou",
+    giftCatalog: "Catalogul Cadourilor", 
+    selectGift: "Selectează un Cadou",
+    sendGiftTo: "Trimite Cadou către",
+    confirmGift: "Confirmă Cadoul",
+    giftSent: "Cadou Trimis cu Succes!",
+    giftReceived: "Cadou Primit!",
+    myCredits: "Creditele Mele",
+    buyCredits: "Cumpără Credite",
+    creditsRequired: "Credite Necesare",
+    insufficientCredits: "Credite Insuficiente",
+    topUpCredits: "Încarcă Credite",
+    
+    // Gift Categories
+    basicGifts: "Cadouri de Bază",
+    premiumGifts: "Cadouri Premium", 
+    luxuryGifts: "Cadouri de Lux",
+    vipOnly: "Doar VIP",
+    
+    // Gift Names
+    rose: "Trandafir",
+    kiss: "Sărut",
+    heart: "Inimă", 
+    diamond: "Diamant",
+    champagne: "Șampanie",
+    yacht: "Iaht",
+    crown: "Coroană",
+    goldBar: "Lingou de Aur",
+    
+    // Escort Dashboard
+    giftsReceived: "Cadouri Primite",
+    giftHistory: "Istoric Cadouri",
+    totalEarnings: "Câștiguri Totale", 
+    pendingPayouts: "Plăți în Așteptare",
+    sender: "Expeditor",
+    giftName: "Nume Cadou",
+    value: "Valoare",
+    dateReceived: "Data Primirii",
+    conversionRate: "Rata de Conversie",
+    
+    // Top Senders Leaderboard
+    topGiftSenders: "Top Expeditori Cadouri",
+    thisMonth: "Luna Aceasta",
+    giftsSent: "Cadouri Trimise",
+    totalSpent: "Total Cheltuit",
+    becomeTopSender: "Devino Top Expeditor!",
+    
+    // Gift Sending Flow
+    chooseGift: "Alege Cadoul Tău",
+    previewGift: "Previzualizează Cadoul",
+    confirmSend: "Confirmă Trimiterea", 
+    giftAnimation: "Animație Cadou",
+    thankYouForGift: "Mulțumesc pentru cadou!",
+    
+    // Credit System
+    creditBalance: "Sold Credite",
+    purchaseCredits: "Cumpără Credite",
+    creditPackages: "Pachete de Credite",
+    selectPackage: "Selectează Pachet",
+    buyNow: "Cumpără Acum",
+    
+    // VIP Features
+    upgradeToVip: "Upgrade la VIP",
+    vipExclusive: "Exclusiv VIP",
+    vipBenefits: "Beneficii VIP", 
+    unlockAllGifts: "Deblochează Toate Cadourile"
   }
 };
 
