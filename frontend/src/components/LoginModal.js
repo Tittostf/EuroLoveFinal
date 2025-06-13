@@ -35,7 +35,20 @@ export const LoginModal = ({ isOpen, onClose, defaultTab = 'login' }) => {
       await login(loginData);
       onClose();
     } catch (error) {
-      setError(error.message);
+      // Better error handling - check different error formats
+      let errorMessage = 'Login failed. Please try again.';
+      
+      if (error.response?.data?.detail) {
+        errorMessage = error.response.data.detail;
+      } else if (error.response?.data?.message) {
+        errorMessage = error.response.data.message;
+      } else if (error.message && error.message !== '[object Object]') {
+        errorMessage = error.message;
+      } else if (typeof error === 'string') {
+        errorMessage = error;
+      }
+      
+      setError(errorMessage);
     } finally {
       setLoading(false);
     }
@@ -54,12 +67,37 @@ export const LoginModal = ({ isOpen, onClose, defaultTab = 'login' }) => {
 
     try {
       const { confirmPassword, ...dataToSend } = registerData;
-      if (dataToSend.age) dataToSend.age = parseInt(dataToSend.age);
+      
+      // Ensure age is converted to integer if provided
+      if (dataToSend.age) {
+        dataToSend.age = parseInt(dataToSend.age);
+      }
+      
+      // Ensure user_type is correct (backend expects "client" or "escort")
+      if (!dataToSend.user_type || !['client', 'escort'].includes(dataToSend.user_type)) {
+        dataToSend.user_type = 'client'; // Default fallback
+      }
+      
+      console.log('Registration data being sent:', dataToSend); // Debug logging
       
       await register(dataToSend);
       onClose();
     } catch (error) {
-      setError(error.message);
+      // Better error handling - check different error formats
+      let errorMessage = 'Registration failed. Please try again.';
+      
+      if (error.response?.data?.detail) {
+        errorMessage = error.response.data.detail;
+      } else if (error.response?.data?.message) {
+        errorMessage = error.response.data.message;
+      } else if (error.message && error.message !== '[object Object]') {
+        errorMessage = error.message;
+      } else if (typeof error === 'string') {
+        errorMessage = error;
+      }
+      
+      console.error('Registration error:', error); // Debug logging
+      setError(errorMessage);
     } finally {
       setLoading(false);
     }
