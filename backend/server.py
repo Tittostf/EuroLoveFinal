@@ -254,39 +254,39 @@ async def send_gift(gift_request: SendGiftRequest, current_user: User = Depends(
         escort_share=escort_share
     )
     
-    # Start database transaction
-    async with await client.start_session() as session:
-        async with session.start_transaction():
-            # Deduct credits from client
-            await db.users.update_one(
-                {"id": current_user.id},
-                {"$inc": {
-                    "credits": -gift_request.gift_value,
-                    "points": gift_request.gift_value  # 1€ = 1 point for clients
-                }},
-                session=session
-            )
-            
-            # Add earnings to escort
-            await db.users.update_one(
-                {"id": gift_request.recipient_id},
-                {"$inc": {
-                    "credits": escort_share,
-                    "points": gift_request.gift_value  # 1€ received = 1 point for escorts
-                }},
-                session=session
-            )
-            
-            # Record gift transaction
-            await db.gifts.insert_one(gift.dict(), session=session)
-            
-            # Record platform revenue
-            revenue = PlatformRevenue(
-                source="gift",
-                amount=platform_share,
-                description=f"Gift: {gift_request.gift_name} from {current_user.username} to {recipient.username}"
-            )
-            await db.platform_revenue.insert_one(revenue.dict(), session=session)
+    try:
+        # Update client credits and points
+        await db.users.update_one(
+            {"id": current_user.id},
+            {"$inc": {
+                "credits": -gift_request.gift_value,
+                "points": gift_request.gift_value  # 1€ = 1 point for clients
+            }}
+        )
+        
+        # Add earnings to escort
+        await db.users.update_one(
+            {"id": gift_request.recipient_id},
+            {"$inc": {
+                "credits": escort_share,
+                "points": gift_request.gift_value  # 1€ received = 1 point for escorts
+            }}
+        )
+        
+        # Record gift transaction
+        await db.gifts.insert_one(gift.dict())
+        
+        # Record platform revenue
+        revenue = PlatformRevenue(
+            source="gift",
+            amount=platform_share,
+            description=f"Gift: {gift_request.gift_name} from {current_user.username} to {recipient.username}"
+        )
+        await db.platform_revenue.insert_one(revenue.dict())
+        
+    except Exception as e:
+        logger.error(f"Failed to process gift: {e}")
+        raise HTTPException(status_code=500, detail="Failed to process gift transaction")
     
     return {
         "message": "Gift sent successfully",
@@ -314,29 +314,30 @@ async def repost_ad(repost_request: RepostRequest, current_user: User = Depends(
         points_earned=2.0
     )
     
-    # Start database transaction
-    async with await client.start_session() as session:
-        async with session.start_transaction():
-            # Deduct credits and add points to escort
-            await db.users.update_one(
-                {"id": current_user.id},
-                {"$inc": {
-                    "credits": -repost_cost,
-                    "points": 2.0  # 2 points per repost
-                }},
-                session=session
-            )
-            
-            # Record repost transaction
-            await db.reposts.insert_one(repost.dict(), session=session)
-            
-            # Record platform revenue
-            revenue = PlatformRevenue(
-                source="repost",
-                amount=repost_cost,
-                description=f"Repost by {current_user.username}"
-            )
-            await db.platform_revenue.insert_one(revenue.dict(), session=session)
+    try:
+        # Update escort credits and points
+        await db.users.update_one(
+            {"id": current_user.id},
+            {"$inc": {
+                "credits": -repost_cost,
+                "points": 2.0  # 2 points per repost
+            }}
+        )
+        
+        # Record repost transaction
+        await db.reposts.insert_one(repost.dict())
+        
+        # Record platform revenue
+        revenue = PlatformRevenue(
+            source="repost",
+            amount=repost_cost,
+            description=f"Repost by {current_user.username}"
+        )
+        await db.platform_revenue.insert_one(revenue.dict())
+        
+    except Exception as e:
+        logger.error(f"Failed to process repost: {e}")
+        raise HTTPException(status_code=500, detail="Failed to process repost transaction")
     
     return {
         "message": "Ad reposted successfully",
