@@ -16,8 +16,8 @@ load_dotenv('/app/backend/.env')
 async def create_sample_data():
     # MongoDB connection
     mongo_url = os.environ['MONGO_URL']
-    client = AsyncIOMotorClient(mongo_url)
-    db = client[os.environ['DB_NAME']]
+    mongo_client = AsyncIOMotorClient(mongo_url)
+    db = mongo_client[os.environ['DB_NAME']]
     
     print("Creating sample data...")
     
@@ -201,7 +201,7 @@ async def create_sample_data():
     except Exception as e:
         print(f"❌ Error creating sample data: {e}")
     finally:
-        await client.close()
+        mongo_client.close()
 
 if __name__ == "__main__":
     asyncio.run(create_sample_data())
