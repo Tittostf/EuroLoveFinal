@@ -60,6 +60,38 @@ function App() {
         {/* Top Donators Rewards Program Section */}
         <TopDonatorsRewardsSection />
         
+        {/* Top Gift Senders Leaderboard Section */}
+        <TopGiftSendersLeaderboard />
+        
+        {/* Virtual Gifts Modal */}
+        <VirtualGiftsModal 
+          isOpen={showGiftsModal}
+          onClose={() => setShowGiftsModal(false)}
+          recipientName={selectedProfile?.name || "Escort"}
+          userCredits={150}
+          isVIP={true}
+        />
+        
+        {/* Gifts Dashboard Modal */}
+        {showGiftsDashboard && (
+          <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+            <div className="bg-white rounded-lg max-w-6xl w-full max-h-[90vh] overflow-y-auto">
+              <div className="p-4 border-b border-gray-200 flex justify-between items-center">
+                <h2 className="text-xl font-bold">Gifts Dashboard</h2>
+                <button 
+                  onClick={() => setShowGiftsDashboard(false)}
+                  className="text-gray-500 hover:text-gray-700 text-2xl"
+                >
+                  ×
+                </button>
+              </div>
+              <div className="p-4">
+                <GiftsReceivedDashboard escortName="Isabella" />
+              </div>
+            </div>
+          </div>
+        )}
+        
         {/* Profile Management Modal/Section */}
         {showProfileManagement && (
           <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
