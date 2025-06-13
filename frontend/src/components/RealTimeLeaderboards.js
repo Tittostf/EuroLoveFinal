@@ -150,7 +150,7 @@ export const MonthlyRewardsSection = () => {
                       </span>
                       <div>
                         <p className="text-white font-bold text-lg">{user.name || user.username}</p>
-                        <p className="text-gray-400 text-sm">{user.points} points • €{user.total_earned?.toFixed(2) || '0.00'} earned</p>
+                        <p className="text-gray-400 text-sm">{typeof user.points === 'number' ? user.points : 0} points • €{user.total_earned?.toFixed(2) || '0.00'} earned</p>
                       </div>
                     </div>
                     <div className="text-right">
