@@ -93,9 +93,10 @@ const mockTopDonators = [
 ];
 
 // Header Component
-export const Header = () => {
+export const Header = ({ onLoginClick }) => {
   const { language, setLanguage } = useLanguage();
   const { t } = useTranslation();
+  const { user, isAuthenticated, logout } = useAuth();
   
   return (
     <header className="bg-gradient-to-r from-gray-900 via-black to-gray-900 border-b border-yellow-400/20 shadow-2xl">
@@ -135,6 +136,11 @@ export const Header = () => {
             <a href="#" className="text-gray-300 hover:text-yellow-400 transition-all duration-300 font-medium tracking-wide uppercase text-sm">
               {t('videos')}
             </a>
+            {isAuthenticated && user?.user_type === 'admin' && (
+              <a href="/admin" className="text-yellow-400 hover:text-yellow-300 transition-all duration-300 font-medium tracking-wide uppercase text-sm">
+                Admin
+              </a>
+            )}
           </nav>
 
           {/* Language Switcher & User Actions */}
@@ -163,12 +169,38 @@ export const Header = () => {
               </button>
             </div>
             
-            <button className="bg-gradient-to-r from-yellow-400 to-yellow-500 text-black px-6 py-2.5 rounded-lg font-bold hover:from-yellow-500 hover:to-yellow-600 transition-all transform hover:scale-105 shadow-lg hover:shadow-yellow-400/25 uppercase tracking-wide text-sm">
-              {t('login')}
-            </button>
-            <button className="border-2 border-yellow-400 text-yellow-400 px-6 py-2.5 rounded-lg font-bold hover:bg-yellow-400 hover:text-black transition-all transform hover:scale-105 uppercase tracking-wide text-sm">
-              {t('register')}
-            </button>
+            {/* User Actions */}
+            {isAuthenticated ? (
+              <div className="flex items-center space-x-4">
+                <div className="text-right">
+                  <p className="text-white font-medium">{user.username}</p>
+                  <p className="text-yellow-400 text-xs">
+                    €{user.credits?.toFixed(2) || '0.00'} | {user.points?.toFixed(0) || '0'} pts
+                  </p>
+                </div>
+                <button 
+                  onClick={logout}
+                  className="border-2 border-gray-600 text-gray-300 px-4 py-2 rounded-lg font-bold hover:bg-gray-600 hover:text-white transition-all transform hover:scale-105 uppercase tracking-wide text-sm"
+                >
+                  Logout
+                </button>
+              </div>
+            ) : (
+              <div className="flex items-center space-x-2">
+                <button 
+                  onClick={() => onLoginClick('login')}
+                  className="bg-gradient-to-r from-yellow-400 to-yellow-500 text-black px-6 py-2.5 rounded-lg font-bold hover:from-yellow-500 hover:to-yellow-600 transition-all transform hover:scale-105 shadow-lg hover:shadow-yellow-400/25 uppercase tracking-wide text-sm"
+                >
+                  {t('login')}
+                </button>
+                <button 
+                  onClick={() => onLoginClick('register')}
+                  className="border-2 border-yellow-400 text-yellow-400 px-6 py-2.5 rounded-lg font-bold hover:bg-yellow-400 hover:text-black transition-all transform hover:scale-105 uppercase tracking-wide text-sm"
+                >
+                  {t('register')}
+                </button>
+              </div>
+            )}
           </div>
         </div>
       </div>
