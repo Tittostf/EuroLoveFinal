@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { useLanguage, useTranslation } from './translations';
-import { useLanguage, useTranslation } from './translations';
+import { useLanguage as useGlobalLanguage, useTranslation } from './translations';
 
 // Language context
 const useLanguage = () => {
