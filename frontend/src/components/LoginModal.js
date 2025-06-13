@@ -35,7 +35,7 @@ export const LoginModal = ({ isOpen, onClose, defaultTab = 'login' }) => {
       await login(loginData);
       onClose();
     } catch (error) {
-      // Better error handling - check different error formats
+      // Better error handling - ensure we always set a string
       let errorMessage = 'Login failed. Please try again.';
       
       if (error.response?.data?.detail) {
@@ -48,7 +48,8 @@ export const LoginModal = ({ isOpen, onClose, defaultTab = 'login' }) => {
         errorMessage = error;
       }
       
-      setError(errorMessage);
+      // Ensure errorMessage is always a string
+      setError(String(errorMessage));
     } finally {
       setLoading(false);
     }
@@ -80,10 +81,11 @@ export const LoginModal = ({ isOpen, onClose, defaultTab = 'login' }) => {
       
       console.log('Registration data being sent:', dataToSend); // Debug logging
       
-      await register(dataToSend);
+      const result = await register(dataToSend);
+      console.log('Registration successful:', result); // Debug logging
       onClose();
     } catch (error) {
-      // Better error handling - check different error formats
+      // Better error handling - ensure we always set a string
       let errorMessage = 'Registration failed. Please try again.';
       
       if (error.response?.data?.detail) {
@@ -97,7 +99,9 @@ export const LoginModal = ({ isOpen, onClose, defaultTab = 'login' }) => {
       }
       
       console.error('Registration error:', error); // Debug logging
-      setError(errorMessage);
+      
+      // Ensure errorMessage is always a string
+      setError(String(errorMessage));
     } finally {
       setLoading(false);
     }
