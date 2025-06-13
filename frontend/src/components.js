@@ -1479,7 +1479,221 @@ export const MainContent = ({ selectedCountry, selectedCity, onProfileManagement
   );
 };
 
-// Footer Component
+// Virtual Gifts Modal Component
+export const VirtualGiftsModal = ({ isOpen, onClose, recipientName, userCredits = 150, isVIP = false }) => {
+  const { language, setLanguage, t } = useLanguage();
+  const [selectedGift, setSelectedGift] = useState(null);
+  const [showConfirmation, setShowConfirmation] = useState(false);
+  const [giftSent, setGiftSent] = useState(false);
+  const [showAnimation, setShowAnimation] = useState(false);
+
+  if (!isOpen) return null;
+
+  const handleGiftSelect = (gift) => {
+    if (!isVIP && gift.category !== 'basic') {
+      alert(t('upgradeToVip'));
+      return;
+    }
+    setSelectedGift(gift);
+    setShowConfirmation(true);
+  };
+
+  const handleSendGift = () => {
+    if (userCredits < selectedGift.cost) {
+      alert(t('insufficientCredits'));
+      return;
+    }
+    
+    setShowConfirmation(false);
+    setShowAnimation(true);
+    
+    setTimeout(() => {
+      setShowAnimation(false);
+      setGiftSent(true);
+      setTimeout(() => {
+        setGiftSent(false);
+        onClose();
+        setSelectedGift(null);
+      }, 2000);
+    }, 1500);
+  };
+
+  const basicGifts = virtualGiftsCatalog.filter(gift => gift.category === 'basic');
+  const premiumGifts = virtualGiftsCatalog.filter(gift => gift.category === 'premium');
+  const luxuryGifts = virtualGiftsCatalog.filter(gift => gift.category === 'luxury');
+
+  return (
+    <div className="fixed inset-0 bg-black/70 z-50 flex items-center justify-center p-4">
+      <div className="bg-gradient-to-br from-gray-900 to-black rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto border border-yellow-400/20 shadow-2xl">
+        {/* Header */}
+        <div className="p-6 border-b border-yellow-400/20">
+          <div className="flex justify-between items-center">
+            <div>
+              <h2 className="text-2xl font-bold text-yellow-400">{t('giftCatalog')}</h2>
+              <p className="text-gray-300">{t('sendGiftTo')} {recipientName}</p>
+            </div>
+            <div className="flex items-center space-x-4">
+              <div className="bg-yellow-400/20 backdrop-blur rounded-lg px-4 py-2">
+                <span className="text-yellow-400 font-bold">{userCredits} {t('myCredits')}</span>
+              </div>
+              <button 
+                onClick={onClose}
+                className="text-gray-400 hover:text-white text-2xl"
+              >
+                ×
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Gift Animation Overlay */}
+        {showAnimation && selectedGift && (
+          <div className="absolute inset-0 bg-black/80 flex items-center justify-center z-60">
+            <div className="text-center">
+              <div className="text-8xl mb-4 animate-bounce">{selectedGift.emoji}</div>
+              <p className="text-2xl text-yellow-400 font-bold">{t('giftAnimation')}</p>
+              <p className="text-white">{t(selectedGift.name)} → {recipientName}</p>
+            </div>
+          </div>
+        )}
+
+        {/* Gift Sent Confirmation */}
+        {giftSent && (
+          <div className="absolute inset-0 bg-gradient-to-br from-green-900/90 to-green-800/90 flex items-center justify-center z-60">
+            <div className="text-center">
+              <div className="text-6xl mb-4">✅</div>
+              <p className="text-3xl text-green-300 font-bold mb-2">{t('giftSent')}</p>
+              <p className="text-white">{t(selectedGift?.name)} sent to {recipientName}</p>
+            </div>
+          </div>
+        )}
+
+        {/* Confirmation Modal */}
+        {showConfirmation && selectedGift && (
+          <div className="absolute inset-0 bg-black/80 flex items-center justify-center z-60">
+            <div className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-xl p-8 border border-yellow-400/30 max-w-md w-full mx-4">
+              <div className="text-center">
+                <div className="text-6xl mb-4">{selectedGift.emoji}</div>
+                <h3 className="text-xl font-bold text-white mb-2">{t('confirmGift')}</h3>
+                <p className="text-gray-300 mb-4">{t(selectedGift.name)} → {recipientName}</p>
+                <div className="bg-yellow-400/20 backdrop-blur rounded-lg p-4 mb-6">
+                  <p className="text-yellow-400 font-bold">{selectedGift.cost} {t('creditsRequired')}</p>
+                </div>
+                <div className="flex space-x-3">
+                  <button
+                    onClick={() => setShowConfirmation(false)}
+                    className="flex-1 bg-gray-600 text-white py-3 rounded-lg hover:bg-gray-700 transition-colors"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    onClick={handleSendGift}
+                    className="flex-1 bg-gradient-to-r from-yellow-400 to-yellow-500 text-black py-3 rounded-lg font-bold hover:from-yellow-500 hover:to-yellow-600 transition-all"
+                  >
+                    {t('confirmSend')}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Content */}
+        <div className="p-6">
+          {/* Basic Gifts */}
+          <div className="mb-8">
+            <h3 className="text-xl font-bold text-white mb-4 flex items-center space-x-2">
+              <span>🌟</span>
+              <span>{t('basicGifts')}</span>
+              <span className="text-sm text-green-400 bg-green-400/20 px-2 py-1 rounded">Free Users</span>
+            </h3>
+            <div className="grid grid-cols-3 md:grid-cols-6 gap-4">
+              {basicGifts.map((gift) => (
+                <div
+                  key={gift.id}
+                  onClick={() => handleGiftSelect(gift)}
+                  className="bg-gradient-to-br from-gray-800/60 to-gray-900/60 backdrop-blur rounded-xl p-4 border border-gray-600/30 hover:border-yellow-400/50 cursor-pointer transition-all hover:scale-105"
+                >
+                  <div className="text-center">
+                    <div className="text-3xl mb-2">{gift.emoji}</div>
+                    <p className="text-white font-medium text-sm">{t(gift.name)}</p>
+                    <p className="text-yellow-400 font-bold text-xs">{gift.cost}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Premium Gifts */}
+          <div className="mb-8">
+            <h3 className="text-xl font-bold text-white mb-4 flex items-center space-x-2">
+              <span>💎</span>
+              <span>{t('premiumGifts')}</span>
+              {!isVIP && <span className="text-sm text-red-400 bg-red-400/20 px-2 py-1 rounded">{t('vipOnly')}</span>}
+            </h3>
+            <div className="grid grid-cols-3 md:grid-cols-6 gap-4">
+              {premiumGifts.map((gift) => (
+                <div
+                  key={gift.id}
+                  onClick={() => handleGiftSelect(gift)}
+                  className={`bg-gradient-to-br from-purple-800/60 to-purple-900/60 backdrop-blur rounded-xl p-4 border cursor-pointer transition-all hover:scale-105 ${
+                    !isVIP ? 'border-red-400/30 opacity-50' : 'border-purple-400/50 hover:border-yellow-400/50'
+                  }`}
+                >
+                  <div className="text-center">
+                    <div className="text-3xl mb-2">{gift.emoji}</div>
+                    <p className="text-white font-medium text-sm">{t(gift.name)}</p>
+                    <p className="text-yellow-400 font-bold text-xs">{gift.cost}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Luxury Gifts */}
+          <div className="mb-8">
+            <h3 className="text-xl font-bold text-white mb-4 flex items-center space-x-2">
+              <span>👑</span>
+              <span>{t('luxuryGifts')}</span>
+              {!isVIP && <span className="text-sm text-red-400 bg-red-400/20 px-2 py-1 rounded">{t('vipOnly')}</span>}
+            </h3>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              {luxuryGifts.map((gift) => (
+                <div
+                  key={gift.id}
+                  onClick={() => handleGiftSelect(gift)}
+                  className={`bg-gradient-to-br from-yellow-800/60 to-yellow-900/60 backdrop-blur rounded-xl p-6 border cursor-pointer transition-all hover:scale-105 ${
+                    !isVIP ? 'border-red-400/30 opacity-50' : 'border-yellow-400/50 hover:border-yellow-400/80'
+                  }`}
+                >
+                  <div className="text-center">
+                    <div className="text-4xl mb-3">{gift.emoji}</div>
+                    <p className="text-white font-bold">{t(gift.name)}</p>
+                    <p className="text-yellow-400 font-bold">{gift.cost}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* VIP Upgrade Section */}
+          {!isVIP && (
+            <div className="bg-gradient-to-br from-yellow-600/20 to-yellow-800/20 backdrop-blur rounded-xl p-6 border border-yellow-400/30">
+              <div className="text-center">
+                <div className="text-4xl mb-4">👑</div>
+                <h3 className="text-xl font-bold text-yellow-400 mb-2">{t('upgradeToVip')}</h3>
+                <p className="text-white mb-4">{t('unlockAllGifts')}</p>
+                <button className="bg-gradient-to-r from-yellow-400 to-yellow-500 text-black px-8 py-3 rounded-lg font-bold hover:from-yellow-500 hover:to-yellow-600 transition-all">
+                  {t('upgradeToVip')}
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
 export const Footer = () => {
   return (
     <footer className="bg-gray-900 text-white py-12">
