@@ -1781,3 +1781,233 @@ export const Footer = () => {
     </footer>
   );
 };
+
+// Top Gift Senders Leaderboard Component
+export const TopGiftSendersLeaderboard = () => {
+  const { language, setLanguage, t } = useLanguage();
+  
+  return (
+    <div className="bg-gradient-to-br from-green-900 via-black to-emerald-900 py-20 relative overflow-hidden">
+      {/* Background decoration */}
+      <div className="absolute inset-0">
+        <div className="absolute top-1/4 left-0 w-96 h-96 bg-green-400/5 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-1/4 right-0 w-96 h-96 bg-emerald-400/5 rounded-full blur-3xl"></div>
+      </div>
+      
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-16">
+          <div className="flex items-center justify-center space-x-4 mb-6">
+            <div className="w-16 h-16 bg-gradient-to-br from-green-400 to-emerald-500 rounded-full flex items-center justify-center shadow-xl">
+              <span className="text-white font-bold text-2xl">🎁</span>
+            </div>
+            <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-green-400 via-emerald-400 to-green-500 bg-clip-text text-transparent tracking-tight">
+              {t('topGiftSenders')}
+            </h2>
+          </div>
+          <p className="text-2xl md:text-3xl text-green-300 font-bold mb-4 tracking-wide">
+            {t('thisMonth')}
+          </p>
+          <p className="text-white text-lg md:text-xl max-w-5xl mx-auto leading-relaxed">
+            {t('becomeTopSender')}
+          </p>
+        </div>
+
+        <div className="bg-gradient-to-br from-gray-800/60 to-gray-900/60 backdrop-blur rounded-2xl p-8 border border-green-400/20 shadow-2xl">
+          <div className="space-y-4">
+            {mockTopGiftSenders.map((sender) => (
+              <div 
+                key={sender.rank}
+                className={`flex items-center justify-between p-6 rounded-xl transition-all hover:scale-105 ${
+                  sender.rank <= 3 
+                    ? 'bg-gradient-to-r from-green-600/20 to-emerald-600/20 border-2 border-green-400/40 shadow-lg' 
+                    : 'bg-gray-700/40 border border-gray-600/30'
+                }`}
+              >
+                <div className="flex items-center space-x-6">
+                  <div className="flex items-center space-x-3">
+                    <span className={`font-bold text-2xl w-10 text-center ${
+                      sender.rank === 1 ? 'text-yellow-400' : 
+                      sender.rank === 2 ? 'text-gray-300' : 
+                      sender.rank === 3 ? 'text-amber-500' : 'text-gray-400'
+                    }`}>
+                      #{sender.rank}
+                    </span>
+                    <span className="text-3xl">{sender.avatar}</span>
+                  </div>
+                  <div>
+                    <p className="text-white font-bold text-xl">{sender.username}</p>
+                    <p className="text-gray-400">{sender.giftsSent} {t('giftsSent').toLowerCase()}</p>
+                  </div>
+                </div>
+                <div className="text-right">
+                  <p className={`font-bold text-xl ${sender.rank <= 3 ? 'text-green-400' : 'text-gray-400'}`}>
+                    {sender.monthlySpending}
+                  </p>
+                  <p className={`text-sm ${sender.rank <= 3 ? 'text-green-300' : 'text-gray-500'}`}>
+                    {sender.totalSpent} {t('creditsSpent').toLowerCase()}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="mt-12 text-center">
+          <div className="bg-gradient-to-br from-gray-800/60 to-gray-900/60 backdrop-blur rounded-2xl p-8 border border-green-400/20 shadow-2xl">
+            <h3 className="text-2xl font-bold text-green-400 mb-4">{t('becomeTopSender')}</h3>
+            <p className="text-white text-lg mb-6">
+              Send virtual gifts to your favorite escorts and compete for the top position!
+            </p>
+            <button className="bg-gradient-to-r from-green-400 to-emerald-500 text-black px-8 py-3 rounded-xl font-bold hover:from-green-500 hover:to-emerald-600 transition-all transform hover:scale-105">
+              {t('sendGift')}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// Gifts Received Dashboard Component (for Escorts)
+export const GiftsReceivedDashboard = ({ escortName = "Isabella" }) => {
+  const { language, setLanguage, t } = useLanguage();
+  const [activeTab, setActiveTab] = useState('recent');
+  
+  const totalEarnings = mockGiftHistory.reduce((sum, gift) => sum + gift.earnings, 0);
+  const totalGifts = mockGiftHistory.length;
+  
+  return (
+    <div className="bg-white rounded-lg shadow-lg max-w-6xl mx-auto">
+      <div className="border-b border-gray-200 p-6">
+        <div className="flex justify-between items-center">
+          <div>
+            <h2 className="text-2xl font-bold text-gray-900">{t('giftsReceived')}</h2>
+            <p className="text-gray-600">{escortName}'s Gift Dashboard</p>
+          </div>
+          <div className="flex space-x-4">
+            <div className="bg-green-50 rounded-lg p-4 text-center">
+              <p className="text-2xl font-bold text-green-600">€{totalEarnings.toFixed(2)}</p>
+              <p className="text-sm text-gray-600">{t('totalEarnings')}</p>
+            </div>
+            <div className="bg-blue-50 rounded-lg p-4 text-center">
+              <p className="text-2xl font-bold text-blue-600">{totalGifts}</p>
+              <p className="text-sm text-gray-600">{t('giftsReceived')}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="p-6">
+        {/* Tab Navigation */}
+        <div className="flex space-x-4 mb-6">
+          <button
+            onClick={() => setActiveTab('recent')}
+            className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+              activeTab === 'recent'
+                ? 'bg-yellow-400 text-black'
+                : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+            }`}
+          >
+            Recent Gifts
+          </button>
+          <button
+            onClick={() => setActiveTab('stats')}
+            className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+              activeTab === 'stats'
+                ? 'bg-yellow-400 text-black'
+                : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+            }`}
+          >
+            Statistics
+          </button>
+        </div>
+
+        {/* Recent Gifts Tab */}
+        {activeTab === 'recent' && (
+          <div className="overflow-x-auto">
+            <table className="w-full">
+              <thead>
+                <tr className="border-b border-gray-200">
+                  <th className="text-left py-3 text-sm font-semibold text-gray-700">{t('dateReceived')}</th>
+                  <th className="text-left py-3 text-sm font-semibold text-gray-700">{t('giftName')}</th>
+                  <th className="text-left py-3 text-sm font-semibold text-gray-700">{t('sender')}</th>
+                  <th className="text-left py-3 text-sm font-semibold text-gray-700">{t('value')}</th>
+                  <th className="text-left py-3 text-sm font-semibold text-gray-700">Earnings</th>
+                  <th className="text-left py-3 text-sm font-semibold text-gray-700">Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                {mockGiftHistory.map((gift) => (
+                  <tr key={gift.id} className="border-b border-gray-100 hover:bg-gray-50">
+                    <td className="py-3 text-sm text-gray-600">{gift.dateReceived}</td>
+                    <td className="py-3">
+                      <div className="flex items-center space-x-2">
+                        <span className="text-2xl">{gift.giftEmoji}</span>
+                        <span className="text-sm text-gray-700">{t(gift.giftName)}</span>
+                      </div>
+                    </td>
+                    <td className="py-3 text-sm text-gray-700">{gift.sender}</td>
+                    <td className="py-3 text-sm font-medium text-blue-600">{gift.value} credits</td>
+                    <td className="py-3 text-sm font-medium text-green-600">€{gift.earnings.toFixed(2)}</td>
+                    <td className="py-3">
+                      <span className="bg-green-100 text-green-800 px-2 py-1 rounded text-xs font-medium">
+                        {gift.status}
+                      </span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+
+        {/* Statistics Tab */}
+        {activeTab === 'stats' && (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="bg-gradient-to-br from-purple-50 to-purple-100 rounded-lg p-6 border border-purple-200">
+              <div className="flex items-center space-x-3 mb-4">
+                <span className="text-3xl">🌹</span>
+                <div>
+                  <h3 className="font-semibold text-gray-900">Most Popular Gift</h3>
+                  <p className="text-sm text-gray-600">Rose - 45% of all gifts</p>
+                </div>
+              </div>
+            </div>
+            
+            <div className="bg-gradient-to-br from-green-50 to-green-100 rounded-lg p-6 border border-green-200">
+              <div className="flex items-center space-x-3 mb-4">
+                <span className="text-3xl">💰</span>
+                <div>
+                  <h3 className="font-semibold text-gray-900">Highest Value Gift</h3>
+                  <p className="text-sm text-gray-600">Yacht - €50.00 earnings</p>
+                </div>
+              </div>
+            </div>
+            
+            <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg p-6 border border-blue-200">
+              <div className="flex items-center space-x-3 mb-4">
+                <span className="text-3xl">👑</span>
+                <div>
+                  <h3 className="font-semibold text-gray-900">Top Sender</h3>
+                  <p className="text-sm text-gray-600">LuxuryGifter_VIP</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+
+      <div className="border-t border-gray-200 p-6">
+        <div className="bg-yellow-50 rounded-lg p-4">
+          <div className="flex items-center space-x-3">
+            <span className="text-2xl">💡</span>
+            <div>
+              <h4 className="font-semibold text-gray-900">Conversion Rate</h4>
+              <p className="text-sm text-gray-600">1 Credit = €0.10 earnings • {t('conversionRate')}: 10%</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
