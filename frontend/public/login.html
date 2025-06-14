@@ -252,8 +252,7 @@
                 if (response.ok) {
                     localStorage.setItem('accessToken', data.access_token);
                     alert(`🎉 Registration successful! Welcome to EuroLove!\n\n✅ You received 50 welcome credits\n✅ Account created as ${formData.role}\n✅ Ready to start connecting!`);
-                    // In a real app, you'd redirect to dashboard
-                    window.location.reload();
+                    window.location.href = 'dashboard.html';
                 } else {
                     showError(data.detail || 'Registration failed');
                 }
