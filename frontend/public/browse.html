@@ -465,6 +465,21 @@
             alert(`💬 Messaging feature coming soon!\n\nFor now, send a gift to ${profileName} to show your interest! 💕`);
         }
         
+        function debugAuth() {
+            const token = localStorage.getItem('accessToken');
+            const info = `
+Debug Info:
+- Token exists: ${token ? 'Yes' : 'No'}
+- Token length: ${token ? token.length : 0}
+- Current user: ${currentUser ? currentUser.full_name : 'Not loaded'}
+- User credits: ${currentUser ? currentUser.credits : 'N/A'}
+- User role: ${currentUser ? currentUser.role : 'N/A'}
+            `;
+            alert(info);
+            console.log('Full token:', token);
+            console.log('Current user object:', currentUser);
+        }
+        
         // Load profiles when page loads
         loadProfiles();
     </script>
