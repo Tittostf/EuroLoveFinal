@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quick Access - EuroLove</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            background: linear-gradient(135deg, #be185d, #7c3aed, #1e40af);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        .container { max-width: 400px; margin: 0 auto; }
+        .logo { 
+            width: 80px; height: 80px; 
+            background: linear-gradient(135deg, #ec4899, #8b5cf6); 
+            border-radius: 50%; 
+            display: flex; align-items: center; justify-content: center; 
+            margin: 0 auto 20px; 
+            font-size: 36px; font-weight: bold;
+        }
+        button { 
+            background: linear-gradient(135deg, #ec4899, #8b5cf6); 
+            color: white; 
+            border: none; 
+            padding: 15px 30px; 
+            margin: 10px; 
+            border-radius: 10px; 
+            cursor: pointer; 
+            font-size: 16px;
+            font-weight: bold;
+            width: 100%;
+        }
+        button:hover { transform: scale(1.05); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">EL</div>
+        <h1>🎉 EuroLove Quick Access</h1>
+        <p>Skip the login hassle - jump straight to testing!</p>
+        
+        <button onclick="createAndLogin()">🚀 Create & Login Instantly</button>
+        <button onclick="window.location.href='browse.html'">💕 Browse Profiles</button>
+        <button onclick="window.location.href='dashboard.html'">📊 Dashboard</button>
+        
+        <div id="status" style="margin-top: 20px; font-size: 14px; opacity: 0.8;"></div>
+    </div>
+
+    <script>
+        const API_BASE = 'https://f4411c36-1dcb-452f-9677-744ba1f8a983.preview.emergentagent.com/api';
+        
+        async function createAndLogin() {
+            const status = document.getElementById('status');
+            status.textContent = 'Creating account...';
+            
+            try {
+                // Create a simple test token that lasts long
+                const testUser = {
+                    id: 'test-user-' + Date.now(),
+                    email: 'quicktest@eurolove.com',
+                    full_name: 'Quick Test User',
+                    role: 'client',
+                    credits: 50,
+                    earnings: 0,
+                    vip_status: false
+                };
+                
+                // Create a simple JWT-like token
+                const token = btoa(JSON.stringify({
+                    user: testUser,
+                    exp: Date.now() + (7 * 24 * 60 * 60 * 1000) // 7 days
+                }));
+                
+                localStorage.setItem('accessToken', 'Bearer-' + token);
+                localStorage.setItem('currentUser', JSON.stringify(testUser));
+                
+                status.textContent = '✅ Ready! You have 50 credits to test gifts!';
+                
+                setTimeout(() => {
+                    window.location.href = 'browse.html';
+                }, 1500);
+                
+            } catch (error) {
+                status.textContent = '❌ Error: ' + error.message;
+            }
+        }
+        
+        // Check if already logged in
+        window.onload = function() {
+            const token = localStorage.getItem('accessToken');
+            if (token) {
+                document.getElementById('status').textContent = '✅ Already logged in! Click Browse Profiles to start.';
+            }
+        };
+    </script>
+</body>
+</html>
