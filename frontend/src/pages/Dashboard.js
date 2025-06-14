@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { useAuth } from '../contexts/AuthContext'
-import { useToast } from '../components/Toast'
 import axios from 'axios'
 
 export default function Dashboard() {
   const { currentUser } = useAuth()
-  const { addToast } = useToast()
   const [stats, setStats] = useState({
     giftsSent: 0,
     giftsReceived: 0,
@@ -51,7 +49,6 @@ export default function Dashboard() {
       setRecentGifts(allGifts)
     } catch (error) {
       console.error('Error fetching dashboard data:', error)
-      addToast('Error loading dashboard data', 'error')
     } finally {
       setLoading(false)
     }
