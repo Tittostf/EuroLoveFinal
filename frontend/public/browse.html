@@ -466,6 +466,22 @@
             if (!selectedGift || !selectedProfile || !currentUser) return;
             
             const token = localStorage.getItem('accessToken');
+            
+            // Quick access mode - simulate gift sending
+            if (token && token.startsWith('Bearer-')) {
+                // Simulate gift sending for quick access
+                currentUser.credits -= selectedGift.credits;
+                document.getElementById('credits-display').textContent = `Credits: ${currentUser.credits}`;
+                
+                // Update stored user
+                localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                
+                alert(`🎉 ${selectedGift.icon} ${selectedGift.name} sent to ${selectedProfile.name}!\n\nYou spent ${selectedGift.credits} credits\nRemaining credits: ${currentUser.credits}\n\n(Demo mode - gift simulated)`);
+                closeGiftModal();
+                return;
+            }
+            
+            // Real API mode
             if (!token) {
                 alert('Session expired. Please login again.');
                 window.location.href = 'login.html';
