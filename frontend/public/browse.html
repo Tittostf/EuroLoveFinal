@@ -354,14 +354,25 @@
         }
         
         function selectGift(giftType, profileId, profileName) {
+            console.log('selectGift called:', { giftType, profileId, profileName });
+            console.log('currentUser:', currentUser);
+            
             if (!currentUser) {
                 alert('Please login to send gifts');
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            const token = localStorage.getItem('accessToken');
+            if (!token) {
+                alert('Session expired. Please login again.');
+                window.location.href = 'login.html';
                 return;
             }
             
             const gift = giftTypes[giftType];
             if (currentUser.credits < gift.credits) {
-                alert(`You need ${gift.credits} credits to send this gift. You have ${currentUser.credits} credits.`);
+                alert(`You need ${gift.credits} credits to send this gift. You have ${currentUser.credits} credits.\n\nGo to dashboard to buy more credits!`);
                 return;
             }
             
