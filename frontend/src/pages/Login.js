@@ -1,30 +1,29 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
-import { useToast } from '../components/Toast'
 
 export default function Login() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
+  const [error, setError] = useState('')
   const { login } = useAuth()
-  const { addToast } = useToast()
   const navigate = useNavigate()
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     setLoading(true)
+    setError('')
 
     try {
       const result = await login(email, password)
       if (result.success) {
-        addToast('Login successful!', 'success')
         navigate('/dashboard')
       } else {
-        addToast(result.error, 'error')
+        setError(result.error)
       }
     } catch (error) {
-      addToast('Login failed. Please try again.', 'error')
+      setError('Login failed. Please try again.')
     } finally {
       setLoading(false)
     }
