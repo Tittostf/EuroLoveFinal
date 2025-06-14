@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quick Test - EuroLove</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            background: linear-gradient(135deg, #be185d, #7c3aed, #1e40af);
+            color: white;
+            padding: 20px;
+        }
+        .container { max-width: 600px; margin: 0 auto; }
+        button { 
+            background: #ec4899; 
+            color: white; 
+            border: none; 
+            padding: 10px 20px; 
+            margin: 10px; 
+            border-radius: 5px; 
+            cursor: pointer; 
+        }
+        .result { 
+            background: rgba(0,0,0,0.3); 
+            padding: 15px; 
+            margin: 10px 0; 
+            border-radius: 8px; 
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔧 EuroLove Test Panel</h1>
+        
+        <h3>Quick Tests:</h3>
+        <button onclick="testBackend()">Test Backend Connection</button>
+        <button onclick="createTestUser()">Create Test User</button>
+        <button onclick="testLogin()">Test Login</button>
+        <button onclick="checkAuth()">Check Current Auth</button>
+        <button onclick="testGiftSend()">Test Gift Send</button>
+        
+        <div id="results"></div>
+    </div>
+
+    <script>
+        const API_BASE = 'https://f4411c36-1dcb-452f-9677-744ba1f8a983.preview.emergentagent.com/api';
+        
+        function log(message) {
+            const results = document.getElementById('results');
+            results.innerHTML += `<div class="result">[${new Date().toLocaleTimeString()}] ${message}</div>`;
+        }
+        
+        async function testBackend() {
+            try {
+                const response = await fetch(`${API_BASE}/`);
+                const data = await response.json();
+                log(`✅ Backend: ${JSON.stringify(data, null, 2)}`);
+            } catch (error) {
+                log(`❌ Backend Error: ${error}`);
+            }
+        }
+        
+        async function createTestUser() {
+            try {
+                const userData = {
+                    email: 'test@eurolove.com',
+                    password: 'testpass123',
+                    full_name: 'Test User',
+                    role: 'client',
+                    age: 25,
+                    bio: 'Test account',
+                    location: 'Test City'
+                };
+                
+                const response = await fetch(`${API_BASE}/auth/register`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(userData)
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    localStorage.setItem('accessToken', data.access_token);
+                    log(`✅ User Created: ${JSON.stringify(data.user, null, 2)}`);
+                    log(`Token saved: ${data.access_token.substring(0, 50)}...`);
+                } else {
+                    log(`❌ Registration Failed: ${JSON.stringify(data, null, 2)}`);
+                }
+            } catch (error) {
+                log(`❌ Registration Error: ${error}`);
+            }
+        }
+        
+        async function testLogin() {
+            try {
+                const response = await fetch(`${API_BASE}/auth/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        email: 'test@eurolove.com',
+                        password: 'testpass123'
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    localStorage.setItem('accessToken', data.access_token);
+                    log(`✅ Login Success: ${JSON.stringify(data.user, null, 2)}`);
+                    log(`Token saved: ${data.access_token.substring(0, 50)}...`);
+                } else {
+                    log(`❌ Login Failed: ${JSON.stringify(data, null, 2)}`);
+                }
+            } catch (error) {
+                log(`❌ Login Error: ${error}`);
+            }
+        }
+        
+        async function checkAuth() {
+            try {
+                const token = localStorage.getItem('accessToken');
+                log(`Token from storage: ${token ? token.substring(0, 50) + '...' : 'None'}`);
+                
+                if (!token) {
+                    log('❌ No token found');
+                    return;
+                }
+                
+                const response = await fetch(`${API_BASE}/profile/me`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    log(`✅ Auth Valid: ${JSON.stringify(data, null, 2)}`);
+                } else {
+                    log(`❌ Auth Failed: ${JSON.stringify(data, null, 2)}`);
+                }
+            } catch (error) {
+                log(`❌ Auth Error: ${error}`);
+            }
+        }
+        
+        async function testGiftSend() {
+            try {
+                const token = localStorage.getItem('accessToken');
+                if (!token) {
+                    log('❌ No token - please login first');
+                    return;
+                }
+                
+                const response = await fetch(`${API_BASE}/gifts/send`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({
+                        receiver_id: '550e8400-e29b-41d4-a716-446655440001',
+                        gift_type: 'heart',
+                        message: 'Test gift!'
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    log(`✅ Gift Sent: ${JSON.stringify(data, null, 2)}`);
+                } else {
+                    log(`❌ Gift Failed: ${JSON.stringify(data, null, 2)}`);
+                }
+            } catch (error) {
+                log(`❌ Gift Error: ${error}`);
+            }
+        }
+    </script>
+</body>
+</html>
