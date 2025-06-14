@@ -244,31 +244,31 @@
                 const token = localStorage.getItem('accessToken');
                 console.log('Token found:', token ? 'Yes' : 'No');
                 
-                if (token) {
-                    const userResponse = await fetch(`${API_BASE}/profile/me`, {
-                        headers: { 'Authorization': `Bearer ${token}` }
-                    });
-                    console.log('User response status:', userResponse.status);
-                    
-                    if (userResponse.ok) {
-                        currentUser = await userResponse.json();
-                        console.log('Current user loaded:', currentUser);
-                        document.getElementById('credits-display').textContent = `Credits: ${currentUser.credits}`;
-                    } else {
-                        console.error('Failed to get user profile:', userResponse.status);
-                        // If token is invalid, redirect to login
-                        if (userResponse.status === 401 || userResponse.status === 403) {
-                            alert('Session expired. Please login again.');
-                            localStorage.removeItem('accessToken');
-                            window.location.href = 'login.html';
-                            return;
-                        }
-                    }
-                } else {
+                if (!token) {
                     console.log('No token found, redirecting to login');
-                    alert('Please login first');
                     window.location.href = 'login.html';
                     return;
+                }
+                
+                const userResponse = await fetch(`${API_BASE}/profile/me`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                console.log('User response status:', userResponse.status);
+                
+                if (userResponse.ok) {
+                    currentUser = await userResponse.json();
+                    console.log('Current user loaded:', currentUser);
+                    document.getElementById('credits-display').textContent = `Credits: ${currentUser.credits}`;
+                } else {
+                    console.error('Failed to get user profile:', userResponse.status);
+                    // If token is invalid, clear it and redirect to login
+                    localStorage.removeItem('accessToken');
+                    
+                    if (userResponse.status === 401 || userResponse.status === 403) {
+                        alert('Session expired. Please login again.');
+                        window.location.href = 'login.html';
+                        return;
+                    }
                 }
                 
                 // Load escort profiles
