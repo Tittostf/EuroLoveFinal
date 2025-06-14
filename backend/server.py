@@ -222,6 +222,11 @@ async def root():
 @api_router.post("/auth/register")
 async def register(user_data: UserRegister):
     try:
+        # First check if user already exists
+        existing_user = supabase.table('profiles').select('email').eq('email', user_data.email).execute()
+        if existing_user.data:
+            raise HTTPException(status_code=400, detail="Email already registered. Please use a different email or try logging in.")
+        
         # Register user with Supabase Auth
         auth_response = supabase.auth.sign_up({
             "email": user_data.email,
@@ -248,7 +253,15 @@ async def register(user_data: UserRegister):
                 "status": UserStatus.ACTIVE.value
             }
             
-            profile_response = supabase.table('profiles').insert(profile_data).execute()
+            try:
+                profile_response = supabase.table('profiles').insert(profile_data).execute()
+            except Exception as profile_error:
+                # If profile creation fails, clean up the auth user
+                logger.error(f"Profile creation failed: {profile_error}")
+                if "duplicate key value violates unique constraint" in str(profile_error) or "already exists" in str(profile_error):
+                    raise HTTPException(status_code=400, detail="Email already registered. Please use a different email or try logging in.")
+                else:
+                    raise HTTPException(status_code=500, detail="Registration failed. Please try again.")
             
             # Create access token
             access_token = create_access_token({"sub": user_id, "email": user_data.email})
@@ -260,11 +273,26 @@ async def register(user_data: UserRegister):
                 "user": profile_response.data[0]
             }
         else:
-            raise HTTPException(status_code=400, detail="Registration failed")
+            # Handle Supabase auth errors
+            if hasattr(auth_response, 'error') and auth_response.error:
+                error_message = auth_response.error.message
+                if "already registered" in error_message or "already exists" in error_message:
+                    raise HTTPException(status_code=400, detail="Email already registered. Please use a different email or try logging in.")
+                else:
+                    raise HTTPException(status_code=400, detail=f"Registration failed: {error_message}")
+            else:
+                raise HTTPException(status_code=400, detail="Registration failed")
             
+    except HTTPException:
+        # Re-raise HTTP exceptions as-is
+        raise
     except Exception as e:
         logger.error(f"Registration error: {e}")
-        raise HTTPException(status_code=400, detail=str(e))
+        error_str = str(e).lower()
+        if "duplicate" in error_str or "already exists" in error_str or "unique constraint" in error_str:
+            raise HTTPException(status_code=400, detail="Email already registered. Please use a different email or try logging in.")
+        else:
+            raise HTTPException(status_code=500, detail="Registration failed. Please try again.")
 
 @api_router.post("/auth/login")
 async def login(user_data: UserLogin):
