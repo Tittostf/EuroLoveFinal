@@ -191,8 +191,7 @@
                     localStorage.setItem('accessToken', data.access_token);
                     const user = data.user;
                     alert(`🎉 Login successful! Welcome back!\n\n✅ Credits: ${user.credits}\n✅ Role: ${user.role}\n${user.vip_status ? '✅ VIP Member' : ''}`);
-                    // In a real app, you'd redirect to dashboard
-                    window.location.reload();
+                    window.location.href = 'dashboard.html';
                 } else {
                     showError(data.detail || 'Login failed. Please check your credentials.');
                 }
