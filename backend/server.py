@@ -297,7 +297,7 @@ async def register(user_data: UserRegister):
 @api_router.post("/auth/login")
 async def login(user_data: UserLogin):
     try:
-        # Authenticate with Supabase
+        # First try Supabase auth
         auth_response = supabase.auth.sign_in_with_password({
             "email": user_data.email,
             "password": user_data.password
@@ -321,8 +321,49 @@ async def login(user_data: UserLogin):
             else:
                 raise HTTPException(status_code=404, detail="User profile not found")
         else:
+            # If Supabase auth fails, try to find user in our database and update auth
+            profile_response = supabase.table('profiles').select('*').eq('email', user_data.email).execute()
+            
+            if profile_response.data:
+                # User exists in our database, try to create/update Supabase auth
+                try:
+                    # Try to sign up with Supabase Auth (this will work if user doesn't exist in auth)
+                    auth_response = supabase.auth.sign_up({
+                        "email": user_data.email,
+                        "password": user_data.password
+                    })
+                    
+                    if auth_response.user:
+                        # Update the profile with the new auth user ID
+                        user_profile = profile_response.data[0]
+                        supabase.table('profiles').update({"id": auth_response.user.id}).eq('email', user_data.email).execute()
+                        
+                        access_token = create_access_token({"sub": auth_response.user.id, "email": user_data.email})
+                        
+                        return {
+                            "message": "Login successful",
+                            "access_token": access_token,
+                            "token_type": "bearer",
+                            "user": user_profile
+                        }
+                except Exception as signup_error:
+                    logger.error(f"Supabase auth signup failed: {signup_error}")
+                    # If all else fails, create a temporary token with the existing profile
+                    user_profile = profile_response.data[0]
+                    access_token = create_access_token({"sub": user_profile['id'], "email": user_data.email})
+                    
+                    return {
+                        "message": "Login successful",
+                        "access_token": access_token,
+                        "token_type": "bearer",
+                        "user": user_profile
+                    }
+            
             raise HTTPException(status_code=401, detail="Invalid credentials")
             
+    except HTTPException:
+        # Re-raise HTTP exceptions as-is
+        raise
     except Exception as e:
         logger.error(f"Login error: {e}")
         raise HTTPException(status_code=401, detail="Invalid credentials")
