@@ -193,6 +193,8 @@
         }
         
         async function handleRegister() {
+            hideError();
+            
             const formData = {
                 full_name: document.getElementById('reg-name').value,
                 email: document.getElementById('reg-email').value,
@@ -203,6 +205,7 @@
                 bio: ''
             };
             
+            // Client-side validation
             if (!formData.full_name || !formData.email || !formData.password || !formData.age) {
                 showError('Please fill in all required fields');
                 return;
@@ -212,6 +215,17 @@
                 showError('You must be at least 18 years old');
                 return;
             }
+            
+            if (formData.password.length < 6) {
+                showError('Password must be at least 6 characters long');
+                return;
+            }
+            
+            // Disable button during request
+            const button = event.target;
+            const originalText = button.textContent;
+            button.textContent = 'Creating Account...';
+            button.disabled = true;
             
             try {
                 const response = await fetch(`${API_BASE}/auth/register`, {
@@ -224,14 +238,19 @@
                 
                 if (response.ok) {
                     localStorage.setItem('accessToken', data.access_token);
-                    alert(`Registration successful! Welcome to EuroLove! You received 50 welcome credits.`);
-                    window.location.href = 'dashboard.html';
+                    alert(`🎉 Registration successful! Welcome to EuroLove!\n\n✅ You received 50 welcome credits\n✅ Account created as ${formData.role}\n✅ Ready to start connecting!`);
+                    // In a real app, you'd redirect to dashboard
+                    window.location.reload();
                 } else {
                     showError(data.detail || 'Registration failed');
                 }
             } catch (error) {
-                showError('Network error. Please try again.');
+                showError('Network error. Please check your connection and try again.');
                 console.error('Registration error:', error);
+            } finally {
+                // Re-enable button
+                button.textContent = originalText;
+                button.disabled = false;
             }
         }
         
