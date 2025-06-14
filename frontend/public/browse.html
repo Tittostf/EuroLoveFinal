@@ -398,12 +398,25 @@
         async function confirmSendGift() {
             if (!selectedGift || !selectedProfile || !currentUser) return;
             
+            const token = localStorage.getItem('accessToken');
+            if (!token) {
+                alert('Session expired. Please login again.');
+                window.location.href = 'login.html';
+                return;
+            }
+            
             try {
+                console.log('Sending gift:', {
+                    receiver_id: selectedProfile.id,
+                    gift_type: selectedGift.type,
+                    message: `Beautiful ${selectedGift.name} for you! 💕`
+                });
+                
                 const response = await fetch(`${API_BASE}/gifts/send`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+                        'Authorization': `Bearer ${token}`
                     },
                     body: JSON.stringify({
                         receiver_id: selectedProfile.id,
@@ -412,18 +425,32 @@
                     })
                 });
                 
+                console.log('Response status:', response.status);
+                
                 if (response.ok) {
+                    const responseData = await response.json();
+                    console.log('Gift sent successfully:', responseData);
+                    
                     currentUser.credits -= selectedGift.credits;
                     document.getElementById('credits-display').textContent = `Credits: ${currentUser.credits}`;
                     
                     alert(`🎉 ${selectedGift.icon} ${selectedGift.name} sent to ${selectedProfile.name}!\n\nYou spent ${selectedGift.credits} credits\nRemaining credits: ${currentUser.credits}`);
                 } else {
                     const error = await response.json();
+                    console.error('Gift sending error:', error);
+                    
+                    if (response.status === 401 || response.status === 403) {
+                        alert('Session expired. Please login again.');
+                        localStorage.removeItem('accessToken');
+                        window.location.href = 'login.html';
+                        return;
+                    }
+                    
                     alert(`Error sending gift: ${error.detail || 'Please try again'}`);
                 }
             } catch (error) {
-                console.error('Gift sending error:', error);
-                alert('Network error. Please try again.');
+                console.error('Network error:', error);
+                alert('Network error. Please check your connection and try again.');
             }
             
             closeGiftModal();
