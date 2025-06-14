@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - EuroLove</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #be185d, #7c3aed, #1e40af);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            border-radius: 16px;
+            backdrop-filter: blur(10px);
+        }
+        .user-info h1 { color: white; font-size: 28px; margin-bottom: 5px; }
+        .user-info p { color: #d1d5db; }
+        .header-actions { display: flex; gap: 10px; }
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        .btn-primary { background: linear-gradient(135deg, #ec4899, #8b5cf6); color: white; }
+        .btn-secondary { background: rgba(255, 255, 255, 0.2); color: white; }
+        .btn:hover { transform: scale(1.05); }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .stat-card {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 16px;
+            border: 1px solid rgba(236, 72, 153, 0.2);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .stat-icon {
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+        
+        .stat-value {
+            color: white;
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            color: #d1d5db;
+            font-size: 14px;
+        }
+        
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .action-card {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 16px;
+            border: 1px solid rgba(236, 72, 153, 0.2);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .action-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .action-icon { font-size: 48px; margin-bottom: 15px; }
+        .action-title { color: white; font-size: 18px; font-weight: bold; margin-bottom: 8px; }
+        .action-desc { color: #9ca3af; font-size: 14px; }
+        
+        .recent-section {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 16px;
+            border: 1px solid rgba(236, 72, 153, 0.2);
+            backdrop-filter: blur(10px);
+            padding: 25px;
+        }
+        
+        .section-title {
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        
+        .activity-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .activity-icon {
+            font-size: 24px;
+            margin-right: 15px;
+        }
+        
+        .activity-text {
+            flex: 1;
+            color: white;
+        }
+        
+        .activity-time {
+            color: #9ca3af;
+            font-size: 12px;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: #9ca3af;
+        }
+        
+        .empty-icon { font-size: 48px; margin-bottom: 15px; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="user-info">
+            <h1 id="welcome-text">Welcome to EuroLove!</h1>
+            <p id="user-details">Loading...</p>
+        </div>
+        <div class="header-actions">
+            <button class="btn btn-secondary" onclick="logout()">Logout</button>
+        </div>
+    </div>
+    
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-icon">💎</div>
+            <div class="stat-value" id="credits-stat">--</div>
+            <div class="stat-label">Credits</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">💰</div>
+            <div class="stat-value" id="earnings-stat">€--</div>
+            <div class="stat-label">Total Earnings</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">🎁</div>
+            <div class="stat-value" id="gifts-stat">--</div>
+            <div class="stat-label">Gifts Sent/Received</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">👑</div>
+            <div class="stat-value" id="status-stat">--</div>
+            <div class="stat-label">Status</div>
+        </div>
+    </div>
+    
+    <div class="quick-actions">
+        <div class="action-card" onclick="window.location.href = 'browse.html'">
+            <div class="action-icon">💕</div>
+            <div class="action-title">Browse Profiles</div>
+            <div class="action-desc">Discover amazing companions</div>
+        </div>
+        
+        <div class="action-card" onclick="window.location.href = 'reposts.html'">
+            <div class="action-icon">📸</div>
+            <div class="action-title">View Reposts</div>
+            <div class="action-desc">See latest posts & updates</div>
+        </div>
+        
+        <div class="action-card" onclick="buyCredits()">
+            <div class="action-icon">💳</div>
+            <div class="action-title">Buy Credits</div>
+            <div class="action-desc">Purchase more credits</div>
+        </div>
+        
+        <div class="action-card" onclick="viewLeaderboard()">
+            <div class="action-icon">🏆</div>
+            <div class="action-title">Leaderboard</div>
+            <div class="action-desc">See top earners & spenders</div>
+        </div>
+        
+        <div class="action-card" onclick="window.location.href = 'gifts.html'">
+            <div class="action-icon">🎁</div>
+            <div class="action-title">My Gifts</div>
+            <div class="action-desc">View gift history</div>
+        </div>
+        
+        <div class="action-card" onclick="upgradeVIP()">
+            <div class="action-icon">⭐</div>
+            <div class="action-title">VIP Membership</div>
+            <div class="action-desc">Upgrade to premium</div>
+        </div>
+    </div>
+    
+    <div class="recent-section">
+        <h3 class="section-title">Recent Activity</h3>
+        <div id="recent-activity">
+            <div class="empty-state">
+                <div class="empty-icon">🎯</div>
+                <p>No recent activity</p>
+                <p>Start browsing profiles and sending gifts!</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'https://f4411c36-1dcb-452f-9677-744ba1f8a983.preview.emergentagent.com/api';
+        let currentUser = null;
+        
+        async function loadUserData() {
+            try {
+                const token = localStorage.getItem('accessToken');
+                if (!token) {
+                    window.location.href = 'login.html';
+                    return;
+                }
+                
+                // Get current user
+                const userResponse = await fetch(`${API_BASE}/profile/me`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                
+                if (!userResponse.ok) {
+                    if (userResponse.status === 401) {
+                        localStorage.removeItem('accessToken');
+                        window.location.href = 'login.html';
+                        return;
+                    }
+                    throw new Error('Failed to load user data');
+                }
+                
+                currentUser = await userResponse.json();
+                displayUserData();
+                loadGiftStats();
+                loadRecentActivity();
+                
+            } catch (error) {
+                console.error('Error loading user data:', error);
+                alert('Error loading user data. Please try refreshing the page.');
+            }
+        }
+        
+        function displayUserData() {
+            if (!currentUser) return;
+            
+            document.getElementById('welcome-text').textContent = `Welcome back, ${currentUser.full_name}!`;
+            document.getElementById('user-details').textContent = 
+                `${currentUser.role.charAt(0).toUpperCase() + currentUser.role.slice(1)} • ${currentUser.email}`;
+            
+            document.getElementById('credits-stat').textContent = currentUser.credits || 0;
+            document.getElementById('earnings-stat').textContent = `€${(currentUser.earnings || 0).toFixed(2)}`;
+            document.getElementById('status-stat').textContent = currentUser.vip_status ? 'VIP' : 'Standard';
+        }
+        
+        async function loadGiftStats() {
+            try {
+                const token = localStorage.getItem('accessToken');
+                const [sentResponse, receivedResponse] = await Promise.all([
+                    fetch(`${API_BASE}/gifts/sent`, { headers: { 'Authorization': `Bearer ${token}` } }),
+                    fetch(`${API_BASE}/gifts/received`, { headers: { 'Authorization': `Bearer ${token}` } })
+                ]);
+                
+                const sent = sentResponse.ok ? (await sentResponse.json()).gifts : [];
+                const received = receivedResponse.ok ? (await receivedResponse.json()).gifts : [];
+                
+                const totalGifts = (sent?.length || 0) + (received?.length || 0);
+                document.getElementById('gifts-stat').textContent = totalGifts;
+                
+            } catch (error) {
+                console.error('Error loading gift stats:', error);
+            }
+        }
+        
+        async function loadRecentActivity() {
+            try {
+                const token = localStorage.getItem('accessToken');
+                const response = await fetch(`${API_BASE}/gifts/received`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    const gifts = data.gifts || [];
+                    
+                    if (gifts.length > 0) {
+                        displayRecentActivity(gifts.slice(0, 5));
+                    }
+                }
+            } catch (error) {
+                console.error('Error loading recent activity:', error);
+            }
+        }
+        
+        function displayRecentActivity(activities) {
+            const container = document.getElementById('recent-activity');
+            container.innerHTML = '';
+            
+            activities.forEach(activity => {
+                const item = document.createElement('div');
+                item.className = 'activity-item';
+                
+                const giftIcons = {
+                    heart: '❤️',
+                    rose: '🌹',
+                    diamond: '💎',
+                    crown: '👑',
+                    luxury_car: '🚗'
+                };
+                
+                item.innerHTML = `
+                    <div class="activity-icon">${giftIcons[activity.gift_type] || '🎁'}</div>
+                    <div class="activity-text">
+                        Received ${activity.gift_type.replace('_', ' ')} gift (€${activity.money_value.toFixed(2)})
+                        ${activity.message ? `<br><small>"${activity.message}"</small>` : ''}
+                    </div>
+                    <div class="activity-time">${new Date(activity.created_at).toLocaleDateString()}</div>
+                `;
+                
+                container.appendChild(item);
+            });
+        }
+        
+        function logout() {
+            localStorage.removeItem('accessToken');
+            window.location.href = 'login.html';
+        }
+        
+        function buyCredits() {
+            alert('💳 Credit purchase feature coming soon!\n\nCredit packages:\n• Starter: 100 credits - €5\n• Popular: 500 credits - €20\n• Premium: 1000 credits - €35');
+        }
+        
+        function viewLeaderboard() {
+            alert('🏆 Leaderboard feature coming soon!\n\nSee:\n• Top spenders (clients)\n• Top earners (escorts)\n• Monthly rewards\n• VIP rankings');
+        }
+        
+        function upgradeVIP() {
+            alert('⭐ VIP upgrade feature coming soon!\n\nVIP benefits:\n• Priority listing\n• Exclusive features\n• Monthly rewards\n• Special badge');
+        }
+        
+        // Load user data when page loads
+        loadUserData();
+    </script>
+</body>
+</html>
