@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
-import { useToast } from '../components/Toast'
 
 export default function Register() {
   const [formData, setFormData] = useState({
@@ -14,8 +13,8 @@ export default function Register() {
     location: ''
   })
   const [loading, setLoading] = useState(false)
+  const [error, setError] = useState('')
   const { register } = useAuth()
-  const { addToast } = useToast()
   const navigate = useNavigate()
 
   const handleChange = (e) => {
@@ -28,6 +27,7 @@ export default function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault()
     setLoading(true)
+    setError('')
 
     try {
       const userData = {
@@ -37,13 +37,12 @@ export default function Register() {
       
       const result = await register(userData)
       if (result.success) {
-        addToast('Registration successful! Welcome to EuroLove!', 'success')
         navigate('/dashboard')
       } else {
-        addToast(result.error, 'error')
+        setError(result.error)
       }
     } catch (error) {
-      addToast('Registration failed. Please try again.', 'error')
+      setError('Registration failed. Please try again.')
     } finally {
       setLoading(false)
     }
