@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Browse Profiles - EuroLove</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #be185d, #7c3aed, #1e40af);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .header h1 { color: white; font-size: 36px; margin-bottom: 8px; }
+        .header p { color: #d1d5db; font-size: 18px; }
+        
+        .profiles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .profile-card {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 16px;
+            border: 1px solid rgba(236, 72, 153, 0.2);
+            backdrop-filter: blur(10px);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .profile-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        .profile-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+        
+        .profile-info {
+            padding: 20px;
+        }
+        
+        .profile-name {
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+        
+        .profile-details {
+            color: #d1d5db;
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .vip-badge {
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            color: black;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        .profile-bio {
+            color: #9ca3af;
+            font-size: 14px;
+            line-height: 1.4;
+            margin-bottom: 16px;
+        }
+        
+        .profile-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 16px;
+            font-size: 14px;
+        }
+        
+        .stat { text-align: center; }
+        .stat-value { color: white; font-weight: bold; font-size: 16px; }
+        .stat-label { color: #9ca3af; }
+        
+        .gift-buttons {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+        
+        .gift-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            padding: 8px 4px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+            font-size: 12px;
+        }
+        
+        .gift-btn:hover {
+            background: rgba(236, 72, 153, 0.3);
+            border-color: #ec4899;
+            transform: scale(1.05);
+        }
+        
+        .gift-icon { font-size: 16px; margin-bottom: 4px; }
+        .gift-cost { font-size: 10px; opacity: 0.8; }
+        
+        .send-message-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #ec4899, #8b5cf6);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .send-message-btn:hover { transform: scale(1.02); }
+        
+        .loading { text-align: center; color: white; font-size: 18px; padding: 40px; }
+        .error { text-align: center; color: #ef4444; font-size: 16px; padding: 20px; }
+        
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+        }
+        
+        .credits-display {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 8px;
+            backdrop-filter: blur(10px);
+            font-weight: bold;
+        }
+        
+        .gift-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+        
+        .modal-content {
+            background: rgba(0, 0, 0, 0.9);
+            border-radius: 16px;
+            border: 1px solid rgba(236, 72, 153, 0.3);
+            padding: 30px;
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+        }
+        
+        .modal-title { color: white; font-size: 24px; margin-bottom: 20px; }
+        .modal-text { color: #d1d5db; margin-bottom: 20px; }
+        .modal-buttons { display: flex; gap: 10px; }
+        .modal-btn { flex: 1; padding: 10px; border: none; border-radius: 8px; cursor: pointer; }
+        .btn-confirm { background: linear-gradient(135deg, #ec4899, #8b5cf6); color: white; }
+        .btn-cancel { background: #4b5563; color: white; }
+    </style>
+</head>
+<body>
+    <button class="back-btn" onclick="window.location.href = 'login.html'">← Back</button>
+    <div class="credits-display" id="credits-display">Credits: --</div>
+    
+    <div class="header">
+        <h1>💕 Browse Companions</h1>
+        <p>Discover amazing people from across Europe</p>
+    </div>
+    
+    <div id="profiles-container">
+        <div class="loading">Loading beautiful profiles...</div>
+    </div>
+    
+    <!-- Gift Confirmation Modal -->
+    <div id="gift-modal" class="gift-modal">
+        <div class="modal-content">
+            <h3 class="modal-title">Send Gift</h3>
+            <p class="modal-text" id="gift-modal-text"></p>
+            <div class="modal-buttons">
+                <button class="modal-btn btn-cancel" onclick="closeGiftModal()">Cancel</button>
+                <button class="modal-btn btn-confirm" onclick="confirmSendGift()">Send Gift</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'https://f4411c36-1dcb-452f-9677-744ba1f8a983.preview.emergentagent.com/api';
+        let currentUser = null;
+        let selectedGift = null;
+        let selectedProfile = null;
+        
+        const giftTypes = {
+            heart: { icon: '❤️', credits: 1, value: 0.01, name: 'Heart' },
+            rose: { icon: '🌹', credits: 5, value: 0.05, name: 'Rose' },
+            diamond: { icon: '💎', credits: 10, value: 0.10, name: 'Diamond' },
+            crown: { icon: '👑', credits: 25, value: 0.25, name: 'Crown' },
+            luxury_car: { icon: '🚗', credits: 100, value: 1.00, name: 'Luxury Car' }
+        };
+        
+        async function loadProfiles() {
+            try {
+                // Get current user for credits
+                const token = localStorage.getItem('accessToken');
+                if (token) {
+                    const userResponse = await fetch(`${API_BASE}/profile/me`, {
+                        headers: { 'Authorization': `Bearer ${token}` }
+                    });
+                    if (userResponse.ok) {
+                        currentUser = await userResponse.json();
+                        document.getElementById('credits-display').textContent = `Credits: ${currentUser.credits}`;
+                    }
+                }
+                
+                // Load escort profiles
+                const response = await fetch(`${API_BASE}/profiles?role=escort&limit=50`);
+                if (!response.ok) throw new Error('Failed to load profiles');
+                
+                const data = await response.json();
+                displayProfiles(data.profiles || []);
+                
+            } catch (error) {
+                console.error('Error loading profiles:', error);
+                document.getElementById('profiles-container').innerHTML = 
+                    '<div class="error">Error loading profiles. Please try again later.</div>';
+            }
+        }
+        
+        function displayProfiles(profiles) {
+            const container = document.getElementById('profiles-container');
+            
+            if (profiles.length === 0) {
+                container.innerHTML = '<div class="error">No companions available at the moment.</div>';
+                return;
+            }
+            
+            const grid = document.createElement('div');
+            grid.className = 'profiles-grid';
+            
+            profiles.forEach(profile => {
+                const card = createProfileCard(profile);
+                grid.appendChild(card);
+            });
+            
+            container.innerHTML = '';
+            container.appendChild(grid);
+        }
+        
+        function createProfileCard(profile) {
+            const card = document.createElement('div');
+            card.className = 'profile-card';
+            
+            const defaultImage = 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=400&h=400&fit=crop&crop=face';
+            
+            card.innerHTML = `
+                <img src="${profile.profile_image || defaultImage}" alt="${profile.full_name}" class="profile-image" onerror="this.src='${defaultImage}'">
+                <div class="profile-info">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                        <h3 class="profile-name">${profile.full_name}</h3>
+                        ${profile.vip_status ? '<span class="vip-badge">VIP</span>' : ''}
+                    </div>
+                    <div class="profile-details">
+                        <span>${profile.age} years</span>
+                        <span>📍 ${profile.location || 'Europe'}</span>
+                    </div>
+                    <p class="profile-bio">${profile.bio || 'Elegant companion available for sophisticated encounters.'}</p>
+                    
+                    <div class="profile-stats">
+                        <div class="stat">
+                            <div class="stat-value">€${(profile.earnings || 0).toFixed(2)}</div>
+                            <div class="stat-label">Earned</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">${profile.vip_status ? 'VIP' : 'Standard'}</div>
+                            <div class="stat-label">Status</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">⭐⭐⭐⭐⭐</div>
+                            <div class="stat-label">Rating</div>
+                        </div>
+                    </div>
+                    
+                    <div class="gift-buttons">
+                        ${Object.entries(giftTypes).map(([type, gift]) => `
+                            <button class="gift-btn" onclick="selectGift('${type}', '${profile.id}', '${profile.full_name}')">
+                                <div class="gift-icon">${gift.icon}</div>
+                                <div>${gift.credits}c</div>
+                                <div class="gift-cost">€${gift.value.toFixed(2)}</div>
+                            </button>
+                        `).join('')}
+                    </div>
+                    
+                    <button class="send-message-btn" onclick="sendMessage('${profile.id}', '${profile.full_name}')">
+                        💬 Send Message
+                    </button>
+                </div>
+            `;
+            
+            return card;
+        }
+        
+        function selectGift(giftType, profileId, profileName) {
+            if (!currentUser) {
+                alert('Please login to send gifts');
+                return;
+            }
+            
+            const gift = giftTypes[giftType];
+            if (currentUser.credits < gift.credits) {
+                alert(`You need ${gift.credits} credits to send this gift. You have ${currentUser.credits} credits.`);
+                return;
+            }
+            
+            selectedGift = { type: giftType, ...gift };
+            selectedProfile = { id: profileId, name: profileName };
+            
+            document.getElementById('gift-modal-text').innerHTML = `
+                Send ${gift.icon} ${gift.name} to <strong>${profileName}</strong>?<br>
+                <br>
+                Cost: ${gift.credits} credits (€${gift.value.toFixed(2)})<br>
+                Your credits: ${currentUser.credits}
+            `;
+            
+            document.getElementById('gift-modal').style.display = 'flex';
+        }
+        
+        function closeGiftModal() {
+            document.getElementById('gift-modal').style.display = 'none';
+            selectedGift = null;
+            selectedProfile = null;
+        }
+        
+        async function confirmSendGift() {
+            if (!selectedGift || !selectedProfile || !currentUser) return;
+            
+            try {
+                const response = await fetch(`${API_BASE}/gifts/send`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+                    },
+                    body: JSON.stringify({
+                        receiver_id: selectedProfile.id,
+                        gift_type: selectedGift.type,
+                        message: `Beautiful ${selectedGift.name} for you! 💕`
+                    })
+                });
+                
+                if (response.ok) {
+                    currentUser.credits -= selectedGift.credits;
+                    document.getElementById('credits-display').textContent = `Credits: ${currentUser.credits}`;
+                    
+                    alert(`🎉 ${selectedGift.icon} ${selectedGift.name} sent to ${selectedProfile.name}!\n\nYou spent ${selectedGift.credits} credits\nRemaining credits: ${currentUser.credits}`);
+                } else {
+                    const error = await response.json();
+                    alert(`Error sending gift: ${error.detail || 'Please try again'}`);
+                }
+            } catch (error) {
+                console.error('Gift sending error:', error);
+                alert('Network error. Please try again.');
+            }
+            
+            closeGiftModal();
+        }
+        
+        function sendMessage(profileId, profileName) {
+            alert(`💬 Messaging feature coming soon!\n\nFor now, send a gift to ${profileName} to show your interest! 💕`);
+        }
+        
+        // Load profiles when page loads
+        loadProfiles();
+    </script>
+</body>
+</html>
