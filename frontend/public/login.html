@@ -162,6 +162,8 @@
         }
         
         async function handleLogin() {
+            hideError();
+            
             const email = document.getElementById('login-email').value;
             const password = document.getElementById('login-password').value;
             
@@ -169,6 +171,12 @@
                 showError('Please fill in all fields');
                 return;
             }
+            
+            // Disable button during request
+            const button = event.target;
+            const originalText = button.textContent;
+            button.textContent = 'Signing In...';
+            button.disabled = true;
             
             try {
                 const response = await fetch(`${API_BASE}/auth/login`, {
@@ -181,14 +189,20 @@
                 
                 if (response.ok) {
                     localStorage.setItem('accessToken', data.access_token);
-                    alert('Login successful! Welcome to EuroLove!');
-                    window.location.href = 'dashboard.html';
+                    const user = data.user;
+                    alert(`🎉 Login successful! Welcome back!\n\n✅ Credits: ${user.credits}\n✅ Role: ${user.role}\n${user.vip_status ? '✅ VIP Member' : ''}`);
+                    // In a real app, you'd redirect to dashboard
+                    window.location.reload();
                 } else {
-                    showError(data.detail || 'Login failed');
+                    showError(data.detail || 'Login failed. Please check your credentials.');
                 }
             } catch (error) {
-                showError('Network error. Please try again.');
+                showError('Network error. Please check your connection and try again.');
                 console.error('Login error:', error);
+            } finally {
+                // Re-enable button
+                button.textContent = originalText;
+                button.disabled = false;
             }
         }
         
