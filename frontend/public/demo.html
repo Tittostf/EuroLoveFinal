@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EuroLove Demo - Browse Profiles</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #be185d, #7c3aed, #1e40af);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .header h1 { color: white; font-size: 36px; margin-bottom: 8px; }
+        .header p { color: #d1d5db; font-size: 18px; }
+        
+        .credits-display {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 8px;
+            backdrop-filter: blur(10px);
+            font-weight: bold;
+        }
+        
+        .profiles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .profile-card {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 16px;
+            border: 1px solid rgba(236, 72, 153, 0.2);
+            backdrop-filter: blur(10px);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .profile-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        .profile-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+        
+        .profile-info {
+            padding: 20px;
+        }
+        
+        .profile-name {
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+        
+        .profile-details {
+            color: #d1d5db;
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .vip-badge {
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            color: black;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        .profile-bio {
+            color: #9ca3af;
+            font-size: 14px;
+            line-height: 1.4;
+            margin-bottom: 16px;
+        }
+        
+        .gift-buttons {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+        
+        .gift-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            padding: 8px 4px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+            font-size: 12px;
+        }
+        
+        .gift-btn:hover {
+            background: rgba(236, 72, 153, 0.3);
+            border-color: #ec4899;
+            transform: scale(1.05);
+        }
+        
+        .gift-icon { font-size: 16px; margin-bottom: 4px; }
+        .gift-cost { font-size: 10px; opacity: 0.8; }
+        
+        .gift-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+        
+        .modal-content {
+            background: rgba(0, 0, 0, 0.9);
+            border-radius: 16px;
+            border: 1px solid rgba(236, 72, 153, 0.3);
+            padding: 30px;
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+        }
+        
+        .modal-title { color: white; font-size: 24px; margin-bottom: 20px; }
+        .modal-text { color: #d1d5db; margin-bottom: 20px; }
+        .modal-buttons { display: flex; gap: 10px; }
+        .modal-btn { flex: 1; padding: 10px; border: none; border-radius: 8px; cursor: pointer; }
+        .btn-confirm { background: linear-gradient(135deg, #ec4899, #8b5cf6); color: white; }
+        .btn-cancel { background: #4b5563; color: white; }
+        
+        .demo-banner {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="credits-display" id="credits-display">Credits: 50</div>
+    
+    <div class="header">
+        <h1>💕 Browse Companions</h1>
+        <p>Discover amazing people from across Europe</p>
+    </div>
+    
+    <div class="profiles-grid">
+        <!-- Profiles will be generated by JavaScript -->
+    </div>
+    
+    <!-- Gift Confirmation Modal -->
+    <div id="gift-modal" class="gift-modal">
+        <div class="modal-content">
+            <h3 class="modal-title">Send Gift</h3>
+            <p class="modal-text" id="gift-modal-text"></p>
+            <div class="modal-buttons">
+                <button class="modal-btn btn-cancel" onclick="closeGiftModal()">Cancel</button>
+                <button class="modal-btn btn-confirm" onclick="confirmSendGift()">Send Gift</button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="demo-banner">
+        🎮 Demo Mode - All gifts are simulated
+    </div>
+
+    <script>
+        let currentCredits = 50;
+        let selectedGift = null;
+        let selectedProfile = null;
+        
+        const giftTypes = {
+            heart: { icon: '❤️', credits: 1, value: 0.01, name: 'Heart' },
+            rose: { icon: '🌹', credits: 5, value: 0.05, name: 'Rose' },
+            diamond: { icon: '💎', credits: 10, value: 0.10, name: 'Diamond' },
+            crown: { icon: '👑', credits: 25, value: 0.25, name: 'Crown' },
+            luxury_car: { icon: '🚗', credits: 100, value: 1.00, name: 'Luxury Car' }
+        };
+        
+        const profiles = [
+            {
+                id: '1',
+                full_name: 'Sophia Milano',
+                age: 26,
+                location: 'Milan, Italy',
+                bio: 'Elite companion from Milan. I speak Italian, English, and French. Available for dinner dates and social events.',
+                earnings: 125.75,
+                vip_status: true,
+                profile_image: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=400&h=400&fit=crop&crop=face'
+            },
+            {
+                id: '2',
+                full_name: 'Elena Barcelona',
+                age: 24,
+                location: 'Barcelona, Spain',
+                bio: 'Professional model and companion. Love art, wine, and intellectual conversations. VIP experiences only.',
+                earnings: 200.50,
+                vip_status: true,
+                profile_image: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=400&fit=crop&crop=face'
+            },
+            {
+                id: '3',
+                full_name: 'Marie Dubois',
+                age: 28,
+                location: 'Paris, France',
+                bio: 'Parisian elegance meets modern sophistication. Perfect for business events and cultural experiences.',
+                earnings: 175.25,
+                vip_status: false,
+                profile_image: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400&h=400&fit=crop&crop=face'
+            },
+            {
+                id: '4',
+                full_name: 'Anna Vienna',
+                age: 25,
+                location: 'Vienna, Austria',
+                bio: 'Classical musician and companion. Love opera, fine dining, and romantic evenings. Speak German and English.',
+                earnings: 150.00,
+                vip_status: false,
+                profile_image: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&h=400&fit=crop&crop=face'
+            },
+            {
+                id: '5',
+                full_name: 'Lucia Roma',
+                age: 27,
+                location: 'Rome, Italy',
+                bio: 'Roman beauty with a passion for history and culture. Perfect guide for exploring the eternal city.',
+                earnings: 190.75,
+                vip_status: true,
+                profile_image: 'https://images.unsplash.com/photo-1489424731084-a5d8b219a5bb?w=400&h=400&fit=crop&crop=face'
+            },
+            {
+                id: '6',
+                full_name: 'Ingrid Stockholm',
+                age: 23,
+                location: 'Stockholm, Sweden',
+                bio: 'Nordic beauty with a warm personality. Love winter sports, saunas, and cozy evenings by the fireplace.',
+                earnings: 140.25,
+                vip_status: false,
+                profile_image: 'https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?w=400&h=400&fit=crop&crop=face'
+            }
+        ];
+        
+        function displayProfiles() {
+            const grid = document.querySelector('.profiles-grid');
+            
+            profiles.forEach(profile => {
+                const card = createProfileCard(profile);
+                grid.appendChild(card);
+            });
+        }
+        
+        function createProfileCard(profile) {
+            const card = document.createElement('div');
+            card.className = 'profile-card';
+            
+            card.innerHTML = `
+                <img src="${profile.profile_image}" alt="${profile.full_name}" class="profile-image">
+                <div class="profile-info">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                        <h3 class="profile-name">${profile.full_name}</h3>
+                        ${profile.vip_status ? '<span class="vip-badge">VIP</span>' : ''}
+                    </div>
+                    <div class="profile-details">
+                        <span>${profile.age} years</span>
+                        <span>📍 ${profile.location}</span>
+                    </div>
+                    <p class="profile-bio">${profile.bio}</p>
+                    
+                    <div class="gift-buttons">
+                        ${Object.entries(giftTypes).map(([type, gift]) => `
+                            <button class="gift-btn" onclick="selectGift('${type}', '${profile.id}', '${profile.full_name}')">
+                                <div class="gift-icon">${gift.icon}</div>
+                                <div>${gift.credits}c</div>
+                                <div class="gift-cost">€${gift.value.toFixed(2)}</div>
+                            </button>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+            
+            return card;
+        }
+        
+        function selectGift(giftType, profileId, profileName) {
+            const gift = giftTypes[giftType];
+            
+            if (currentCredits < gift.credits) {
+                alert(`You need ${gift.credits} credits to send this gift. You have ${currentCredits} credits.`);
+                return;
+            }
+            
+            selectedGift = { type: giftType, ...gift };
+            selectedProfile = { id: profileId, name: profileName };
+            
+            document.getElementById('gift-modal-text').innerHTML = `
+                Send ${gift.icon} ${gift.name} to <strong>${profileName}</strong>?<br>
+                <br>
+                Cost: ${gift.credits} credits (€${gift.value.toFixed(2)})<br>
+                Your credits: ${currentCredits}
+            `;
+            
+            document.getElementById('gift-modal').style.display = 'flex';
+        }
+        
+        function closeGiftModal() {
+            document.getElementById('gift-modal').style.display = 'none';
+            selectedGift = null;
+            selectedProfile = null;
+        }
+        
+        function confirmSendGift() {
+            if (!selectedGift || !selectedProfile) return;
+            
+            currentCredits -= selectedGift.credits;
+            document.getElementById('credits-display').textContent = `Credits: ${currentCredits}`;
+            
+            alert(`🎉 ${selectedGift.icon} ${selectedGift.name} sent to ${selectedProfile.name}!\n\nYou spent ${selectedGift.credits} credits\nRemaining credits: ${currentCredits}\n\n✨ Gift delivered successfully!`);
+            
+            closeGiftModal();
+        }
+        
+        // Load profiles when page loads
+        displayProfiles();
+    </script>
+</body>
+</html>
