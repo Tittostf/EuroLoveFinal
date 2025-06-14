@@ -1,5 +1,4 @@
 import React, { createContext, useContext, useState, useEffect } from 'react'
-import { supabase } from '../supabaseClient'
 import axios from 'axios'
 
 const AuthContext = createContext()
@@ -13,7 +12,7 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true)
   const [accessToken, setAccessToken] = useState(localStorage.getItem('accessToken'))
 
-  const API_BASE = process.env.REACT_APP_BACKEND_URL + '/api'
+  const API_BASE = (process.env.REACT_APP_BACKEND_URL || 'https://f4411c36-1dcb-452f-9677-744ba1f8a983.preview.emergentagent.com') + '/api'
 
   // Setup axios interceptor for authentication
   useEffect(() => {
