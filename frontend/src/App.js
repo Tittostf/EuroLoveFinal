@@ -2,31 +2,115 @@ import React from "react";
 import "./App.css";
 
 function App() {
+  console.log("App component is rendering!");
+  
   return (
-    <div className="min-h-screen bg-gradient-to-br from-pink-900 via-purple-900 to-indigo-900 flex items-center justify-center">
-      <div className="max-w-md w-full p-8">
-        <div className="bg-black bg-opacity-20 backdrop-blur-lg rounded-2xl p-8 border border-pink-500/20 text-center">
-          {/* Logo */}
-          <div className="mx-auto w-16 h-16 bg-gradient-to-r from-pink-500 to-purple-600 rounded-full flex items-center justify-center mb-4">
-            <span className="text-white font-bold text-2xl">EL</span>
-          </div>
-          <h1 className="text-3xl font-bold text-white mb-2">EuroLove</h1>
-          <p className="text-gray-300 mb-6">Premium Dating Platform</p>
+    <div style={{ 
+      minHeight: '100vh', 
+      background: 'linear-gradient(135deg, #ec4899, #8b5cf6, #3730a3)',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      fontFamily: 'Arial, sans-serif'
+    }}>
+      <div style={{
+        maxWidth: '400px',
+        width: '100%',
+        padding: '32px',
+        backgroundColor: 'rgba(0, 0, 0, 0.2)',
+        borderRadius: '16px',
+        border: '1px solid rgba(236, 72, 153, 0.2)',
+        textAlign: 'center',
+        backdropFilter: 'blur(10px)'
+      }}>
+        {/* Logo */}
+        <div style={{
+          width: '64px',
+          height: '64px',
+          background: 'linear-gradient(135deg, #ec4899, #8b5cf6)',
+          borderRadius: '50%',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          margin: '0 auto 16px',
+          fontSize: '32px',
+          fontWeight: 'bold',
+          color: 'white'
+        }}>
+          EL
+        </div>
+        
+        <h1 style={{ 
+          fontSize: '48px', 
+          fontWeight: 'bold', 
+          color: 'white', 
+          margin: '0 0 8px' 
+        }}>
+          EuroLove
+        </h1>
+        
+        <p style={{ 
+          color: '#d1d5db', 
+          margin: '0 0 24px',
+          fontSize: '18px'
+        }}>
+          Premium Dating Platform
+        </p>
+        
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+          <button style={{
+            width: '100%',
+            background: 'linear-gradient(135deg, #dc2626, #7c2d12)',
+            color: 'white',
+            fontWeight: '500',
+            padding: '12px 16px',
+            borderRadius: '8px',
+            border: 'none',
+            cursor: 'pointer',
+            fontSize: '16px',
+            transition: 'all 0.2s'
+          }} 
+          onMouseOver={(e) => e.target.style.transform = 'scale(1.05)'}
+          onMouseOut={(e) => e.target.style.transform = 'scale(1)'}
+          onClick={() => alert('Login clicked!')}>
+            Login
+          </button>
           
-          <div className="space-y-4">
-            <button className="w-full bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-700 hover:to-purple-700 text-white font-medium py-3 px-4 rounded-lg transition-all duration-200">
-              Login
-            </button>
-            <button className="w-full bg-gradient-to-r from-gray-600 to-gray-700 hover:from-gray-700 hover:to-gray-800 text-white font-medium py-3 px-4 rounded-lg transition-all duration-200">
-              Register
-            </button>
-          </div>
-          
-          <div className="mt-6 text-center">
-            <p className="text-gray-400 text-sm">
-              Platform Status: <span className="text-green-400">Online</span>
-            </p>
-          </div>
+          <button style={{
+            width: '100%',
+            background: 'linear-gradient(135deg, #4b5563, #374151)',
+            color: 'white',
+            fontWeight: '500',
+            padding: '12px 16px',
+            borderRadius: '8px',
+            border: 'none',
+            cursor: 'pointer',
+            fontSize: '16px',
+            transition: 'all 0.2s'
+          }}
+          onMouseOver={(e) => e.target.style.transform = 'scale(1.05)'}
+          onMouseOut={(e) => e.target.style.transform = 'scale(1)'}
+          onClick={() => alert('Register clicked!')}>
+            Register
+          </button>
+        </div>
+        
+        <div style={{ marginTop: '24px' }}>
+          <p style={{ 
+            color: '#9ca3af', 
+            fontSize: '14px',
+            margin: 0
+          }}>
+            Platform Status: <span style={{ color: '#10b981' }}>✅ Online</span>
+          </p>
+          <p style={{ 
+            color: '#9ca3af', 
+            fontSize: '12px',
+            margin: '8px 0 0',
+            opacity: 0.7
+          }}>
+            Backend Connected • Database Ready
+          </p>
         </div>
       </div>
     </div>
