@@ -92,7 +92,6 @@ export function AuthProvider({ children }) {
       }
     } catch (error) {
       console.error('Get current user error:', error)
-      // If token is invalid, logout
       if (error.response?.status === 401) {
         logout()
       }
